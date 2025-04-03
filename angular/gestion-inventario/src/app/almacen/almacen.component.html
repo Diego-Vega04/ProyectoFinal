@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Almacén</title>
+    <link rel="stylesheet" href="almacen.component.css">
+</head>
+
+<body>
+
+    <h2 style="text-align: center;">Plano de Almacén</h2>
+
+    <table>
+        <tr>
+            <td colspan="5" class="shipping">Envío</td>
+        </tr>
+        <tr>
+            <td class="rack" id="A1">A1</td>
+            <td class="aisle" rowspan="4"></td>
+            <td class="rack" id="B1">B1</td>
+            <td class="aisle" rowspan="4"></td>
+            <td class="rack" id="C1" rowspan="2">C1
+            </td>
+        </tr>
+        <tr>
+            <td class="rack" id="A2">A2</td>
+            <td class="rack" id="B2">B2</td>
+        </tr>
+        <tr>
+            <td class="rack" id="A3" rowspan="2">A3</td>
+            <td class="rack" id="B3">B3</td>
+            <td class="rack" id="C2">C2</td>
+        </tr>
+        <tr>
+            <td class="rack" id="B4">B4</td>
+            <td class="rack" id="C3">C3</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="receiving">Recepción</td>
+        </tr>
+
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+td {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #000;
+  position: relative; /* Necesario para posicionar el botón dentro de la celda */
+}
+
+.rack {
+  background-color: #FFD700; /* Estantería - Amarillo */
+}
+
+.rack:hover{
+    background-color: #E7C50C;
+}
+
+.aisle {
+  background-color: #F0F0F0;
+  width: 25px;
+} /* Pasillo - Gris */
+
+.receiving {
+  background-color: #87CEEB;
+} /* Recepción - Azul */
+
+.shipping {
+  background-color: #FF4500;
+} /* Envío - Rojo */
+
+.rack:hover button {
+  display: inline-block; /* Muestra el botón cuando el ratón está sobre la celda */
+}
