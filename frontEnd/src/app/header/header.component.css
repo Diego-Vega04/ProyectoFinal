@@ -1,11 +1,11 @@
 header {
     display: flex;
-    align-items: center;   /* Centra verticalmente los elementos */
-    justify-content: flex-start;  /* Espacia los elementos uniformemente */
+    align-items: center;  
+    justify-content: flex-start;  
     padding: 10px 0;
     color: white;
     font-family: Arial, sans-serif;
-    position: relative;
+    position: static;
     width: 100%;
 }
 
@@ -55,15 +55,15 @@ header {
 .side-menu {
     position: fixed;
     top: 0;
-    left: -280px;
+    left: -400px;
     width: 400px;
     height: 100%;
     background-color: white;
     transition: left 0.3s ease;
-    z-index: 9999;
 }
 .side-menu.open {
     left: 0;
+    z-index: 9999;
 }
 .side-menu-content {
     color: black;
