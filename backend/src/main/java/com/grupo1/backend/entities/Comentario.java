@@ -1,5 +1,7 @@
 package com.grupo1.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,7 @@ public class Comentario {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonIgnore
     private User user;
 
     @ManyToOne

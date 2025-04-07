@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo1.backend.entities.enums.CategoriaProducto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -61,6 +62,8 @@ public class Producto {
     private List<Pedido> pedidos;
 
     //un producto en varias reseñas
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Comentario> comentarios;
+    
 }
