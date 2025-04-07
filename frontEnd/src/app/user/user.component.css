@@ -1,0 +1,68 @@
+/*Ajuste debajo del header*/
+.user-container {
+    display: flex;
+    margin-top: 70px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    min-height: calc(100vh - 70px);
+}
+
+/*Menu lateral*/
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    height: calc(100vh - 70px);
+    position: sticky;
+    top: 70px;
+    overflow-y: auto;
+    margin-left: 10rem;
+    border-radius: 8px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.sidebar li {
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 5px;
+}
+
+.sidebar li:hover {
+    background-color: #f0f0f0;
+}
+
+.logout {
+    margin-top: 2rem;
+    font-weight: bold;
+}
+
+.content {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1rem 0;
+  }
+  
