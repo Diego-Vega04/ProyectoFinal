@@ -39,7 +39,7 @@ export class HeaderComponent {
       this.router.navigate(['/login']);
     } else {
       // Si está logueado, muestra el menú lateral
-      this.toggleMenu();
+      this.router.navigate(['/user']);
     }
   }
 }

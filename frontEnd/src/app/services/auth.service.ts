@@ -8,8 +8,8 @@ export class AuthService {
   constructor() { }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-    //return true; 
+    //return !!localStorage.getItem('token');
+    return true; 
   }
 
   // Obtener el email del usuario logueado
