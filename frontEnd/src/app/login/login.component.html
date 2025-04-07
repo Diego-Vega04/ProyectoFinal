@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a routerLink="/">
+                <img src="logo-pccomponentes.svg" alt="Logo PCComponentes">
+            </a>
+        </div>
+    </header>
+    <main>
+        <section class="section1">
+            <div class="texto">
+                <img src="truck-svgrepo-com.svg" alt="SVG Camión" class="svg">
+                <div>
+                    <h4>Gestiona tus pedidos</h4>
+                    <span>Ten el control de todos tus pedidos y recibe notificaciones con el seguimiento</span>
+                </div>
+            </div>
+
+            <div class="texto">
+                <img src="medal-quality-svgrepo-com.svg" alt="SVG Medalla" class="svg">
+                <div>
+                    <h4>Lista de deseos personlizada</h4>
+                    <span>Guarda tus productos favoritos en las listas de deseos personalizadas</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section2">
+            <h1>{{ esRegistro ? 'Crear cuenta' : 'Iniciar sesión' }}</h1>
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
+
+                <!-- Campo Nombre solo en modo registro -->
+                <div *ngIf="esRegistro">
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" ngModel required style="width: 300px">
+                </div>
+
+                <!-- Email -->
+                <input type="email" id="email" name="email" placeholder="E-mail*" ngModel required style="width: 300px">
+
+                <!-- Contraseña 1-->
+                <div class="passqord-wrapper">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+                        placeholder="Contraseña*" ngModel required style="width: 300px">
+                    <button type="button" (click)="togglePasswordVisibility()" class="eye-button">
+                        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    </button>
+                </div>
+
+                <!-- Repetir contraseña solo en modo registro -->
+                <div *ngIf="esRegistro">
+                    <input [type]="showPassword ? 'text' : 'password'" id="repeatPassword" name="repeatPassword"
+                        placeholder="Repetir contraseña*" ngModel required style="width: 300px">
+                    <button type="button" (click)="togglePasswordVisibility()" class="eye-button">
+                        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    </button>
+                </div>
+
+                <!-- Checkboxes solo en modo registro -->
+                <div *ngIf="esRegistro">
+                    <label>
+                        <input type="checkbox" name="politica" ngModel required>
+                        He leído y acepto la política de privacidad
+                    </label>
+                    <br><br><br>
+                    <label>
+                        <input type="checkbox" name="ofertas" ngModel>
+                        Recibir descuentos exclusivos, novedades y tendencias por e-mail. Me puedo dar de baja desde mi
+                        panel.
+                    </label>
+                </div>
+
+                <a *ngIf="!esRegistro" href="#" class="forgot-password">He olvidado mi contraseña</a>
+                <!-- Botón principal -->
+                <button type="submit" class="login-button">
+                    {{ esRegistro ? 'Crear cuenta' : 'Iniciar sesión' }}
+                </button>
+
+                <!-- Línea decorativa -->
+                <div class="divider">
+                    <span>{{ esRegistro ? 'Ya tengo una cuenta' : '¿Eres nuevo cliente?' }}</span>
+                </div>
+
+                <!-- Botón alternativo -->
+                <button type="button" class="create-account" (click)="alternarModo()">{{ esRegistro ? 'Iniciar sesión' : 'Crear cuenta'
+                    }}</button>
+            </form>
+
+        </section>
+
+    </main>
+</body>
+
+</html>
