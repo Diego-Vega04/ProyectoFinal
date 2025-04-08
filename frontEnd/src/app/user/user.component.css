@@ -112,27 +112,33 @@ hr {
 }
 
 /*Seccion reestablecer psswd*/
-.psswd-container{
+.psswd-container {
     position: relative;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     margin-bottom: 20px;
-}
-
-.psswd{
+  }
+  
+  .psswd {
     width: 100%;
     padding-right: 40px;
     height: 35px;
     box-sizing: border-box;
-}
-
-.eye-button{
+    font-size: 14px;
+  }
+  
+  .eye-button {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     background-color: transparent;
     border: none;
-    color: #555;
     cursor: pointer;
     font-size: 18px;
-}
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

@@ -37,59 +37,60 @@
     <h2>Bienvenido a tu área personal</h2>
     <div class="text user-info">
       <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
-      <div class="field">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editar">
-      </div>
-      <div class="field">
-        <label for="lastname">Apellidos:</label>
-        <input type="text" id="lastname" class="userData" [(ngModel)]="userLastName" name="lastname" [disabled]="editar">
-      </div>
-      <div class="field">
-        <label for="email">Email:</label>
-        <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editar">
-      </div>
+        <div class="field">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editar">
+        </div>
+        <div class="field">
+          <label for="lastname">Apellidos:</label>
+          <input type="text" id="lastname" class="userData" [(ngModel)]="userLastName" name="lastname"
+            [disabled]="editar">
+        </div>
+        <div class="field">
+          <label for="email">Email:</label>
+          <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editar">
+        </div>
 
-      <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
-    </form>
+        <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
+      </form>
     </div>
-    
-    <hr><h3>Reestablecer contraseña:</h3>
-    
+
+    <hr>
+    <h3>Reestablecer contraseña:</h3>
+
     <div class="textPsswd">
       <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
-      <label for="psswd1">Contraseña actual</label>
-      <div class="psswd-container">
-        <input [type]="showPassword1 ? 'text' : 'password'" id="psswd1" 
-        class="psswd" name="psswd1" placeholder="Contraseña actual" ngModel required>
+        <label for="psswd1">Contraseña actual</label>
+        <div class="psswd-container">
+          <input [type]="showPassword1 ? 'text' : 'password'" class="psswd" name="psswd1"
+            placeholder="Contraseña actual" ngModel required>
+          <button type="button" class="eye-button" (click)="togglePasswordVisibility(1)">
+            <i class="fas" [ngClass]="showPassword1 ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
 
-        <button type="button" (click)="togglePasswordVisibility(1)" class="eye-button">
-          <i [class]="showPassword1 ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-        </button>
-      </div>
+        <br>
+        <label for="psswd2">Nueva contraseña:</label>
+        <div class="psswd-container">
+          <input [type]="showPassword2 ? 'text' : 'password'" class="psswd" name="psswd3"
+            placeholder="Repetir contraseña" ngModel required>
+          <button type="button" class="eye-button" (click)="togglePasswordVisibility(2)">
+            <i class="fas" [ngClass]="showPassword2 ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
 
-      <br>
-      <label for="psswd2">Nueva contraseña:</label>
-      <div class="psswd-container">
-        <input [type]="showPassword2 ? 'text' : 'password'" id="psswd2" class="psswd" name="psswd2" 
-        placeholder="Nueva contraseña" ngModel required>
-        <button type="button" (click)="togglePasswordVisibility(2)" class="eye-button">
-          <i [class]="showPassword2 ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-        </button>
-      </div>
-
-      <br>
-      <label for="psswd3">Repita la nueva contraseña</label>
-      <div class="psswd-container">
-        <input [type]="showPassword3 ? 'text' : 'password'" id="psswd3" class="psswd" name="psswd3"
-        placeholder="Repita la contraseña" ngModel required>
-        <button type="button" (click)="togglePasswordVisibility(3)" class="eye-button">
-          <i [class]="showPassword3 ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-        </button>
-      </div>
-
-      <button type="button" class="btEdit" (click)="editPsswd()">Cambiar contraseña</button>
-    </form>
+        <br>
+        <label for="psswd3">Repita la nueva contraseña</label>
+        <div class="psswd-container">
+          <input [type]="showPassword3 ? 'text' : 'password'" class="psswd" name="psswd3"
+            placeholder="Repetir contraseña" ngModel required>
+          <button type="button" class="eye-button" (click)="togglePasswordVisibility(3)">
+            <i class="fas" [ngClass]="showPassword3 ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+        <!--arreglar boton de doble ojo-->
+        <button type="button" class="btEdit" (click)="editPsswd()">Cambiar contraseña</button>
+      </form>
     </div>
   </section>
 </div>
