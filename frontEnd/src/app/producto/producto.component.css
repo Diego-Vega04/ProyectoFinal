@@ -1,4 +1,3 @@
-
 .product-container {
 
   max-width: 1200px;
@@ -173,7 +172,8 @@
 }
 
 
-.reviews, .questions {
+.reviews,
+.questions {
 
   color: #0066c0;
 
@@ -418,7 +418,10 @@
 }
 
 
-.financing, .refurbished, .shipping-info, .store-availability {
+.financing,
+.refurbished,
+.shipping-info,
+.store-availability {
 
   padding: 10px 0;
 
@@ -448,9 +451,11 @@
   0% {
     box-shadow: 0 0 0 0 rgba(138, 86, 172, 0.5);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(138, 86, 172, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(138, 86, 172, 0);
   }
@@ -512,12 +517,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transition: left 0.7s ease;
 }
 
@@ -531,10 +534,12 @@
     transform: scale(0, 0);
     opacity: 0.5;
   }
+
   20% {
     transform: scale(25, 25);
     opacity: 0.5;
   }
+
   100% {
     opacity: 0;
     transform: scale(40, 40);
@@ -574,12 +579,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transition: left 0.7s ease;
 }
 
@@ -606,7 +609,9 @@
 }
 
 
-.service, .warranty, .warranty-extension {
+.service,
+.warranty,
+.warranty-extension {
 
   display: flex;
 
@@ -619,7 +624,8 @@
 }
 
 
-.service-price, .warranty-price {
+.service-price,
+.warranty-price {
 
   margin-left: auto;
 
@@ -654,7 +660,9 @@
   }
 
 
-  .product-images, .product-details, .product-purchase {
+  .product-images,
+  .product-details,
+  .product-purchase {
 
     min-width: 100%;
 
@@ -1076,7 +1084,8 @@
 }
 
 
-.overall-rating, .recommendation-rate {
+.overall-rating,
+.recommendation-rate {
 
   background-color: #f8f8f8;
 
@@ -1160,7 +1169,8 @@
 }
 
 
-.total-reviews, .total-recommendations {
+.total-reviews,
+.total-recommendations {
 
   font-size: 14px;
 
@@ -1377,7 +1387,8 @@
   }
 
 
-  .overall-rating, .recommendation-rate {
+  .overall-rating,
+  .recommendation-rate {
 
     width: 100%;
 
