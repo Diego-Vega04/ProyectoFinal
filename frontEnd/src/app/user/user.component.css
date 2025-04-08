@@ -66,4 +66,47 @@ hr {
     border-top: 1px solid #e0e0e0;
     margin: 1rem 0;
 }
+
+/*Seccion "Mis datos"*/
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .field label {
+    width: 120px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .field input {
+    width: 200px;
+    height: 25px;
+    border: 1px solid #ccc;
+  }
+
+  /*Botón del form*/
+  .btEdit {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btEdit:hover {
+    background-color: #0056b3;
+  }
+  
   

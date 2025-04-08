@@ -35,9 +35,56 @@
 
   <section class="content">
     <h2>Bienvenido a tu área personal</h2>
-    <div class="text">
-      <span>Nombre: </span>
-      <input type="text" id="name" class="userData" value="">
+    <div class="text user-info">
+      <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
+      <div class="field">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editar">
+      </div>
+      <div class="field">
+        <label for="lastname">Apellidos:</label>
+        <input type="text" id="lastname" class="userData" [(ngModel)]="userLastName" name="lastname" [disabled]="editar">
+      </div>
+      <div class="field">
+        <label for="email">Email:</label>
+        <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editar">
+      </div>
+
+      <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
+    </form>
+    </div>
+    
+    <h3>Reestablecer contraseña:</h3>
+    
+    <div class="textPsswd">
+      <span>Contraseña actual</span>
+      <div class="psswd-container">
+        <input [type]="showPassword ? 'text' : 'password'" class="psswd" name="psswd1" placeholder="Contraseña actual"
+          ngModel required>
+        <button type="button" (click)="togglePasswordVisibility()" class="eye-button">
+          <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+        </button>
+      </div>
+
+      <br>
+      <span>Nueva contraseña:</span>
+      <div class="psswd-container">
+        <input [type]="showPassword ? 'text' : 'password'" class="psswd" name="psswd2" 
+        placeholder="Nueva contraseña" ngModel required>
+        <button type="button" (click)="togglePasswordVisibility()" class="eye-button">
+          <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+        </button>
+      </div>
+
+      <br>
+      <span>Repita la nueva contraseña</span>
+      <div class="psswd-container">
+        <input [type]="showPassword ? 'text' : 'password'" class="psswd" name="psswd3"
+        placeholder="Repita la contraseña" ngModel required>
+        <button type="button" (click)="togglePasswordVisibility()" class="eye-button">
+          <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+        </button>
+      </div>
     </div>
   </section>
 </div>
