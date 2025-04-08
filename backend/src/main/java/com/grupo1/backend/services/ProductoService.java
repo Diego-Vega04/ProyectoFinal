@@ -21,7 +21,12 @@ public class ProductoService {
     }
 
     public void deleteProducto(int id) throws NotFoundException {
-        productoRepo.deleteById(id);
+        if (productoRepo.existsById(id)) {
+            productoRepo.deleteById(id);
+        } else {
+            throw new NotFoundException();
+        }
+        
     }
 
     public List<Producto> productosByCategoria(CategoriaProducto categoria) {
@@ -37,6 +42,11 @@ public class ProductoService {
     }
 
     public Producto getById (int id) throws NotFoundException {
-        return productoRepo.findById(id).get();
+        if (productoRepo.existsById(id)) {
+            return productoRepo.findById(id).get();
+        } else  {
+            throw new NotFoundException();
+        }
+        
     }
 }

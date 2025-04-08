@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo1.backend.entities.Carrito;
 import com.grupo1.backend.services.CarritoService;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,13 +35,34 @@ public class CarritoController {
     }
     
     @GetMapping("/user/{id_user}")
-    public ResponseEntity<Carrito> getByUser(@PathVariable int id_user) {
-        return ResponseEntity.ok(carritoSer.getByUser(id_user));
+    public ResponseEntity<?> getByUser(@PathVariable int id_user) {
+        try {
+            if (id_user <= 0) {
+                throw new BadRequestException();
+            }
+
+            return ResponseEntity.ok(carritoSer.getByUser(id_user));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un usuario con id " + id_user);
+        } catch (BadRequestException c) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de usuario no puede ser menor o igual que 0");
+        }
+        
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Carrito> getById (@PathVariable int id) {
-        return ResponseEntity.ok(carritoSer.getById(id));
+    public ResponseEntity<?> getById (@PathVariable int id) {
+        try {
+            if (id <= 0) {
+                throw new BadRequestException();
+            }
+            
+            return ResponseEntity.ok(carritoSer.getById(id));        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un carrito con id " + id);
+        } catch (BadRequestException c) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del carrito no puede ser menor o igual que 0");
+        }
+        
     }
     
 }

@@ -2,8 +2,10 @@ package com.grupo1.backend.controllers;
 
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,38 +27,76 @@ public class ProductoController {
     @Autowired
     private ProductoService productoSer;
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById (@PathVariable int id) {
+        try {
+            if (id <= 0) {
+                throw new BadRequestException();
+            }
+
+            return ResponseEntity.ok(productoSer.getById(id));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el producto con id " + id);
+        } catch (BadRequestException a) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id no puede ser menor o igual que 0");
+        } catch (Exception b) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + b.getMessage());
+        }
+        
+    }
+
     @PostMapping("/añadir")
-    public ResponseEntity<Producto> addProducto (@RequestBody Producto producto) {
+    public ResponseEntity<?> addProducto (@RequestBody Producto producto) {
         return ResponseEntity.ok (productoSer.addProducto(producto));
     }
 
     @DeleteMapping("/borrar/{id}")
-    public void deleteProducto (@PathVariable int id) throws NotFoundException {
-        productoSer.deleteProducto(id);
+    public ResponseEntity<?> deleteProducto (@PathVariable int id) {
+        try {
+            if (id <= 0) {
+                throw new BadRequestException();
+            }
+
+            productoSer.deleteProducto(id);
+            return ResponseEntity.ok("Producto eliminado correctamente");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el producto con id " + id);
+        } catch (BadRequestException a) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id no puede ser menor o igual que 0");
+        } catch (Exception b) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + b.getMessage());
+        }
     }
 
     @PutMapping("/actualizar")
-    public ResponseEntity<Producto> actualizarProducto(@RequestBody Producto producto) {
+    public ResponseEntity<?> actualizarProducto(@RequestBody Producto producto) {
         return ResponseEntity.ok (productoSer.addProducto(producto));
-    }
-    
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Producto> getById (@PathVariable int id) throws NotFoundException {
-        return ResponseEntity.ok(productoSer.getById(id));
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Producto>> getAll () {
-        return ResponseEntity.ok(productoSer.getAllProdcutos());
+    public ResponseEntity<?> getAll () {
+        List<Producto> a = productoSer.getAllProdcutos();
+        if (a == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay productos en la base de datos");
+        }
+        return ResponseEntity.ok(a);
     }
 
     @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<Producto>> getByCategoria (@PathVariable CategoriaProducto categoria) {
-        return ResponseEntity.ok(productoSer.productosByCategoria(categoria));
+    public ResponseEntity<?> getByCategoria (@PathVariable CategoriaProducto categoria) {
+        List<Producto> a = productoSer.productosByCategoria(categoria);
+        if (a == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay productos con esa categoria");
+        }
+        return ResponseEntity.ok(a);
     }
 
     @GetMapping("/marca/{marca}")
-    public ResponseEntity<List<Producto>> getByMarca (@PathVariable String marca) {
-        return ResponseEntity.ok(productoSer.productosByMarca(marca));
+    public ResponseEntity<?> getByMarca (@PathVariable String marca) {
+        List<Producto> a = productoSer.productosByMarca(marca);
+        if (a == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay productos de esa marca");
+        }
+        return ResponseEntity.ok(a);
     }
 }

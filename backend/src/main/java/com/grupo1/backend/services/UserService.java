@@ -19,8 +19,13 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public User getUserByEmail(String email) {
-        return userRepo.findByEmail(email);
+    public User getUserByEmail(String email) throws NotFoundException {
+        if (userRepo.existsByEmail(email)) {
+            return userRepo.findByEmail(email);
+        } else {
+            throw new NotFoundException();
+        }
+        
     }
 
     public User addUser (User user) {
@@ -28,10 +33,20 @@ public class UserService {
     }
 
     public void deleteUser (int id) throws NotFoundException{
-        userRepo.deleteById(id);
+        if (userRepo.existsById(id)) {
+            userRepo.deleteById(id);
+        } else {
+            throw new NotFoundException();
+        }
+        
     }
 
     public User getById (int id) throws NotFoundException {
-        return userRepo.findById(id).get();
+        if (userRepo.existsById(id)) {
+            return userRepo.findById(id).get();        
+        } else {
+            throw new NotFoundException();
+        }
+        
     }
 }

@@ -23,12 +23,21 @@ public class ComentarioService {
     @Autowired
     private ProductoRepository productoRepo;
 
-    public List<Comentario> getComentariosByUser(int id_user) {
-        return comentarioRepo.findByUser(userRepo.findById(id_user).get());
+    public List<Comentario> getComentariosByUser(int id_user) throws NotFoundException {
+        if (userRepo.existsById(id_user)) {
+            return comentarioRepo.findByUser(userRepo.findById(id_user).get());
+        } else {
+            throw new NotFoundException();
+        }
+        
     }
 
-    public List<Comentario> getComentariosByProducto (int id_producto) {
-        return comentarioRepo.findByProducto(productoRepo.findById(id_producto).get());
+    public List<Comentario> getComentariosByProducto (int id_producto) throws NotFoundException {
+        if (productoRepo.existsById(id_producto)) {
+            return comentarioRepo.findByProducto(productoRepo.findById(id_producto).get());
+        }  else {
+            throw new NotFoundException();
+        }
     }
 
     public Comentario addComentario(Comentario comentario) {
@@ -36,10 +45,18 @@ public class ComentarioService {
     }
 
     public void deleteComentario(int id) throws NotFoundException {
-        comentarioRepo.deleteById(id);
+        if (comentarioRepo.existsById(id)) {
+            comentarioRepo.deleteById(id);
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     public Comentario getById (int id) throws NotFoundException {
-        return comentarioRepo.findById(id).get();
+        if (comentarioRepo.existsById(id)) {
+            return comentarioRepo.findById(id).get();        
+        } else {
+            throw new NotFoundException();
+        }
     }
 }

@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo1.backend.entities.User;
 import com.grupo1.backend.services.UserService;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,18 +29,38 @@ public class UserController {
     private UserService userSer;
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<User> getByEmail (@PathVariable String email) {
-        return ResponseEntity.ok(userSer.getUserByEmail(email));
+    public ResponseEntity<?> getByEmail (@PathVariable String email) {
+        try {
+            return ResponseEntity.ok(userSer.getUserByEmail(email));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro un usuario con email " + email);
+        }
     }
 
     @PostMapping("/añadir")
-    public ResponseEntity<User> addUser (@RequestBody User user) {
-        return ResponseEntity.ok (userSer.addUser(user));
+    public ResponseEntity<?> addUser (@RequestBody User user) throws NotFoundException {
+        if (userSer.getUserByEmail(user.getEmail()) == null) {
+            return ResponseEntity.ok (userSer.addUser(user));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya existe un usuario con email: " + user.getEmail());
+        }
     }
 
     @DeleteMapping("/borrar/{id}")
-    public void deleteUser (@PathVariable int id) throws NotFoundException {
-        userSer.deleteUser(id);
+    public ResponseEntity<?> deleteUser (@PathVariable int id) throws NotFoundException {
+        try {
+            if (id <= 0) {
+                throw new BadRequestException();
+            }
+
+            userSer.deleteUser(id);
+            return ResponseEntity.ok("Usuario eliminado correctamente");
+
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro un usuario con id " + id);
+        } catch (BadRequestException v) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id no puede ser menor o igual que cero");
+        }
     }
 
     @PutMapping("/actualizar")
@@ -47,7 +69,21 @@ public class UserController {
     }
     
     @GetMapping("/id/{id}")
-    public ResponseEntity<User> getById (@PathVariable int id) throws NotFoundException {
-        return ResponseEntity.ok(userSer.getById(id));
+    public ResponseEntity<?> getById (@PathVariable int id) {
+        try {
+            if (id <= 0) {
+                throw new BadRequestException();
+            }
+
+            User a = userSer.getById(id);
+            return ResponseEntity.ok(a);
+
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro un usuario con id " + id);
+        } catch (BadRequestException v) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id no puede ser menor o igual que cero");
+        }
+       
     }
 }
+
