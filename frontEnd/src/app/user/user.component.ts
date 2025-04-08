@@ -13,8 +13,12 @@ export class UserComponent {
   userLastName: string | null = "";
   userEmail: string | null = "";
 
-  showPassword: boolean = false;
+  showPassword1 = false;
+  showPassword2 = false;
+  showPassword3 = false;
+
   editar: boolean = true;  //true = desahibilitado
+  psswd: boolean = true;
 
   constructor(public authService: AuthService) { }
 
@@ -28,6 +32,7 @@ export class UserComponent {
     if (this.editar) {
       this.update();
     }
+
   }
 
   update() {
@@ -39,7 +44,16 @@ export class UserComponent {
     this.editar = !this.editar;
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  togglePasswordVisibility(index: number) {
+    switch (index) {
+      case 1: this.showPassword1 = !this.showPassword1; break;
+      case 2: this.showPassword2 = !this.showPassword2; break;
+      case 3: this.showPassword3 = !this.showPassword3; break;
+    }
+  }
+
+  editPsswd() {
+    console.log("click");
+    //recoger datos de los inputs
   }
 }

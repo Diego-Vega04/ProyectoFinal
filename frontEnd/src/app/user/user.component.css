@@ -73,40 +73,66 @@ hr {
     flex-direction: column;
     gap: 20px;
     padding: 20px 0;
-  }
-  
-  .field {
+}
+
+.field {
     display: flex;
     align-items: center;
-  }
-  
-  .field label {
+}
+
+.field label {
     width: 120px;
     font-weight: bold;
     color: #333;
-  }
-  
-  .field input {
-    width: 200px;
-    height: 25px;
-    border: 1px solid #ccc;
-  }
+}
 
-  /*Botón del form*/
-  .btEdit {
+.field input {
+    width: 250px;
+    height: 20px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+}
+
+/*Botón del form*/
+.btEdit {
     margin-top: 20px;
     padding: 10px 20px;
     border-radius: 8px;
-    background-color: #007bff;
+    background-color: #8a56ac;
     color: white;
     border: none;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .btEdit:hover {
-    background-color: #0056b3;
-  }
-  
-  
+}
+
+.btEdit:hover {
+    background-color: #70448C;
+}
+
+/*Seccion reestablecer psswd*/
+.psswd-container{
+    position: relative;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.psswd{
+    width: 100%;
+    padding-right: 40px;
+    height: 35px;
+    box-sizing: border-box;
+}
+
+.eye-button{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 18px;
+}
