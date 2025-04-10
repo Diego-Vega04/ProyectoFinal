@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Product {
   id: number;
@@ -23,12 +24,15 @@ interface Product {
   templateUrl: './filtro2.component.html',
   styleUrls: ['./filtro2.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule]
 })
 export class Filtro2Component implements OnInit {
   products: Product[] = [];
   displayedProducts: Product[] = [];
   currentSort: string = 'relevance';
+  minPrice: number = 211;
+  maxPrice: number = 9625;
+  filteredProducts: Product[] = [];
 
   constructor() { }
 
@@ -110,15 +114,32 @@ export class Filtro2Component implements OnInit {
     ];
 
     // Initialize displayed products with default sort (relevance)
+    this.filteredProducts = [...this.products];
     this.displayedProducts = [...this.products];
     console.log('Products loaded:', this.displayedProducts.length);
   }
 
+  updatePriceFilter(): void {
+    // Make sure min is not greater than max
+    if (this.minPrice > this.maxPrice) {
+      this.minPrice = this.maxPrice;
+    }
+    
+    // Filter products by price range
+    this.filteredProducts = this.products.filter(product => 
+      product.currentPrice >= this.minPrice && 
+      product.currentPrice <= this.maxPrice
+    );
+    
+    // Apply current sort to filtered products
+    this.sortProducts(this.currentSort);
+  }
+  
   sortProducts(sortType: string): void {
     this.currentSort = sortType;
     
-    // Create a copy of the products array to sort
-    let sortedProducts = [...this.products];
+    // Create a copy of the filtered products array to sort
+    let sortedProducts = [...this.filteredProducts];
     
     switch (sortType) {
       case 'relevance':
