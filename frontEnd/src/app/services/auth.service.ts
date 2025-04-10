@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class AuthService {
 
   user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -33,8 +34,9 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('user');  
+    
+    this.router.navigate(['/']); //redirige a home
   }
 }
