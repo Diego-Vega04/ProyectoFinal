@@ -1,0 +1,31 @@
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.app-nav {
+  background-color: #70448C;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.app-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.app-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.app-nav a.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
