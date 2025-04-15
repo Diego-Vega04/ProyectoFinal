@@ -26,7 +26,7 @@ Este proyecto ha sido creado utilizando las siguientes tecnologías:
 
 ## Autores
 
-- [@Diego-Vega04]([https://github.com/Diego-Vega04])
-- [@Gonzalo422]([https://github.com/Gonzalo422])
-- [@aresMG]([https://github.com/aresMG])
+- [@Diego-Vega04](https://github.com/Diego-Vega04)
+- [@Gonzalo422](https://github.com/Gonzalo422)
+- [@aresMG](https://github.com/aresMG)
 
