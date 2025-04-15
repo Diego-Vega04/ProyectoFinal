@@ -11,14 +11,14 @@
     <header>
         <div class="logo">
             <a routerLink="/">
-                <img src="" alt="Logo">
+                <img src="logoNoFondo.png" alt="Logo">
             </a>
         </div>
     </header>
     <main>
 
         <section class="section1">
-            <h1 style="justify-content: center;">{{ esRegistro ? 'Crear cuenta' : 'Iniciar sesión' }}</h1>
+            <h1>{{ esRegistro ? 'Crear cuenta' : 'Iniciar sesión' }}</h1>
             <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
 
                 <!-- Campo Nombre solo en modo registro -->

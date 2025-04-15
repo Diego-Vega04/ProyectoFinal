@@ -5,13 +5,16 @@ body {
 }
 
 /*Logo superior*/
-.logo {
-    align-items: center;
-    display: block;
-    width: 140px;
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;     
+    height: 250px;           
+}
+
+.logo img {
+    width: 450px;
     height: auto;
-    padding: 65px;
-    margin: 0 auto;
 }
 
 /*Main secciones*/
@@ -33,9 +36,14 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
-/*Form Seccion 1*/
+h1{
+    font-size: 35px;
+}
+
+/*Form Seccion*/
 .login-form {
     display: flex;
     flex-direction: column;
