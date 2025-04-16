@@ -19,8 +19,9 @@ Este proyecto ha sido creado utilizando las siguientes tecnologías:
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Color Principal   | ![#8a56ac](https://placehold.co/15x15/8a56ac/8a56ac.png) `#8a56ac` |
+| Color Primario    | ![#8a56ac](https://placehold.co/15x15/8a56ac/8a56ac.png) `#8a56ac` |
 | Color Secundario  | ![#70448C](https://placehold.co/15x15/70448C/70118C.png) `#70448C` |
+| Color Terciario   | ![#C791EB](https://placehold.co/15x15/C791EB/C791EB.png) `#C791EB` |
 
 
 
