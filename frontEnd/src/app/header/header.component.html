@@ -20,9 +20,9 @@
     </a>
     </div>
 
-    <!-- Menú de categorías con íconos -->
+    <!-- Menú de categorías-->
     <div class="categories" (click)="toggleMenu()">
-      <button class="hamburger" (click)="toggleMenu()">
+      <button class="hamburger" [ngClass]="{'open': menuOpen}">
         <span class="line"></span>
         <span class="line"></span>
         <span class="line"></span>
@@ -33,8 +33,8 @@
     <!-- Menú lateral -->
     <div class="side-menu" [ngClass]="{'open': menuOpen}">
       <div class="side-menu-content">
-        <button class="close-btn" (click)="toggleMenu()">X</button>
-        <h2>Categorías</h2>
+        <button class="close-btn" (click)="toggleMenu()">✕</button>
+        <h2>CATEGORÍAS</h2><hr>
         <ul>
           <li>
             <a>Componentes</a>
@@ -78,7 +78,7 @@
     <div class="cart-menu" [ngClass]="{'open': cartMenuOpen}">
       <div class="cart-menu-header">
         <span class="cart-title">Mi cesta</span>
-        <button class="close-btnC" (click)="toggleCartMenu()">X</button>
+        <button class="close-btnC" (click)="toggleCartMenu()">✕</button>
       </div>
       <div class="cart-content">
         <img src="lensPickingPointsNoPostalCodeFound.svg" alt="Imagen SVG Lupa Carrito" class="cart-image">
