@@ -1,9 +1,27 @@
+body, html, main, .user-container {
+    background-color: var(--color-fondo);
+}
+
+label,
+h2,
+h3, h4, h5, p, li {
+    color: var(--color-texto);
+}
+
+.textPsswd, .direcciones, .returns-grid, .warranty-instructions {
+    background-color: var(--color-fondo2);
+    padding: 20px;
+}
+
+input{
+    color: black;
+}
+
 /*Ajuste debajo del header*/
 .user-container {
     display: flex;
     margin-top: 70px;
     font-family: Arial, sans-serif;
-    background-color: #fff;
     height: calc(100vh - 70px);
     overflow: hidden;
 }
@@ -11,7 +29,6 @@
 /*Menu lateral*/
 .sidebar {
     width: 260px;
-    background-color: #ffffff;
     padding: 1rem;
     border-right: 1px solid #ddd;
     height: calc(100vh - 70px);
@@ -20,6 +37,7 @@
     overflow-y: auto;
     margin-left: 10rem;
     border-radius: 8px;
+    background-color: var(--color-fondo2);
 }
 
 .sidebar nav ul {
@@ -37,7 +55,7 @@
     font-weight: bold;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    color: #333;
+    color: var(--color-texto);
 }
 
 .sidebar li {
@@ -48,7 +66,7 @@
 }
 
 .sidebar li:hover {
-    background-color: #f0f0f0;
+    background-color: var(--color-terciario);
 }
 
 .logout {
@@ -76,7 +94,8 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px 0;
+    padding: 20px;
+    background-color: var(--color-fondo2);
 }
 
 .field {
@@ -87,7 +106,6 @@ hr {
 .field label {
     width: 120px;
     font-weight: bold;
-    color: #333;
 }
 
 .field input {
@@ -104,7 +122,7 @@ hr {
     margin-top: 20px;
     padding: 10px 20px;
     border-radius: 8px;
-    background-color: #8a56ac;
+    background-color: var(--color-primario);
     color: white;
     border: none;
     font-weight: bold;
@@ -113,7 +131,7 @@ hr {
 }
 
 .btEdit:hover {
-    background-color: #70448C;
+    background-color: var(--color-secundario);
 }
 
 /*Seccion reestablecer psswd*/
@@ -167,84 +185,64 @@ hr {
 /* Apartado Historial de Pedidos */
 .orders-container {
     margin-top: 20px;
-  }
-  
-  .pedido-card {
-    background-color: #f9f9f9;
+}
+
+.pedido-card {
+    background-color: var(--color-fondo2);
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     transition: all 0.3s ease;
-  }
-  
-  .pedido-card:hover {
+}
+
+.pedido-card:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .pedido-header {
+}
+
+.pedido-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .pedido-header h5 {
+}
+
+.pedido-header h5 {
     font-size: 1.2rem;
-    color: #333;
-  }
-  
-  .pedido-state {
+    color: var(--color-texto);
+}
+
+.pedido-state {
     font-size: 0.9rem;
     padding: 0.3rem 0.7rem;
     border-radius: 12px;
     text-transform: capitalize;
-  }
-  
-  .pedido-state.procesando {
-    background-color: #ffa500;
-    color: white;
-  }
-  
-  .pedido-state.enviado {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .pedido-state.entregado {
-    background-color: #2196f3;
-    color: white;
-  }
-  
-  .pedido-state.cancelado {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .pedido-body {
+}
+
+.pedido-body {
     margin-top: 10px;
-  }
-  
-  .pedido-body p {
+}
+
+.pedido-body p {
     font-size: 1rem;
-    color: #555;
-  }
-  
-  .btViewDetails {
+    color: var(--color-texto);
+}
+
+.btViewDetails {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #8a56ac;
+    background-color: var(--color-primario);
     color: white;
     border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .btViewDetails:hover {
-    background-color: #70448C;
-  }
+}
+
+.btViewDetails:hover {
+    background-color: var(--color-secundario);
+}
 
 /*Seccion devoluciones*/
 .returns-buttons {
@@ -256,7 +254,7 @@ hr {
 
 .bt-action {
     padding: 10px 20px;
-    background-color: #8a56ac;
+    background-color: var(--color-primario);
     color: white;
     border: none;
     border-radius: 8px;
@@ -266,15 +264,15 @@ hr {
 }
 
 .bt-action:hover {
-    background-color: #70448C;
+    background-color: var(--color-secundario);
 }
 
 .bt-action.alt {
-    background-color: #555;
+    background-color: #add8e6;
 }
 
 .bt-action.alt:hover {
-    background-color: #333;
+    background-color: #A0C5D2;
 }
 
 /*Seccion Centro de soporte*/
@@ -292,7 +290,7 @@ hr {
 .support-card {
     flex: 1;
     min-width: 220px;
-    background-color: #f9f9f9;
+    background-color: var(--color-fondo2);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -300,7 +298,7 @@ hr {
 }
 
 .btSupport {
-    background-color: #8a56ac;
+    background-color: var(--color-primario);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -312,7 +310,7 @@ hr {
 }
 
 .btSupport:hover {
-    background-color: #70448C;
+    background-color: var(--color-secundario);
 }
 
 .contact-form {

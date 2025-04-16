@@ -95,38 +95,40 @@
     <!--Apartado direcciones-->
     <div *ngIf="selectedSection === 'direcciones'">
       <h3>Mis direcciones</h3>
-      <div class="dir-container">
-        <h5>Dirección 1</h5>
-        <input type="text" class="direction" [disabled]="editar">
-        <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
-      </div>
-      <div class="dir-container">
-        <h5>Dirección 2</h5>
-        <input type="text" class="direction" [disabled]="editar">
-        <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
-      </div>
-      <div class="dir-container">
-        <h5>Dirección 3</h5>
-        <input type="text" class="direction" [disabled]="editar">
-        <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+      <div class="direcciones">
+        <div class="dir-container">
+          <h5>Dirección 1</h5>
+          <input type="text" class="direction" [disabled]="editar">
+          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+        </div>
+        <div class="dir-container">
+          <h5>Dirección 2</h5>
+          <input type="text" class="direction" [disabled]="editar">
+          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+        </div>
+        <div class="dir-container">
+          <h5>Dirección 3</h5>
+          <input type="text" class="direction" [disabled]="editar">
+          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+        </div>
       </div>
     </div>
 
     <!--Apartado pedidos-->
     <div *ngIf="selectedSection === 'pedidos'">
       <h3>Historial de Pedidos</h3>
-    
+
       <!-- Lista de Pedidos -->
       <div class="orders-container">
         <div *ngFor="let pedido of pedidos" class="pedido-card">
           <div class="pedido-header">
             <h5>Pedido #{{ pedido.id }}</h5>
           </div>
-          
+
           <div class="pedido-body">
             <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'dd/MM/yyyy' }}</p>
             <p><strong>Direccion:</strong> {{ pedido.direccion }}</p>
-            
+
             <button class="btViewDetails" (click)="viewDetails(pedido)">Ver detalles</button>
           </div>
         </div>
@@ -136,44 +138,51 @@
     <!--Apartado info devoluciones-->
     <div *ngIf="selectedSection === 'devoluciones'" class="returns-section">
       <h2>Devoluciones y Garantías</h2>
-      <p class="intro-text">Aquí puedes consultar toda la información relacionada con nuestras políticas de devoluciones y garantía de productos.</p>
-    
+      <p class="intro-text">Aquí puedes consultar toda la información relacionada con nuestras políticas de devoluciones
+        y garantía de productos.</p>
+
       <div class="returns-grid">
         <div class="return-card">
           <h4>Plazo de Devolución</h4>
-          <p>Dispones de <strong>30 días naturales</strong> desde la recepción de tu pedido para devolverlo, siempre que esté en su estado original.</p>
+          <p>Dispones de <strong>30 días naturales</strong> desde la recepción de tu pedido para devolverlo, siempre que
+            esté en su estado original.</p>
         </div>
-    
+
         <div class="return-card">
           <h4>Productos Dañados</h4>
-          <p>Si tu pedido llega golpeado o manipulado, notifícalo al momento de la entrega o en un plazo de <strong>7 días naturales</strong>.</p>
+          <p>Si tu pedido llega golpeado o manipulado, notifícalo al momento de la entrega o en un plazo de <strong>7
+              días naturales</strong>.</p>
         </div>
-    
+
         <div class="return-card">
           <h4>Pedido Incorrecto</h4>
-          <p>¿Faltan artículos o no coincide lo recibido? Avísanos en un máximo de 7 días para resolverlo lo antes posible.</p>
+          <p>¿Faltan artículos o no coincide lo recibido? Avísanos en un máximo de 7 días para resolverlo lo antes
+            posible.</p>
         </div>
-    
+
         <div class="return-card">
           <h4>Gestión de Garantías</h4>
-          <p>Si un producto no funciona correctamente, podrás solicitar una garantía de <strong>1, 2 o 3 años</strong> según el tipo de artículo.</p>
+          <p>Si un producto no funciona correctamente, podrás solicitar una garantía de <strong>1, 2 o 3 años</strong>
+            según el tipo de artículo.</p>
         </div>
       </div>
-    
+
       <hr>
-    
+
       <h3>¿Cómo gestiono mi garantía?</h3>
       <div class="warranty-instructions">
-        <p><strong>Garantía de Solución en 24 horas:</strong> Reemplazo inmediato si hay stock, o reembolso en caso contrario, una vez recibamos el producto en nuestras instalaciones.</p>
-        <p><strong>Plazo de recogida:</strong> Entre 3 y 10 días hábiles. Si no recibes novedades, contáctanos para ayudarte rápidamente.</p>
+        <p><strong>Garantía de Solución en 24 horas:</strong> Reemplazo inmediato si hay stock, o reembolso en caso
+          contrario, una vez recibamos el producto en nuestras instalaciones.</p>
+        <p><strong>Plazo de recogida:</strong> Entre 3 y 10 días hábiles. Si no recibes novedades, contáctanos para
+          ayudarte rápidamente.</p>
       </div>
-    
+
       <div class="returns-buttons">
         <button class="bt-action" (click)="solicitarDevolucion()">Solicitar devolución</button>
         <button class="bt-action alt" (click)="contactarSoporte()">Contactar con soporte</button>
       </div>
     </div>
-    
+
 
     <!--Apartado info soporte-->
     <div *ngIf="selectedSection === 'soporte'">

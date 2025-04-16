@@ -19,17 +19,17 @@ export class AuthService {
   // es posible que haya que cambiarlo al unir el front con el back
 
   getUserName(): string | null {
-    this.user.nombre = "nombre"; //pruebas
+    this.user.nombre = "nombrePrueba"; //pruebas
     return this.user.nombre || null;
   }
 
   getUserLastName(): string | null {
-    this.user.apellidos = "apellido"; //pruebas
+    this.user.apellidos = "apellidoPrueba"; //pruebas
     return this.user.apellidos || null;
   }
   
   getUserEmail(): string | null {
-    this.user.email = "email"; //pruebas
+    this.user.email = "emailPrueba"; //pruebas
     return this.user.email || null;
   }
 
