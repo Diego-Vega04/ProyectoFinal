@@ -14,6 +14,8 @@ export class HeaderComponent {
   cartMenuOpen: boolean = false;
   menuAbierto = false;
 
+  isDarkMode = false;
+
   constructor(public authService: AuthService, private router: Router) { }
 
   // Función para alternar el menú lateral
@@ -40,6 +42,17 @@ export class HeaderComponent {
     } else {
       // Si está logueado, muestra el menú lateral
       this.toggleMenu();
+    }
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    const body = document.body;
+  
+    if (this.isDarkMode) {
+      body.setAttribute('data-tema', 'oscuro');
+    } else {
+      body.removeAttribute('data-tema');
     }
   }
 }

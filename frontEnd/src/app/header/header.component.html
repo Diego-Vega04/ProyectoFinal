@@ -17,7 +17,7 @@
     <div class="logo">
       <a routerLink="/">
         <img src="logoSoloNoFondo.png" alt="Logo">
-    </a>
+      </a>
     </div>
 
     <!-- Menú de categorías-->
@@ -34,7 +34,8 @@
     <div class="side-menu" [ngClass]="{'open': menuOpen}">
       <div class="side-menu-content">
         <button class="close-btn" (click)="toggleMenu()">✕</button>
-        <h2>CATEGORÍAS</h2><hr>
+        <h2>CATEGORÍAS</h2>
+        <hr>
         <ul>
           <li>
             <a>Componentes</a>
@@ -85,7 +86,14 @@
         <p class="cart-text">Tu carrito está vacío</p>
         <button class="go-home-btn" click="window.location.href='/'">Explorar artículos</button>
       </div>
+    </div>
 
+    <!-- Botón modo claro/oscuro -->
+    <div class="dark-mode-toggle">
+      <button (click)="toggleDarkMode()">
+        <i class="fas fa-moon" *ngIf="!isDarkMode"></i>
+        <i class="fas fa-sun" *ngIf="isDarkMode"></i>
+      </button>
     </div>
   </header>
 </body>
