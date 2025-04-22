@@ -1,0 +1,17 @@
+:root {
+  --color-fondo: #ffffff; /*Fondo base*/
+  --color-fondo2: #FBFAF5; /*Fondo un poco más oscuro*/
+  --color-texto: #000000; /*Texto*/
+  --color-primario: #8a56ac; /*Color Principal*/
+  --color-secundario: #70448C; /*Color Secundario (Más oscuro)*/
+  --color-terciario: #C791EB; /*Color Terciario (Más claro)*/
+}
+
+[data-tema='oscuro'] {
+  --color-fondo: #121212;
+  --color-fondo2: #282828; 
+  --color-texto: #ffffff;
+  --color-primario: #8a56ac;
+  --color-secundario: #70448C;
+  --color-terciario: #C791EB;
+}
