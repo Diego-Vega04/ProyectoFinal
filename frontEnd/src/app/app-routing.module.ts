@@ -4,8 +4,9 @@ import { LoginComponent } from './login/login.component';
 //import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  //{ path: '', component: HomeComponent}, descomentar cuadno exista el home
+  //{ path: '', component: HomeComponent, canActivate: [KeycloakGuard]}, descomentar cuadno exista el home
   {path: 'login', component: LoginComponent}
+  //{path: 'user', component: UserComponent, canActivate: [KeycloakGuard]} -> descomentar cuando exista con el user
 ];
 
 @NgModule({
