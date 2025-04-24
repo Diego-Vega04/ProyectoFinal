@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './keycloak-init';
-import { KeycloakGuard } from './guards/Keycloak.guard';
+import { Keycloakguard } from './guards/keycloak.guard';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { KeycloakGuard } from './guards/Keycloak.guard';
     multi: true,
     deps: [KeycloakService],
   }, 
-  KeycloakService, KeycloakGuard
+  KeycloakService, Keycloakguard
 ],
   bootstrap: [AppComponent]
 })

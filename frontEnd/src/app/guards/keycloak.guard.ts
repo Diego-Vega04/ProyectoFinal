@@ -5,7 +5,7 @@ import { KeycloakService } from 'keycloak-angular';
 @Injectable({
   providedIn: 'root'
 })
-export class KeycloakGuard implements CanActivate {
+export class Keycloakguard implements CanActivate {
   
   constructor(private keycloakService: KeycloakService, private router: Router) {}
 
