@@ -99,12 +99,10 @@
         <div class="dir-container">
           <h5>Dirección 1</h5>
           <input type="text" class="direction" [disabled]="editar">
-          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
         </div>
         <div class="dir-container">
           <h5>Dirección 2</h5>
           <input type="text" class="direction" [disabled]="editar">
-          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
         </div>
         <div class="dir-container">
           <h5>Dirección 3</h5>
@@ -115,7 +113,7 @@
     </div>
 
     <!--Apartado pedidos-->
-    <div *ngIf="selectedSection === 'pedidos'">
+    <div *ngIf="selectedSection === 'pedidos'" id="pedidos">
       <h3>Historial de Pedidos</h3>
 
       <!-- Lista de Pedidos -->
@@ -129,10 +127,14 @@
             <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'dd/MM/yyyy' }}</p>
             <p><strong>Direccion:</strong> {{ pedido.direccion }}</p>
 
-            <button class="btViewDetails" (click)="viewDetails(pedido)">Ver detalles</button>
+            <button class="btViewDetails" (click)="selectSection('pedido')">Ver detalles</button>
           </div>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="selectedSection === 'pedido'">
+
     </div>
 
     <!--Apartado info devoluciones-->
@@ -178,8 +180,8 @@
       </div>
 
       <div class="returns-buttons">
-        <button class="bt-action" (click)="solicitarDevolucion()">Solicitar devolución</button>
-        <button class="bt-action alt" (click)="contactarSoporte()">Contactar con soporte</button>
+        <button class="bt-action" (click)="solicitarDevolucion()">Solicitar una devolución</button>
+        <button class="bt-action alt" (click)="selectSection('soporte')">Contactar con soporte</button>
       </div>
     </div>
 
