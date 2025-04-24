@@ -22,6 +22,26 @@ export class UserComponent {
   editar: boolean = true;  //true = desahibilitado
   psswd: boolean = true;
 
+  motivo = '';
+  devolucionMode = false;
+
+  //Pedidos para pruebas
+  pedidos = [
+    {
+      id: 1,
+      fecha: '2023-04-20',
+      direccion: 'Calle Falsa 123',
+      productos: [
+        { nombre: 'Teclado', precio: 20.00, cantidad: 1 },
+        { nombre: 'Ratón', precio: 10.00, cantidad: 2 }
+      ]
+    },
+    { id: 2, fecha: '2023-04-03', direccion: 'c/inventada nº2' },
+    { id: 3, fecha: '2023-04-05', direccion: 'c/inventada nº2' },
+    { id: 4, fecha: '2023-04-07', direccion: 'c/inventada nº2' },
+  ];
+  pedidoSeleccionado: any = null;
+
   //Centro de soporte
   contact = {
     name: '',
@@ -31,8 +51,16 @@ export class UserComponent {
 
   selectedSection: string = 'mis-datos';
 
-  selectSection(section: string) {
+  selectSection(section: string, pedido?: any) {
     this.selectedSection = section;
+
+    if (pedido) this.pedidoSeleccionado = pedido;
+
+    if (section === 'pedidos') {
+      this.pedidoSeleccionado = null;
+      this.devolucionMode = false;
+      this.motivo = '';
+    }
   }
 
   constructor(public authService: AuthService) { }
@@ -73,7 +101,7 @@ export class UserComponent {
   }
 
   //Seccion direcciones
-  editDir(){ 
+  editDir() {
     //guardar la nueva direccion en el objeto del usuario
     this.editar = !this.editar;
   }
@@ -86,32 +114,46 @@ export class UserComponent {
       text: "Las devoluciones se solicitan desde el detalle del pedido a devolver",
       showCancelButton: true,
       confirmButtonText: "Ir al historial de pedidos",
-    }).then((result) =>{
-      if(result.isConfirmed){
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.selectSection('pedidos');
         setTimeout(() => {
           const sc = document.getElementById('pedidos');
-          if(sc){
-            sc.scrollIntoView({behavior: 'smooth'});
+          if (sc) {
+            sc.scrollIntoView({ behavior: 'smooth' });
           }
         }, 0);
       }
     });
   }
-  
+
+  //Formulario devolucion
+  enviarDevolucion() {
+    /*con pedidoService implementado
+    this.pedidoService.solicitarDevolucion(this.pedidoSeleccionado.id, { motivo: this.motivo })
+      .subscribe(() => {
+        Swal.fire('¡Listo!', 'Tu solicitud de devolución se ha enviado.', 'success');
+        this.devolucionMode = false;
+        this.selectSection('pedidos');
+      }, err => {
+        Swal.fire('Error', 'Hubo un problema al enviar la solicitud.', 'error');
+      });
+      */
+      console.log("devolucion")
+  }
+
+  cancelarDevolucion() {
+    this.devolucionMode = false;
+    this.motivo = '';
+  }
+
+
   sendContact() {
     console.log('Mensaje enviado:', this.contact);
   }
 
-  pedidos = [
-    { id: 1, fecha: '2023-04-01', direccion: 'c/inventada nº2' },
-    { id: 2, fecha: '2023-04-03', direccion: 'c/inventada nº2' },
-    { id: 3, fecha: '2023-04-05', direccion: 'c/inventada nº2' },
-    { id: 4, fecha: '2023-04-07', direccion: 'c/inventada nº2'},
-  ];
-
-   // Método para cerrar sesión
-   onLogout(): void {
+  // Método para cerrar sesión
+  onLogout(): void {
     this.authService.logout();
     console.log('Sesión cerrada');
   }
