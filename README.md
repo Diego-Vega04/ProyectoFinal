@@ -29,5 +29,6 @@ Este proyecto ha sido creado utilizando las siguientes tecnologías:
 
 - [@Diego-Vega04](https://github.com/Diego-Vega04)
 - [@Gonzalo422](https://github.com/Gonzalo422)
+- [@ove-atos](https://github.com/ove-atos)
 - [@aresMG](https://github.com/aresMG)
 
