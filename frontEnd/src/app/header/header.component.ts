@@ -100,4 +100,8 @@ export class HeaderComponent {
       panelClass: ['snackbar-inferior'] 
     });    
   }
+
+  vaciarCesta(){
+    this.productosCesta = [];
+  }
 }

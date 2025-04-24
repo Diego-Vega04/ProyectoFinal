@@ -92,14 +92,15 @@
                 <p>{{ producto.precio }} €</p>
                 <button (click)="borrarProducto(i); $event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
               </div>
-              
             </li>
           </ul>
+          <button (click)="vaciarCesta()" class="bt-menu">Vaciar cesta completa</button>
         </ng-container>
         <ng-template #vacia>
           <div class="cart-Ncontent">
             <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
             <p class="cart-text">Tu carrito está vacío</p>
+            <button class="go-home-btn" click="window.location.href='/'" (click)="toggleCartMenu()">Explorar artículos</button>
           </div>
         </ng-template>
       </div>

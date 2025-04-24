@@ -341,6 +341,18 @@ header {
     color: #030709;
 }
 
+.bt-menu{
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--color-terciario);
+    border-radius: 10px;
+    color: #fff;
+}
+.bt-menu:hover{
+    background-color: var(--color-secundario);
+    cursor: pointer;
+}
+
 .cart-menu-footer {
     border-top: 1px solid rgb(255,255,255,0.2);
 }
