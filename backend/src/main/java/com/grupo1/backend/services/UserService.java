@@ -47,6 +47,9 @@ public class UserService {
         } else {
             throw new NotFoundException();
         }
-        
+    }
+
+    public boolean existe (String email) {
+        return userRepo.existsByEmail(email);
     }
 }

@@ -56,6 +56,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Carrito carrito;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Favoritos favoritos;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Pedido> pedidos;
 

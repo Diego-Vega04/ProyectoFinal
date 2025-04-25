@@ -23,7 +23,7 @@ public class CarritoService {
 
     public Carrito getByUser (int id_user) throws NotFoundException {
         if (userRepo.existsById(id_user)) {
-            return carritoRepo.getByUser(userRepo.findById(id_user).get());
+            return carritoRepo.findByUser(userRepo.findById(id_user).get());
         } else {
             throw new NotFoundException();
         }

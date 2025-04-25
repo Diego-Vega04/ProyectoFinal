@@ -3,7 +3,12 @@ package com.grupo1.backend.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo1.backend.entities.Carrito;
+import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.User;
+import com.grupo1.backend.entities.enums.Rol;
+import com.grupo1.backend.services.CarritoService;
+import com.grupo1.backend.services.FavoritosService;
 import com.grupo1.backend.services.UserService;
 
 import org.apache.coyote.BadRequestException;
@@ -28,6 +33,12 @@ public class UserController {
     @Autowired
     private UserService userSer;
 
+    @Autowired
+    private FavoritosService favSer;
+
+    @Autowired
+    private CarritoService carritoSer;
+
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getByEmail (@PathVariable String email) {
         try {
@@ -39,7 +50,17 @@ public class UserController {
 
     @PostMapping("/añadir")
     public ResponseEntity<?> addUser (@RequestBody User user) throws NotFoundException {
-        if (userSer.getUserByEmail(user.getEmail()) == null) {
+        if (!userSer.existe(user.getEmail())) {
+            //al crear un objeto usuario se crean automaticamente los objetos de carrito y favoritos vacios
+            
+            if (user.getRol() == Rol.USER) {
+                Carrito b = new Carrito();
+                user.setCarrito(b);
+            }
+
+            Favoritos a = new Favoritos();
+            user.setFavoritos(a);
+
             return ResponseEntity.ok (userSer.addUser(user));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya existe un usuario con email: " + user.getEmail());

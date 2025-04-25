@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo1.backend.entities.Carrito;
+import com.grupo1.backend.entities.enums.Rol;
 import com.grupo1.backend.services.CarritoService;
 
 import org.apache.coyote.BadRequestException;
@@ -30,8 +31,20 @@ public class CarritoController {
     }
 
     @PostMapping("/añadir")
-    public ResponseEntity<Carrito> addCarrito (@RequestBody Carrito carrito) {
-        return ResponseEntity.ok(carritoSer.addCarrito(carrito));
+    public ResponseEntity<?> addCarrito (@RequestBody Carrito carrito) {
+        try {
+            if (carrito == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El carrito puede estar vacio pero no puede ser nulo");
+            }
+    
+            if (carrito.getUser().getRol() == Rol.ADMIN) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Un usuario admin no puede tener un carrito");
+            } else {
+                return ResponseEntity.ok(carritoSer.addCarrito(carrito));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en la base de datos");
+        }
     }
     
     @GetMapping("/user/{id_user}")
