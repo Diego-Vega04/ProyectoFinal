@@ -1,0 +1,140 @@
+section {
+    margin-bottom: 50px;
+  }
+  .ofertas {
+    padding: 30px;
+    background-color: #f9f9f9;
+  }
+  
+  .ofertas-contenedor {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+  
+  .ofertas-left {
+    flex: 1;
+    max-width: 300px;
+  }
+  
+  .ofertas-left h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #450c7f;
+  }
+  
+  .ofertas-left p {
+    font-size: 19px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .ofertas-left button {
+    padding: 10px 20px;
+    background-color: #ff6c04;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .ofertas-left button:hover {
+    background-color: #b34f08;
+  }
+  
+  .ofertas-right {
+    flex: 3;
+    width: 75%;
+  }
+  
+  .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .lista-productos {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* Permite el desplazamiento */
+    scroll-behavior: smooth; /* Desplazamiento suave */
+    -ms-overflow-style: none;   
+    scrollbar-width: none; 
+  }
+  
+  .lista-productos::-webkit-scrollbar {
+    display: none; /* Ocultar la barra de desplazamiento para Webkit (Chrome, Safari, etc.) */
+  }
+  
+  .producto {
+    min-width: 200px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .precio {
+    font-size: 22px;
+    font-weight: bold;
+    color: #af0d0d;
+  }
+  
+  .precio-original {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #555;
+    margin-left: 8px;
+  }
+  
+  .descuento-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #af0d0d;
+    color: white;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    background-color: #ffffff;
+    color: rgb(91, 91, 91);
+    border: 0.5px solid rgb(186, 181, 181);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #f8f6f6;
+  }
+  
+  .prev,
+  .next {
+    flex-shrink: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .prev:hover,
+  .next:hover {
+    background-color: #f1f1f1;
+  }
+  

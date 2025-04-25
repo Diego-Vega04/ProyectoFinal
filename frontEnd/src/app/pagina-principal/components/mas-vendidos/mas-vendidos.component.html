@@ -1,0 +1,20 @@
+<section class="mas-vendidos">
+    <h2>Descubre los productos más vendidos</h2>
+    <div class="grid-productos">
+      <div class="producto" *ngFor="let p of productosMasVendidos">
+        <!-- Mostrar badge solo si hay descuento -->
+        <div class="descuento-badge" *ngIf="p.descuento">-{{ p.descuento }}%</div>
+        <img [src]="p.imagen" [alt]="p.nombre">
+        <h3>{{ p.nombre }}</h3>
+        <p class="precio" [ngClass]="{'sin-descuento': !p.descuento}">
+          {{ p.precio }} €
+          <!-- Mostrar precio original tachado solo si hay descuento -->
+          <span class="precio-original" *ngIf="p.descuento">
+            {{ (p.precio / (1 - (p.descuento / 100))).toFixed(2) }} €
+          </span>
+        </p>
+        <small>{{ p.valoracion }}/5 ★ {{ p.opiniones }} opiniones</small>
+      </div>
+    </div>
+  </section>
+  

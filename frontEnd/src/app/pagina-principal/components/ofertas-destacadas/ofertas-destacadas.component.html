@@ -1,0 +1,32 @@
+<section class="ofertas">
+    <div class="ofertas-contenedor">
+      <div class="ofertas-left">
+        <h2>Selección TOP</h2>
+        <p>La tecnología que quieres a un precio increíble en marcas TOP. ¡Aprovecha ahora!</p>
+        <button>Ver más</button>
+      </div>
+      <div class="ofertas-right">
+        <div class="slider-container">
+          <button class="prev" (click)="scrollLeft()">←</button>
+          
+          <div class="lista-productos" #slider>
+            <div class="producto" *ngFor="let p of productos">
+              <div class="descuento-badge" *ngIf="p.descuento">-{{ p.descuento }}%</div>
+              <img [src]="p.imagen" [alt]="p.nombre">
+              <h3>{{ p.nombre }}</h3>
+              <p class="precio">
+                {{ p.precio }} €
+                <span class="precio-original" *ngIf="p.descuento">
+                  {{ (p.precio / (1 - (p.descuento / 100))).toFixed(2) }} €
+                </span>
+              </p>
+              <small>{{ p.valoracion }}/5 ★ ({{ p.opiniones }} opiniones)</small>
+            </div>
+          </div>
+  
+          <button class="next" (click)="scrollRight()">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  

@@ -1,0 +1,29 @@
+<section class="basado-navegacion"> 
+    <div class="basado-navegacion-contenedor">
+      <h2>Basado en tu navegación</h2>
+      <div class="slider-container">
+        <button class="prev" (click)="scrollLeft()">←</button>
+        <div class="lista-productos" #slider>
+          <div class="producto" *ngFor="let p of productos">
+            <div *ngIf="p.descuento" class="descuento-badge">
+              -{{ p.descuento }}%
+            </div>
+            <img [src]="p.imagen" [alt]="p.nombre">
+
+            <div class="promocion-badge">Promoción</div>
+            <h3>{{ p.nombre }}</h3>
+            <p class="precio" [ngClass]="{'sin-descuento': !p.descuento}">
+              {{ p.precio }} €
+              <span class="precio-original" *ngIf="p.descuento">
+                {{ (p.precio / (1 - (p.descuento / 100))).toFixed(2) }} €
+              </span>
+            </p>
+            <small>{{ p.valoracion }}/5 ★ {{ p.opiniones }} opiniones</small>
+            <p class="envio-gratis">Envío gratis, Recíbelo mañana</p>
+          </div>
+        </div>
+        <button class="next" (click)="scrollRight()">→</button>
+      </div>
+    </div>
+  </section>
+  

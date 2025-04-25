@@ -1,0 +1,69 @@
+.mas-vendidos {
+    padding: 30px;
+    background-color: #fff;
+  }
+  
+  .mas-vendidos h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .grid-productos {
+    display: flex;
+    gap: 30px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .producto {
+    width: 250px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(191, 190, 190, 0.05);
+    text-align: left;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .producto h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .precio {
+    font-size: 20px;
+    font-weight: bold;
+    color: #af0d0d;  /* Color rojo para precios con descuento */
+    margin-bottom: 10px;
+  }
+  
+  .precio.sin-descuento {
+    color: #333;  /* Color normal para precios sin descuento */
+  }
+  
+  .precio-original {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #555;
+    margin-left: 8px;
+  }
+  
+  .descuento-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #af0d0d;
+    color: white;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  

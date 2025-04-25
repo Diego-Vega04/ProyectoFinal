@@ -1,0 +1,14 @@
+<section class="marcas">
+    <div class="marcas-contenedor">
+      <div class="slider-container">
+        <button class="prev" (click)="scrollLeft()">←</button>
+        <div class="lista-marcas" #slider>
+          <div class="marca" *ngFor="let m of marcas">
+            <img [src]="m.imagen" [alt]="m.nombre">
+          </div>
+        </div>
+        <button class="next" (click)="scrollRight()">→</button>
+      </div>
+    </div>
+  </section>
+  

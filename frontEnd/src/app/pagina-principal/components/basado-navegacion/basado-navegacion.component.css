@@ -1,0 +1,124 @@
+section {
+    margin-bottom: 50px;
+    padding: 30px;
+  }
+  .ofertas-top {
+    padding: 30px;
+    background-color: #fff;
+  }
+  
+  .ofertas-top-contenedor {
+    text-align: left;
+  }
+  
+  .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .lista-productos {
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .producto {
+    min-width: 250px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    position: relative;
+    scroll-snap-align: start;
+  }
+  
+  .lista-productos::-webkit-scrollbar {
+    display: none; /* Ocultar la barra de desplazamiento  */
+  }
+  
+  /* Badge de DESCUENTO */
+  .descuento-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #d90429;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Badge de PROMOCIÓN entre imagen y título */
+  .promocion-badge {
+    background-color:white ;
+    color: #ff6c04;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    border-color: #ff6c04;
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  
+  .producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+
+  
+  .precio {
+    font-size: 20px;
+    font-weight: bold;
+    color: #af0d0d;
+    margin-bottom: 10px;
+  }
+  
+  .precio.sin-descuento {
+    color: #333;
+  }
+  
+  .precio-original {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #555;
+    margin-left: 8px;
+  }
+  
+  .envio-gratis {
+    font-size: 14px;
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  button {
+    background-color: #ffffff;
+    color: rgb(91, 91, 91);
+    border: 0.5px solid rgb(186, 181, 181);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #f8f6f6;
+  }
+  
+  .prev,
+  .next {
+    padding: 10px;
+  }
+  

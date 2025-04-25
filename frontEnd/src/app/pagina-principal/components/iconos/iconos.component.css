@@ -1,0 +1,86 @@
+.iconos {
+    padding: 40px 0;
+    background-color: #fff;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .iconos-contenedor {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .lista-iconos {
+    display: flex;
+    gap: 50px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .lista-iconos::-webkit-scrollbar {
+    display: none; /* Ocultar la barra de desplazamiento para Webkit (Chrome, Safari, etc.) */
+  }
+  
+  .icono {
+    min-width: 140px;
+    height: 140px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+  }
+  
+  .icono:hover {
+    transform: scale(1.05);
+  }
+  
+  .icono img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+  
+  button {
+    background-color: #ffffff;
+    color: rgb(91, 91, 91);
+    border: 0.5px solid rgb(186, 181, 181);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #f8f6f6;
+  }
+  
+  .prev,
+  .next {
+    flex-shrink: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .prev:hover,
+  .next:hover {
+    background-color: #f1f1f1;
+  }
+  

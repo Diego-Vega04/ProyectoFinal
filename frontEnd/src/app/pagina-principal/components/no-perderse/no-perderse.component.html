@@ -1,0 +1,15 @@
+<section class="no-perderse">
+    <h2 class="titulo">Lo que no puedes perderte</h2>
+    <div class="card-contenedor">
+      <div class="card" *ngFor="let card of tarjetas">
+        <img [src]="card.imagen" [alt]="card.titulo" />
+        <h3>{{ card.titulo }}</h3>
+        <p>{{ card.descripcion }}</p>
+      </div>
+    </div>
+  
+    <div class="banner-medio">
+      <img src="assets/banner-no-perderse.png" alt="Banner medio" />
+    </div>
+  </section>
+  

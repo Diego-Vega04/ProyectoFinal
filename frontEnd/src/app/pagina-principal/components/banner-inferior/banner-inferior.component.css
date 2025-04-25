@@ -1,0 +1,25 @@
+.banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .banner-inferior img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  
+  .mensaje {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
