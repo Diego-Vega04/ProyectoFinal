@@ -22,19 +22,21 @@ import { NoPerderseComponent } from './pagina-principal/components/no-perderse/n
 import { OfertasDestacadasComponent } from './pagina-principal/components/ofertas-destacadas/ofertas-destacadas.component';
 import { OfertasTopComponent } from './pagina-principal/components/ofertas-top/ofertas-top.component';
 import { ProductoComponent } from './producto/producto.component';
+import { Filtro2Component } from './filtro/filtro2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    ProductoComponent
+    ProductoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     MatSnackBarModule,
+    Filtro2Component,
     
     PaginaPrincipalComponent,
     BannerInferiorComponent,
