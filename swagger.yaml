@@ -1,0 +1,881 @@
+openapi: 3.0.1
+info:
+  title: API Documentation Eviden components
+  description: Documentación de los diferentes ENDPOINTS del proyecto de Eviden Components.
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+- name: Productos
+  description: Este tag maneja toda la información relacionada con los productos.
+- name: Pedidos
+  description: Este tag maneja toda la información relacionada con los pedidos.
+- name: Users
+  description: Este tag maneja toda la información relacionada con los usuarios.
+- name: Comentarios
+  description: Este tag maneja toda la información relacionada con los comentarios.
+- name: Carritos
+  description: Este tag maneja toda la información relacionada con los comentarios.
+
+paths:
+#PRODUCTOS
+  /productos:
+    get:
+      tags:
+      - Productos
+      summary: Devuelve la información de todos los productos.
+
+      responses:
+        200:
+          description: (OK) La información de los productos se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /productos/id/{id}:
+    get:
+      tags:
+      - Productos
+      summary: Devuelve la información de un producto según su ID.
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del producto a obtener.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+          description: (OK) La información del producto se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /productos/categoria/{categoria}:
+    get:
+      tags: 
+      - Productos
+      summary: Devuelve la información de los productos según la categoría a la que pertenezcan.
+      parameters:
+      - name: categoria
+        in: path
+        description: Categoria a la que pertenecen los productos. 
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: (OK) La información de los productos según categoría se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /productos/marca/{marca}:
+    get: 
+      tags:
+      - Productos
+      summary: Devuelve la información de los productos según la marca a la que pertenezcan. 
+      parameters:
+      - name: marca
+        in: path
+        description: Marca a la que pertenecen los productos.
+        required: true
+        schema:
+          type: string
+      
+      responses:
+        200:
+          description: (OK) La información de los productos según marca se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /productos/añadir:
+    post:
+      tags:
+      - Productos
+      summary: Inserta la información de un nuevo producto a la base de datos.
+      requestBody:
+        content:  
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Producto'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del producto se guardó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /productos/actualizar:
+    put:
+      tags:
+      - Productos
+      summary: Actualiza la información de un producto ya existente en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Producto'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del producto se actualizó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /productos/borrar/{id}:
+    delete:
+      tags:
+      - Productos
+      summary: Elimina un producto de la base de datos.
+      parameters:
+        - name: id
+          in: path
+          description: Identificar del producto a eliminar.
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: (OK) El producto se eliminó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+#PEDIDOS: 
+  /pedidos/id/{id}:
+    get:
+      tags:
+      - Pedidos
+      summary: Devuelve la información del pedido según su ID. 
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del pedido a obtener.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+          description: (OK) La información del producto se muestra correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /pedidos/user/{id_user}: 
+    get:
+      tags:
+      - Pedidos
+      summary: Devuelve la información del pedido según el ID del usuario vinculado.
+      parameters: 
+      - name: id_user
+        in: path
+        description: Identificador del usuario con el pedido a obtener.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+          description: (OK) La información del producto se muestra correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /pedidos/añadir:
+    post: 
+      tags:
+      - Pedidos
+      summary: Inserta la información de un nuevo pedido a la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Pedido'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del producto se guardó correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+#USERS
+  /users/id/{id}:
+    get:
+      tags:
+      - Users
+      summary: Devuelve la información del Usuario según su ID.
+      parameters:
+      - name: id
+        in: path
+        description: Identificado del usuario a obtener.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+          description: (OK) La información del usuario se muestra correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /users/email/{email}:
+    get:
+      tags:
+      - Users
+      summary: Devuelve la información del usuario según su email. 
+      parameters:
+      - name: email
+        in: path
+        description: Email del usuario a obtener.
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: (OK) La información del usuario se muestra correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /users/añadir:
+    post:
+      tags:
+      - Users
+      summary: Inserta la información de un nuevo usuario a la base de datos. 
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del usuario se guardó correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /users/actualizar: 
+    put: 
+      tags:
+      - Users
+      summary: Actualiza la información de un usuario ya existente de la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del usuario se actualizó correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /users/borrar/{id}:
+    delete: 
+      tags:
+      - Users
+      summary: Elimina un usuario de la base de datos.
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del usuario a eliminar. 
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: (OK) El usuario se eliminó correctamente. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+#COMENTARIOS
+  /comentarios/id/{id}:
+    get:
+      tags:
+      - Comentarios
+      summary: Devuelve el comentario según el ID.
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del comentario a obtener.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200: 
+          description: (OK) La información del comentario se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /comentarios/user/{id_user}:
+    get: 
+      tags:
+      - Comentarios
+      summary: Devuelve todos los comentarios de un usuario según el id del usuario. 
+      parameters:
+      - name: id_user
+        in: path
+        description: Identificador del usuario para obtener sus comentarios. 
+        required: true
+        schema:
+          type: integer 
+      
+      responses:
+        200: 
+          description: (OK) La información del comentario se muestra correctamente según el usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /comentarios/producto/{id_producto}:
+    get: 
+      tags:
+      - Comentarios
+      summary: Devuelve todos los comentarios que tiene un producto.
+      parameters:
+      - name: id_producto
+        in: path
+        description: Identificador del producto para obtener sus comentarios. 
+        required: true
+        schema:
+          type: integer
+        
+      responses:
+        200: 
+          description: (OK) La información del comentario se muestra correctamente según el ID del producto.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /comentarios/añadir:
+    post:
+      tags:
+      - Comentarios
+      summary: Inserta la información de un nuevo comentario a la base de datos. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+        required: true
+      responses:
+        200: 
+          description: (OK) La información del comentario se guardó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /comentarios/actualizar:
+    put: 
+      tags:
+      - Comentarios
+      summary: Actualiza la información de un comentario ya existente en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Comentario'
+        required: true
+      responses:
+        200: 
+          description: (OK) La información del comentario se actualizó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /comentarios/borrar/{id}:
+    delete: 
+      tags:
+      - Comentarios
+      summary: Elimina un comentario de la base de datos. 
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del comentario a eliminar. 
+          schema:
+            type: integer
+          required: true
+      responses:
+        200: 
+          description: (OK) La información del comentario se eliminó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+#CARRITOS
+  /carritos/id/{id}:
+    get:
+      tags:
+      - Carritos
+      summary: Devuelve la información del carrito solicitado.
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del carrito a obtener.
+        required: true
+        schema:
+          type: integer
+      
+      responses:
+        200: 
+          description: (OK) La información del carrito se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /carritos/user/{id_user}:
+    get: 
+      tags:
+      - Carritos
+      summary: Devuelve la información del carrito del usuario. 
+      parameters: 
+      - name: id_user
+        in: path
+        description: Identificador del usuario que tiene carrito.
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200: 
+          description: (OK) La información del carrito del usuario se muestra correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /carritos/añadir: 
+    post: 
+      tags:
+      - Carritos
+      summary: Inserta la información de un nuevo carrito en la base de datos. 
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Carrito'
+        required: true
+      responses:
+        200: 
+          description: (OK) La información del carrito se guardó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+  /carritos/actualizar: 
+    put: 
+      tags:
+      - Carritos
+      summary: Actualiza la información de un carrito ya existente en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Carrito'
+        required: true
+      responses:
+        200: 
+          description: (OK) La información del carrito se actualizó correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIOK'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+components:
+  responses:
+    Unauthorized:
+      description: (Unauthorized) No hay autorización para llamar al servicio.
+    NotFound:
+      description: (Not Found) No se encontró la información en la base de datos.
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados.
+    ServerError:
+      description: (Server Error) Error en el servidor.
+
+  schemas:
+  #RequestBody Producto
+    Producto: 
+      type: object
+      properties:
+        id: 
+          type: integer
+          readOnly: true
+          description: ID del productos.
+        nombre:
+          type: string
+          description: Nombre del producto.
+        marca:
+          type: string
+          description: Marca del producto.
+        precio: 
+          type: number
+          format: double
+          description: Precio del producto.
+        descripcion:
+          type: string
+          description: Descripcion del producto.
+        categoria:
+          type: string
+          enum: 
+            - COMPONENTES
+            - ORDENADORES
+            - PERIFÉRICOS
+            - TELEVISORES
+            - SONIDO
+          description: Categoría a la que pertenece el producto. 
+        imagen:
+          type: string 
+          description: Ruta de la imagen del producto.
+
+  #RequestBody Pedido
+    Pedido: 
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: ID del pedido. 
+        fecha:
+          type: string
+          format: date
+          description: Fecha en la que se realiza el pedido.
+        metodo_pago: 
+          type: string
+          enum: 
+            - PAYPAL
+            - VISA
+            - BIZUM
+          description: Método de pago por el que se realiza el pedido. 
+        pedido_producto:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Producto'
+        
+  #RequestBody User  
+    User: 
+      type: object
+      properties: 
+        id:
+          type: integer
+          readOnly: true
+          description: ID del usuario.
+        nombre:
+          type: string
+          description: Nombre del usuario.
+        apellidos:
+          type: string
+          description: Apellidos del usuario.
+        email: 
+          type: string
+          description: Email del usuario.
+        password:
+          type: string
+          description: Contraseña del usuario.
+        cp:
+          type: integer
+          description: Código postal del usuario.
+        direccion: 
+          type: string
+          description: Dirección del usuario.
+        rol:
+          type: string
+          enum: 
+            - USER
+            - ADMIN
+          description: Rol del usuario. 
+        carrito: 
+          $ref: '#/components/schemas/Carrito'
+          description: Carrito del usuario. 
+        pedidos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pedido'
+          description: Pedidos realizados por el usuario. 
+
+  #RequestBody Comentario
+    Comentario: 
+      type: object
+      properties:
+        id: 
+          type: integer
+          readOnly: true
+          description: ID del comentario.
+        nota: 
+          type: integer
+          description: Nota del producto que se valora en el comentario.
+        pros:
+          type: string
+          description: Pros del producto que se valora en el comentario.
+        contras:
+          type: string
+          description: Contras del producto que se valora en el comentario. 
+        opinion: 
+          type: string
+          description: Opinion general del comentario. 
+        producto: #ProductoID
+          type: integer
+          description: Producto que valora el comentario. 
+           
+  #RequestBody Carrito
+    Carrito: 
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: ID del carrito.
+        productos: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Producto'
+
+    APIOK: #Respuesta de OK general
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Indica si la llamada al servicio fue exitosa.
+        id:
+          type: integer
+          enum: [222]
+          description: ID que le corresponde al proyecto.
