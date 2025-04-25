@@ -1,0 +1,43 @@
+/////CARRITOS/////
+------------------
+/api/carritos/actualizar [PUT] (request body)
+/api/carritos/añadir [POST] (request body)
+/api/carritos/id/{id} [GET]
+/api/carritos/user/{id_user} [GET]
+
+
+/////COMENTARIOS/////
+---------------------
+/api/comentarios/actualizar [PUT] (request body)
+/api/comentarios/añadir [POST] (request body)
+/api/comentarios/borrar/{id} [DELETE]
+/api/comentarios/id/{id} [GET]
+/api/comentarios/producto/{id_producto} [GET]
+/api/comentarios/user/{id_user} [GET]
+
+
+/////PEDIDOS/////
+-----------------
+/api/pedidos/añadir [POST] (request body)
+/api/pedidos/id/{id} [GET]
+/api/pedidos/user/{id_user} [GET]
+
+
+/////PRODUCTOS/////
+-------------------
+/api/productos [GET]
+/api/productos/actualizar [PUT] (request body)
+/api/productos/añadir [POST] (request body)
+/api/productos/borrar/{id} [DELETE]
+/api/productos/categoria/{categoria} [GET]
+/api/productos/id/{id} [GET]
+/api/productos/marca/{marca} [GET]
+
+
+/////USERS/////
+---------------
+/api/users/actualizar [PUT] (request body)
+/api/users/añadir [POST] (request body)
+/api/users/borrar/{id} [DELETE]
+/api/users/email{email} [GET]
+/api/users/id/{id} [GET]
