@@ -1,0 +1,365 @@
+body,
+html,
+main,
+.user-container {
+    background-color: var(--color-fondo);
+}
+
+label,
+h2,
+h3,
+h4,
+h5,
+p,
+li {
+    color: var(--color-texto);
+}
+
+.textPsswd,
+.direcciones,
+.returns-grid,
+.warranty-instructions {
+    background-color: var(--color-fondo2);
+    padding: 20px;
+}
+
+input {
+    color: black;
+}
+
+div {
+    border-radius: 20px;
+}
+
+/*Ajuste debajo del header*/
+.user-container {
+    display: flex;
+    margin-top: 70px;
+    font-family: Arial, sans-serif;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+/*Menu lateral*/
+.sidebar {
+    width: 260px;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    height: calc(100vh - 70px);
+    position: fixed;
+    top: 70px;
+    overflow-y: auto;
+    margin-left: 10rem;
+    border-radius: 8px;
+    background-color: var(--color-fondo2);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-texto);
+}
+
+.sidebar li {
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 5px;
+}
+
+.sidebar li:hover {
+    background-color: var(--color-terciario);
+}
+
+.logout {
+    margin-top: 2rem;
+    font-weight: bold;
+    color: red;
+}
+
+.content {
+    margin-left: 450px;
+    padding: 2rem;
+    flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 70px);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1rem 0;
+}
+
+/*Seccion "Mis datos"*/
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--color-fondo2);
+}
+
+.field {
+    display: flex;
+    align-items: center;
+}
+
+.field label {
+    width: 120px;
+    font-weight: bold;
+}
+
+.field input {
+    width: 250px;
+    height: 20px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+}
+
+/*Botón del form*/
+.btEdit {
+    height: 38px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btEdit:hover {
+    background-color: var(--color-secundario);
+}
+
+/*Seccion reestablecer psswd*/
+.psswd-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.psswd {
+    width: 100%;
+    padding-right: 40px;
+    height: 35px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Seccion Mis Direcciones*/
+.dir-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.direction {
+    width: 300px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Apartado Historial de Pedidos */
+.orders-container {
+    margin-top: 20px;
+}
+
+.pedido-card {
+    background-color: var(--color-fondo2);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.pedido-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pedido-header h5 {
+    font-size: 1.2rem;
+    color: var(--color-texto);
+}
+
+.pedido-state {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 12px;
+    text-transform: capitalize;
+}
+
+.pedido-body {
+    margin-top: 10px;
+}
+
+.pedido-body p {
+    font-size: 1rem;
+    color: var(--color-texto);
+}
+
+.btViewDetails {
+    margin-top: 10px;
+    margin-right: 30px;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btViewDetails:hover {
+    background-color: var(--color-secundario);
+}
+
+/*Formulario devoluciones*/
+.form-devolucion {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.form-devolucion textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.form-actions button {
+    margin-right: 10px;
+    padding: 8px 12px;
+}
+
+/*Seccion devoluciones*/
+.returns-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.bt-action {
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bt-action:hover {
+    background-color: var(--color-secundario);
+}
+
+.bt-action.alt {
+    background-color: #add8e6;
+}
+
+.bt-action.alt:hover {
+    background-color: #A0C5D2;
+}
+
+/*Seccion Centro de soporte*/
+.support-section {
+    max-width: 800px;
+}
+
+.support-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.support-card {
+    flex: 1;
+    min-width: 220px;
+    background-color: var(--color-fondo2);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.btSupport {
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btSupport:hover {
+    background-color: var(--color-secundario);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}

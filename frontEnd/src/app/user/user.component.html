@@ -1,0 +1,261 @@
+<div class="user-container">
+  <aside class="sidebar">
+    <nav>
+      <ul>
+        <li class="section-title">Mi cuenta</li>
+        <ul>
+          <li (click)="selectSection('mis-datos')">Mis datos</li>
+          <li (click)="selectSection('direcciones')">Mis direcciones</li>
+        </ul>
+
+        <hr>
+        <li class="section-title">Pedidos y devoluciones</li>
+        <ul>
+          <li (click)="selectSection('pedidos')">Pedidos, devoluciones y facturas</li>
+        </ul>
+
+        <hr>
+        <li class="section-title">¿Necesitas ayuda?</li>
+        <ul>
+          <li (click)="selectSection('devoluciones')">Devoluciones y garantías</li>
+          <li (click)="selectSection('soporte')">Centro de soporte</li>
+        </ul>
+
+        <hr>
+        <li class="logout" (click)="onLogout()">Cerrar sesión</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <!--Apartado mis datos-->
+    <div *ngIf="selectedSection === 'mis-datos'">
+
+      <h2>Bienvenido a tu área personal</h2>
+      <div class="text user-info">
+        <!--Formulario de edición de datos-->
+        <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
+          <div class="field">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editar">
+          </div>
+          <div class="field">
+            <label for="lastname">Apellidos:</label>
+            <input type="text" id="lastname" class="userData" [(ngModel)]="userLastName" name="lastname"
+              [disabled]="editar">
+          </div>
+          <div class="field">
+            <label for="email">Email:</label>
+            <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editar">
+          </div>
+
+          <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
+        </form>
+      </div>
+
+      <hr>
+      <h3>Reestablecer contraseña:</h3>
+      <!--Reestablecer contraseña-->
+      <div class="textPsswd">
+        <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
+          <label for="psswd1">Contraseña actual</label>
+          <div class="psswd-container">
+            <input [type]="showPassword1 ? 'text' : 'password'" class="psswd" name="psswd1"
+              placeholder="Contraseña actual" ngModel required>
+            <button type="button" class="eye-button" (click)="togglePasswordVisibility(1)">
+              <i class="fas" [ngClass]="showPassword1 ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+          </div>
+
+          <br>
+          <label for="psswd2">Nueva contraseña:</label>
+          <div class="psswd-container">
+            <input [type]="showPassword2 ? 'text' : 'password'" class="psswd" name="psswd3"
+              placeholder="Nueva contraseña" ngModel required>
+            <button type="button" class="eye-button" (click)="togglePasswordVisibility(2)">
+              <i class="fas" [ngClass]="showPassword2 ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+          </div>
+
+          <br>
+          <label for="psswd3">Repita la nueva contraseña</label>
+          <div class="psswd-container">
+            <input [type]="showPassword3 ? 'text' : 'password'" class="psswd" name="psswd3"
+              placeholder="Repetir contraseña" ngModel required>
+            <button type="button" class="eye-button" (click)="togglePasswordVisibility(3)">
+              <i class="fas" [ngClass]="showPassword3 ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+          </div>
+
+          <button type="button" class="btEdit" (click)="editPsswd()">Cambiar contraseña</button>
+        </form>
+      </div>
+    </div>
+
+    <!--Apartado direcciones-->
+    <div *ngIf="selectedSection === 'direcciones'">
+      <h3>Mis direcciones</h3>
+      <div class="direcciones">
+        <div class="dir-container">
+          <h5>Dirección 1</h5>
+          <input type="text" class="direction" [disabled]="editar">
+        </div>
+        <div class="dir-container">
+          <h5>Dirección 2</h5>
+          <input type="text" class="direction" [disabled]="editar">
+        </div>
+        <div class="dir-container">
+          <h5>Dirección 3</h5>
+          <input type="text" class="direction" [disabled]="editar">
+          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+        </div>
+      </div>
+    </div>
+
+    <!--Apartado pedidos-->
+    <div *ngIf="selectedSection === 'pedidos'" id="pedidos">
+      <h3>Historial de Pedidos</h3>
+
+      <!-- Lista de Pedidos -->
+      <div class="orders-container">
+        <div *ngFor="let pedido of pedidos" class="pedido-card">
+          <div class="pedido-header">
+            <h5>Pedido #{{ pedido.id }}</h5>
+          </div>
+
+          <div class="pedido-body">
+            <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'dd/MM/yyyy' }}</p>
+            <p><strong>Direccion:</strong> {{ pedido.direccion }}</p>
+
+            <button class="btViewDetails" (click)="selectSection('pedido', pedido)">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedSection === 'pedido'" class="pedido-card">
+      <h3>Detalle del Pedido #{{ pedidoSeleccionado.id }}</h3>
+      <p><strong>Fecha:</strong> {{ pedidoSeleccionado.fecha | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Dirección:</strong> {{ pedidoSeleccionado.direccion }}</p>
+    
+      <div class="pedido-productos">
+        <h4>Productos:</h4>
+        <ul>
+          <li *ngFor="let prod of pedidoSeleccionado.productos">
+            {{ prod.nombre }} — {{ prod.cantidad }} × {{ prod.precio }} €
+          </li>
+        </ul>
+      </div>
+    
+      <div class="pedido-footer">
+        <button (click)="selectSection('pedidos')" class="btViewDetails">← Volver a pedidos</button>
+        <button (click)="devolucionMode = true" class="btViewDetails"> Solicitar devolución</button>
+      </div>
+
+      <!--Formulario de devolución cuando el pedidoService esté implmentado
+      <div *ngIf="devolucionMode" class="form-devolucion">
+        <h4>Motivo de la devolución</h4>
+        <textarea [(ngModel)]="motivo"></textarea>
+        <button (click)="enviarDevolucion()">Enviar solicitud</button>
+        <button (click)="cancelarDevolucion()">Cancelar</button>
+      </div>
+    -->
+
+    <!--Formuloario sin el service-->
+    <div *ngIf="devolucionMode" class="form-devolucion">
+      <h4>Motivo de la devolución</h4>
+      <textarea [(ngModel)]="motivo" rows="4" placeholder="Escribe el motivo aquí..."></textarea>
+      <div class="form-actions">
+        <button (click)="enviarDevolucion()" [disabled]="!motivo.trim()">Enviar solicitud</button>
+        <button (click)="cancelarDevolucion()">Cancelar</button>
+      </div>
+    </div>
+
+    </div>
+
+    <!--Apartado info devoluciones-->
+    <div *ngIf="selectedSection === 'devoluciones'" class="returns-section">
+      <h2>Devoluciones y Garantías</h2>
+      <p class="intro-text">Aquí puedes consultar toda la información relacionada con nuestras políticas de devoluciones
+        y garantía de productos.</p>
+
+      <div class="returns-grid">
+        <div class="return-card">
+          <h4>Plazo de Devolución</h4>
+          <p>Dispones de <strong>30 días naturales</strong> desde la recepción de tu pedido para devolverlo, siempre que
+            esté en su estado original.</p>
+        </div>
+
+        <div class="return-card">
+          <h4>Productos Dañados</h4>
+          <p>Si tu pedido llega golpeado o manipulado, notifícalo al momento de la entrega o en un plazo de <strong>7
+              días naturales</strong>.</p>
+        </div>
+
+        <div class="return-card">
+          <h4>Pedido Incorrecto</h4>
+          <p>¿Faltan artículos o no coincide lo recibido? Avísanos en un máximo de 7 días para resolverlo lo antes
+            posible.</p>
+        </div>
+
+        <div class="return-card">
+          <h4>Gestión de Garantías</h4>
+          <p>Si un producto no funciona correctamente, podrás solicitar una garantía de <strong>1, 2 o 3 años</strong>
+            según el tipo de artículo.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>¿Cómo gestiono mi garantía?</h3>
+      <div class="warranty-instructions">
+        <p><strong>Garantía de Solución en 24 horas:</strong> Reemplazo inmediato si hay stock, o reembolso en caso
+          contrario, una vez recibamos el producto en nuestras instalaciones.</p>
+        <p><strong>Plazo de recogida:</strong> Entre 3 y 10 días hábiles. Si no recibes novedades, contáctanos para
+          ayudarte rápidamente.</p>
+      </div>
+
+      <div class="returns-buttons">
+        <button class="bt-action" (click)="solicitarDevolucion()">Solicitar una devolución</button>
+        <button class="bt-action alt" (click)="selectSection('soporte')">Contactar con soporte</button>
+      </div>
+    </div>
+
+
+    <!--Apartado info soporte-->
+    <div *ngIf="selectedSection === 'soporte'">
+      <h2>Centro de Soporte</h2>
+      <p>¿Tienes alguna duda o problema? Estamos aquí para ayudarte.</p>
+      <div class="support-options">
+        <div class="support-card">
+          <h4>Contacto por Email</h4>
+          <p>Escríbenos directamente.</p>
+          <button type="button" class="btSupport">Enviar Email</button>
+        </div>
+
+        <div class="support-card">
+          <h4>Chat en Vivo</h4>
+          <p>Habla con un agente en tiempo real.</p>
+          <button type="button" class="btSupport">Iniciar Chat</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>Formulario de contacto</h3>
+      <form class="contact-form" (ngSubmit)="sendContact()">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" name="name" [(ngModel)]="contact.name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" [(ngModel)]="contact.email" required>
+
+        <label for="message">Mensaje</label>
+        <textarea id="message" name="message" rows="5" [(ngModel)]="contact.message" required></textarea>
+
+        <button type="submit" class="btSupport">Enviar mensaje</button>
+      </form>
+
+    </div>
+  </main>
+</div>

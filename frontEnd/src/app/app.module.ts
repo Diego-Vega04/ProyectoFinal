@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // COMPONENTES STANDALONE (van en imports)
@@ -23,6 +22,8 @@ import { OfertasDestacadasComponent } from './pagina-principal/components/oferta
 import { OfertasTopComponent } from './pagina-principal/components/ofertas-top/ofertas-top.component';
 import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
+import { UserComponent } from './user/user.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { Filtro2Component } from './filtro/filtro2.component';
     FooterComponent,
     HeaderComponent,
     ProductoComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
