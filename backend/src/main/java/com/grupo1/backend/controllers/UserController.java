@@ -7,8 +7,6 @@ import com.grupo1.backend.entities.Carrito;
 import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.User;
 import com.grupo1.backend.entities.enums.Rol;
-import com.grupo1.backend.services.CarritoService;
-import com.grupo1.backend.services.FavoritosService;
 import com.grupo1.backend.services.UserService;
 
 import org.apache.coyote.BadRequestException;
@@ -23,21 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     
     @Autowired
     private UserService userSer;
-
-    @Autowired
-    private FavoritosService favSer;
-
-    @Autowired
-    private CarritoService carritoSer;
 
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getByEmail (@PathVariable String email) {
