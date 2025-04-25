@@ -21,12 +21,14 @@ import { MasVendidosComponent } from './pagina-principal/components/mas-vendidos
 import { NoPerderseComponent } from './pagina-principal/components/no-perderse/no-perderse.component';
 import { OfertasDestacadasComponent } from './pagina-principal/components/ofertas-destacadas/ofertas-destacadas.component';
 import { OfertasTopComponent } from './pagina-principal/components/ofertas-top/ofertas-top.component';
+import { ProductoComponent } from './producto/producto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
+    ProductoComponent
   ],
   imports: [
     BrowserModule,
