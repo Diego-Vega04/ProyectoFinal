@@ -37,13 +37,9 @@
               }
             ],
             "styles": [
-<<<<<<< HEAD
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css",
               "src/styles/colors.css"
-=======
-              "src/styles.css", "src/styles/colors.css"
->>>>>>> main
             ],
             "scripts": []
           },
@@ -101,13 +97,9 @@
               }
             ],
             "styles": [
-<<<<<<< HEAD
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css",
               "src/styles/colors.css"
-=======
-              "src/styles.css", "src/styles/colors.css"
->>>>>>> main
             ],
             "scripts": []
           }
