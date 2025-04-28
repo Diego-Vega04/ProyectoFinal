@@ -5,11 +5,14 @@ header {
     padding: 10px 0;
     color: white;
     font-family: Arial, sans-serif;
-    position: static;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     width: 100%;
-    background-color: var(--color-fondo);
+    background-color: var(--color-fondo2);
+    margin-bottom: 20px;
 }
-
+  
 /* Logo */
 .logo {
     display: flex;

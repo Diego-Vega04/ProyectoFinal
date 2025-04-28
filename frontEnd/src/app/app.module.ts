@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,7 @@ import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HeaderComponent,
     ProductoComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +52,8 @@ import { FormsModule } from '@angular/forms';
     MasVendidosComponent,
     NoPerderseComponent,
     OfertasDestacadasComponent,
-    OfertasTopComponent
+    OfertasTopComponent,
+    KeycloakAngularModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,123 +1,110 @@
-<!DOCTYPE html>
-<html lang="es">
+<header>
+  <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen}" (click)="closeMenus()"></div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header PCComponentes</title>
-  <link rel="stylesheet" href="header.component.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+  <!-- Logo -->
+  <div class="logo">
+    <a routerLink="/">
+      <img src="logoSoloNoFondo.png" alt="Logo">
+    </a>
+  </div>
 
-<body>
-  <header>
-    <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen}" (click)="closeMenus()"></div>
+  <!-- Menú de categorías-->
+  <div class="categories" (click)="toggleMenu()">
+    <button class="hamburger" [ngClass]="{'open': menuOpen}">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
+    </button>
+    <a href="#">Categorías disponibles</a>
+  </div>
 
-    <!-- Logo -->
-    <div class="logo">
-      <a routerLink="/">
-        <img src="logoSoloNoFondo.png" alt="Logo">
-      </a>
+  <!-- Menú lateral -->
+  <div class="side-menu" [ngClass]="{'open': menuOpen}">
+    <div class="side-menu-content">
+      <button class="close-btn" (click)="toggleMenu()">✕</button>
+      <h2>CATEGORÍAS</h2>
+      <hr>
+      <ul>
+        <li>
+          <a>Componentes</a>
+        </li>
+        <li>
+          <a>Ordenadores</a>
+        </li>
+        <li>
+          <a>Periféricos</a>
+        </li>
+        <li>
+          <a>Televisores</a>
+        </li>
+        <li>
+          <a>Audio</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- Barra de búsqueda-->
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar" (input)="buscarProducto()" [(ngModel)]="nombreBusqueda">
+    <button (click)="buscarProducto()"><i class="fas fa-search"></i></button>
+  </div>
+
+  <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
+  <div class="account" (click)="onMiCuentaClick()">
+    <i class="fas fa-user"></i>
+    <span> {{ authService.isLoggedIn() ? authService.getUserEmail() : 'Mi cuenta' }}</span>
+  </div>
+
+  <!-- Mi cesta -->
+  <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
+    <i class="fas fa-shopping-cart"></i>
+    <span>Mi cesta</span>
+  </div>
+
+  <!-- Menú lateral de la cesta -->
+  <div class="cart-menu" [ngClass]="{'open': cartMenuOpen}">
+    <div class="cart-menu-header">
+      <span class="cart-title">Mi cesta</span>
+      <button class="close-btnC" (click)="toggleCartMenu()">✕</button>
     </div>
 
-    <!-- Menú de categorías-->
-    <div class="categories" (click)="toggleMenu()">
-      <button class="hamburger" [ngClass]="{'open': menuOpen}">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
-      <a href="#">Categorías disponibles</a>
-    </div>
-
-    <!-- Menú lateral -->
-    <div class="side-menu" [ngClass]="{'open': menuOpen}">
-      <div class="side-menu-content">
-        <button class="close-btn" (click)="toggleMenu()">✕</button>
-        <h2>CATEGORÍAS</h2>
-        <hr>
-        <ul>
-          <li>
-            <a>Componentes</a>
-          </li>
-          <li>
-            <a>Ordenadores</a>
-          </li>
-          <li>
-            <a>Periféricos</a>
-          </li>
-          <li>
-            <a>Televisores</a>
-          </li>
-          <li>
-            <a>Audio</a>
+    <div class="cart-content">
+      <ng-container *ngIf="productosCesta.length > 0; else vacia">
+        <ul class="cart-list">
+          <li *ngFor="let producto of productosCesta; let i = index;">
+            <img [src]="producto.imagen" alt="Producto">
+            <div>
+              <p><strong>{{ producto.nombre }}</strong></p>
+              <p>{{ producto.precio }} €</p>
+              <button (click)="borrarProducto(i); $event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </li>
         </ul>
-
-      </div>
+        <button (click)="vaciarCesta()" class="bt-menu">Vaciar cesta completa</button>
+      </ng-container>
+      <ng-template #vacia>
+        <div class="cart-Ncontent">
+          <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
+          <p class="cart-text">Tu carrito está vacío</p>
+          <button class="go-home-btn" click="window.location.href='/'" (click)="toggleCartMenu()">Explorar
+            artículos</button>
+        </div>
+      </ng-template>
     </div>
 
-    <!-- Barra de búsqueda-->
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar" (input)="buscarProducto()" [(ngModel)]="nombreBusqueda">
-      <button (click)="buscarProducto()"><i class="fas fa-search"></i></button>
+    <div class="cart-menu-footer">
+      <button class="go-cart-btn">Ver artículos en la cesta</button>
     </div>
+  </div>
 
-    <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
-    <div class="account" (click)="onMiCuentaClick()">
-      <i class="fas fa-user"></i>
-      <span> {{ authService.isLoggedIn() ? authService.getUserEmail() : 'Mi cuenta' }}</span>
-    </div>
+  <!-- Botón modo claro/oscuro -->
+  <div class="dark-mode-toggle">
+    <button (click)="toggleDarkMode()">
+      <i class="fas fa-moon" *ngIf="!isDarkMode"></i>
+      <i class="fas fa-sun" *ngIf="isDarkMode"></i>
+    </button>
+  </div>
 
-    <!-- Mi cesta -->
-    <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
-      <i class="fas fa-shopping-cart"></i>
-      <span>Mi cesta</span>
-    </div>
-
-    <!-- Menú lateral de la cesta -->
-    <div class="cart-menu" [ngClass]="{'open': cartMenuOpen}">
-      <div class="cart-menu-header">
-        <span class="cart-title">Mi cesta</span>
-        <button class="close-btnC" (click)="toggleCartMenu()">✕</button>
-      </div>
-
-      <div class="cart-content">
-        <ng-container *ngIf="productosCesta.length > 0; else vacia">
-          <ul class="cart-list">
-            <li *ngFor="let producto of productosCesta; let i = index;">
-              <img [src]="producto.imagen" alt="Producto">
-              <div>
-                <p><strong>{{ producto.nombre }}</strong></p>
-                <p>{{ producto.precio }} €</p>
-                <button (click)="borrarProducto(i); $event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
-              </div>
-            </li>
-          </ul>
-          <button (click)="vaciarCesta()" class="bt-menu">Vaciar cesta completa</button>
-        </ng-container>
-        <ng-template #vacia>
-          <div class="cart-Ncontent">
-            <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
-            <p class="cart-text">Tu carrito está vacío</p>
-            <button class="go-home-btn" click="window.location.href='/'" (click)="toggleCartMenu()">Explorar artículos</button>
-          </div>
-        </ng-template>
-      </div>
-      
-      <div class="cart-menu-footer">
-        <button class="go-cart-btn">Ver artículos en la cesta</button>
-      </div>
-    </div>
-
-    <!-- Botón modo claro/oscuro -->
-    <div class="dark-mode-toggle">
-      <button (click)="toggleDarkMode()">
-        <i class="fas fa-moon" *ngIf="!isDarkMode"></i>
-        <i class="fas fa-sun" *ngIf="isDarkMode"></i>
-      </button>
-    </div>
-  </header>
-</body>
-
-</html>
+</header>
