@@ -104,4 +104,9 @@ export class HeaderComponent {
   vaciarCesta(){
     this.productosCesta = [];
   }
+
+  irCesta(){
+    this.router.navigate(['/cesta']);
+    this.closeMenus();
+  }
 }

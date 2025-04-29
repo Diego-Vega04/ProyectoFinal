@@ -23,6 +23,7 @@ import { OfertasTopComponent } from './pagina-principal/components/ofertas-top/o
 import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
+import { CestaComponent } from './cesta/cesta.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     ProductoComponent,
     UserComponent,
+    CestaComponent
   ],
   imports: [
     BrowserModule,
