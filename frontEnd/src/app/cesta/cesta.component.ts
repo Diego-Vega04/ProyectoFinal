@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+
+declare var paypal: any;
 interface CestaItem {
   id: number;
   name: string;
@@ -14,7 +16,39 @@ interface CestaItem {
 })
 
 
-export class CestaComponent {
+export class CestaComponent implements OnInit, AfterViewInit{
+
+  constructor(){}
+
+  ngOnInit(): void {
+      
+  }
+
+  ngAfterViewInit(): void {
+    const total = this.getResumenTotal().total;
+
+    paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total.toFixed(2),
+              currency_code: 'EUR'
+            }
+          }]
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          alert('Pago realizado por: ' + details.payer.name.given_name);
+          this.cleanCart();
+        });
+      },
+      onError: (err: any) => {
+        console.error('Error en el pago:', err);
+      }
+    }).render('#paypal-button-container');
+  }
 
   cartItems: CestaItem[] = [
     {
