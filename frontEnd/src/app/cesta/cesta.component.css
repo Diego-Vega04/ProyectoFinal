@@ -1,6 +1,7 @@
-html,
-body {
-  background-color: var(--color-fondo);
+.cart-content{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
 }
 
 .cart-container {
@@ -12,16 +13,17 @@ body {
 
 h2 {
   color: var(--color-primario);
-  margin-bottom: 1.5rem;
+  margin-left: 4%;
 }
 
 .empty-cart {
-  text-align: center;
+  text-align: left;
+  margin-top: 50px;
 }
 
 .empty-cart p {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 30px;
 }
 
 .btn {
@@ -53,6 +55,8 @@ h2 {
 
 .btn-success {
   background-color: #27ae60;
+  margin-left: 80px;
+  margin-top: 80px;
 }
 
 .btn-success:hover {
@@ -60,27 +64,38 @@ h2 {
 }
 
 .cart-table {
-  width: 100%;
+  width: 70%;
   border-collapse: collapse;
-  margin-bottom: 2rem;
+  float: left;
+  box-shadow: 0 4px 8px 0 var(--sombra-1), 0 6px 20px 0 var(--sombra-2);
+  background-color: var(--color-fondo2);
+}
+
+.cart-table thead{
+  color: var(--color-primario);
 }
 
 .cart-table th,
 .cart-table td {
   padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-fondo2);
+  text-align: center;
+  border-bottom: 1px solid var(--color-primario);
 }
 
 .cart-table th {
-  background-color: var(--color-fondo2);
-  color: var(--color-texto);
+  background-color: var(--color-primario);
+  color: white;
 }
 
 .product-info {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.cart-table tbody tr:hover{
+  background-color: var(--color-secundario);
+  color: white;
 }
 
 .product-img {
@@ -101,12 +116,25 @@ input[type='number'] {
 }
 
 .cart-summary {
-  border-top: 2px solid var(--color-fondo2);
-  padding-top: 1rem;
-  text-align: right;
+  padding: 20px;
+  text-align: left;
   font-size: 1.1rem;
+
 }
 
-.cart-summary p {
+.cart-summary td {
   margin: 0.5rem 0;
+  color: var(--color-texto);
+}
+
+.cart-summary td, .cart-summary th{
+  padding: 5px;
+}
+
+.order-container{
+  border: 1px solid var(--color-texto);
+  border-radius: 10px;
+  margin-right: 150px;
+  background-color: var(--color-fondo2);
+  box-shadow: 0 4px 8px 0 var(--sombra-1), 0 6px 20px 0 var(--sombra-2);
 }

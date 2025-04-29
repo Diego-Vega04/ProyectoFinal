@@ -30,6 +30,13 @@ export class CestaComponent {
       price: 14.5,
       quantity: 1,
       image: 'https://picsum.photos/200'
+    },
+    {
+      id: 3,
+      name: 'Producto 3',
+      price: 10.5,
+      quantity: 1,
+      image: 'https://picsum.photos/200'
     }
   ];
 
@@ -51,22 +58,17 @@ export class CestaComponent {
 
   // Calcula el subtotal
   getSubtotal(): number {
-    return this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return parseFloat(subtotal.toFixed(2));
   }
 
   //Total con envío
   getResumenTotal(): { envio: number; total: number } {
     const subtotal = this.getSubtotal();
     const envio = subtotal >= 70 ? 0 : 3.99;
-    let total = subtotal + envio;
-  
-    return { envio, total };
-  }
+    let total = (subtotal + envio);
+    parseFloat(total.toFixed(2));
 
-  // Simula ir al checkout
-  checkout() {
-    alert('Redirigiendo al checkout...');
-    // Aquí podrías usar Router para navegar a otra vista
-    // this.router.navigate(['/checkout']);
+    return { envio, total };
   }
 }
