@@ -1,5 +1,8 @@
 <div class="cart-container">
-  <h2>TU CARRITO</h2>
+  <div class="cart-header">
+    <button [routerLink]="'/'" routerLinkActive="active">&larr; &nbsp; Volver atrás</button>
+    <h2>TU CARRITO</h2>
+  </div>
   <hr>
 
   <div *ngIf="cartItems.length === 0" class="empty-cart">
@@ -52,7 +55,7 @@
           <tr *ngIf="resumen.envio > 0">
             <td><strong>Gastos de envío:</strong></td>
             <td>{{ resumen.envio }} €</td>
-          </tr>   
+          </tr>
           <tr *ngIf="resumen.envio === 0">
             <td><strong>Envío gratuito</strong></td>
           </tr>

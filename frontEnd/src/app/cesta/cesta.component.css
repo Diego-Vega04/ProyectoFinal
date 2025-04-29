@@ -1,3 +1,23 @@
+.cart-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2%;
+}
+
+.cart-header button{
+  color: var(--color-texto);
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cart-header h2{
+  color: var(--color-primario);
+  margin-right: 0px;
+}
+
 .cart-content{
   display: flex;
   justify-content: space-between;
