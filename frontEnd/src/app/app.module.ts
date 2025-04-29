@@ -24,7 +24,6 @@ import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
@@ -52,8 +51,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
     MasVendidosComponent,
     NoPerderseComponent,
     OfertasDestacadasComponent,
-    OfertasTopComponent,
-    KeycloakAngularModule
+    OfertasTopComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
