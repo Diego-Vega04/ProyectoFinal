@@ -56,6 +56,11 @@ export class CestaComponent {
     this.cartItems = this.cartItems.filter(i => i.id !== item.id);
   }
 
+  //Vacia el carrito completo
+  cleanCart(){
+    this.cartItems = [];
+  }
+
   // Calcula el subtotal
   getSubtotal(): number {
     const subtotal = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -67,8 +72,7 @@ export class CestaComponent {
     const subtotal = this.getSubtotal();
     const envio = subtotal >= 70 ? 0 : 3.99;
     let total = (subtotal + envio);
-    parseFloat(total.toFixed(2));
 
-    return { envio, total };
+    return { envio: parseFloat(envio.toFixed(2)), total: parseFloat(total.toFixed(2)) };
   }
 }

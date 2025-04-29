@@ -56,7 +56,7 @@ h2 {
 .btn-success {
   background-color: #27ae60;
   margin-left: 80px;
-  margin-top: 80px;
+  margin-top: 70px;
 }
 
 .btn-success:hover {
@@ -75,22 +75,23 @@ h2 {
   color: var(--color-primario);
 }
 
-.cart-table th,
-.cart-table td {
+.cart-table th {
   padding: 1rem;
   text-align: center;
-  border-bottom: 1px solid var(--color-primario);
-}
-
-.cart-table th {
   background-color: var(--color-primario);
   color: white;
 }
 
+.cart-table td{
+  vertical-align: middle;
+  text-align: center;
+  height: 80px;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-primario);
+}
+
 .product-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  align-items: center; 
 }
 
 .cart-table tbody tr:hover{
@@ -133,8 +134,10 @@ input[type='number'] {
 
 .order-container{
   border: 1px solid var(--color-texto);
+  position: absolute;
   border-radius: 10px;
-  margin-right: 150px;
+  right: 150px;
+  padding: 10px;
   background-color: var(--color-fondo2);
   box-shadow: 0 4px 8px 0 var(--sombra-1), 0 6px 20px 0 var(--sombra-2);
 }

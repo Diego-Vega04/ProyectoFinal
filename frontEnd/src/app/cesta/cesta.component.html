@@ -15,14 +15,14 @@
           <th>Cantidad</th>
           <th>Precio Unitario</th>
           <th>Total</th>
-          <th></th>
+          <th><button (click)="cleanCart()" class="btn btn-danger">Vaciar todo el carrito</button></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of cartItems">
           <td class="product-info">
             <img [src]="item.image" alt="{{ item.name }}" class="product-img">
-            <span>{{ item.name }}</span>
+            <p>{{ item.name }}</p>
           </td>
           <td>
             <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item)" min="1">
