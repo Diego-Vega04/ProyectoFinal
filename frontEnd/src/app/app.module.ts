@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { OfertasTopComponent } from './pagina-principal/components/ofertas-top/o
 import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
+import { CestaComponent } from './cesta/cesta.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -31,7 +32,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HeaderComponent,
     ProductoComponent,
-    UserComponent
+    UserComponent,
+    CestaComponent
   ],
   imports: [
     BrowserModule,

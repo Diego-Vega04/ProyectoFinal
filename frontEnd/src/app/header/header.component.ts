@@ -94,7 +94,7 @@ export class HeaderComponent {
     this.productosCesta.splice(index, 1); //revisar cuando este el servicio de producto
 
     this.snackBar.open('Producto eliminado de la cesta', 'Cerrar', {
-      duration: 300000, 
+      duration: 3000, 
       horizontalPosition: 'left',
       verticalPosition: 'bottom',
       panelClass: ['snackbar-inferior'] 
@@ -103,5 +103,10 @@ export class HeaderComponent {
 
   vaciarCesta(){
     this.productosCesta = [];
+  }
+
+  irCesta(){
+    this.router.navigate(['/cesta']);
+    this.closeMenus();
   }
 }

@@ -1,19 +1,23 @@
 :root {
-    --color-fondo: #ffffff;
-    --color-texto: #000000;
-    --color-primario: #8a56ac; /*Base*/
-    --color-secundario: #70448C; /*Más oscuro*/
-    --color-terciario: #C791EB; /*Más claro*/
-    --color-fondo2: #faf9fb; /*Fondo un poco más oscuro*/
-  }
+ 
   
-  [data-tema='oscuro'] {
-    --color-fondo: #121212;
- 
-    --color-fondo2: #282828; 
- 
-    --color-texto: #ffffff;
-    --color-primario: #8a56ac;
-    --color-secundario: #70448C;
-    --color-terciario: #C791EB;
-  }
+  --color-fondo: #ffffff; /*Fondo base*/
+  --color-fondo2: #faf9fb; /*Fondo un poco más oscuro*/
+  --color-texto: #000000; /*Texto*/
+  --color-primario: #8a56ac; /*Color Principal*/
+  --color-secundario: #70448C; /*Color Secundario (Más oscuro)*/
+  --color-terciario: #C791EB; /*Color Terciario (Más claro)*/
+  --sombra-1: rgba(0, 0, 0, 0.2);
+  --sombra-2: rgba(0, 0, 0, 0.19);
+}
+
+[data-tema='oscuro'] {
+  --color-fondo: #121212;
+  --color-fondo2: #282828; 
+  --color-texto: #ffffff;
+  --color-primario: #8a56ac;
+  --color-secundario: #70448C;
+  --color-terciario: #C791EB;
+  --sombra-1: rgba(255, 255, 255, 0.2);
+  --sombra-2: rgba(255, 255, 255, 0.19);
+}
