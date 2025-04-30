@@ -24,9 +24,15 @@ export class CestaComponent implements OnInit, AfterViewInit{
       
   }
 
-  ngAfterViewInit(): void {
+  renderPayPalButton() {
+    // Borra cualquier botón anterior para evitar múltiples renders
+    const container = document.getElementById('paypal-button-container');
+    if (container) {
+      container.innerHTML = '';
+    }
+  
     const total = this.getResumenTotal().total;
-
+  
     paypal.Buttons({
       createOrder: (data: any, actions: any) => {
         return actions.order.create({
@@ -42,12 +48,17 @@ export class CestaComponent implements OnInit, AfterViewInit{
         return actions.order.capture().then((details: any) => {
           alert('Pago realizado por: ' + details.payer.name.given_name);
           this.cleanCart();
+          this.renderPayPalButton();
         });
       },
       onError: (err: any) => {
         console.error('Error en el pago:', err);
       }
     }).render('#paypal-button-container');
+  }
+
+  ngAfterViewInit(): void {
+    this.renderPayPalButton();
   }
 
   cartItems: CestaItem[] = [
@@ -83,16 +94,19 @@ export class CestaComponent implements OnInit, AfterViewInit{
     if (item.quantity < 1) {
       item.quantity = 1;
     }
+    this.renderPayPalButton();
   }
 
   // Elimina un producto del carrito
   removeItem(item: CestaItem) {
     this.cartItems = this.cartItems.filter(i => i.id !== item.id);
+    this.renderPayPalButton();
   }
 
   //Vacia el carrito completo
   cleanCart(){
     this.cartItems = [];
+    this.renderPayPalButton();
   }
 
   // Calcula el subtotal
