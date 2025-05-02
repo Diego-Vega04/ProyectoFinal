@@ -15,6 +15,8 @@ export class UserComponent {
   userLastName: string | null = "";
   userEmail: string | null = "";
 
+  userPhotoUrl: string | null = null; 
+
   showPassword1 = false;
   showPassword2 = false;
   showPassword3 = false;
@@ -98,6 +100,17 @@ export class UserComponent {
   editPsswd() {
     console.log("editPsswd");
     //llamada al serivicio update del usuario 
+  }
+
+  onPhotoSelected(event: any): void {
+    const file = event.target.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.userPhotoUrl = e.target.result; 
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   //Seccion direcciones

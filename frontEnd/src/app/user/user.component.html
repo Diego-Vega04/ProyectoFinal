@@ -29,11 +29,13 @@
 
   <main class="content">
     <!--Apartado mis datos-->
-    <div *ngIf="selectedSection === 'mis-datos'">
+    <div *ngIf="selectedSection === 'mis-datos'" class="user-info-container">
 
       <h2>Bienvenido a tu área personal</h2>
       <div class="text user-info">
+        <div class="user-info-row">
         <!--Formulario de edición de datos-->
+        <div class="form-user-info">
         <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
           <div class="field">
             <label for="name">Nombre:</label>
@@ -52,6 +54,16 @@
           <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
         </form>
       </div>
+
+        <div class="profile-section">
+          <div class="profile-photo">
+            <img [src]="userPhotoUrl || 'default-avatar.png'" alt="Foto de perfil" />
+            <input type="file" (change)="onPhotoSelected($event)" accept="image/*" hidden #fileInput>
+            <button type="button" class="btEdit" (click)="fileInput.click()">Cambiar foto</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
       <hr>
       <h3>Reestablecer contraseña:</h3>

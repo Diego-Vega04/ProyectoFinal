@@ -1,5 +1,3 @@
-body,
-html,
 main,
 .user-container {
     background-color: var(--color-fondo);
@@ -112,6 +110,18 @@ hr {
     background-color: var(--color-fondo2);
 }
 
+.user-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 40px 20px 20px;
+}
+
+.form-user-info {
+    flex: 1;
+    margin-right: auto;
+}
+
 .field {
     display: flex;
     align-items: center;
@@ -177,6 +187,28 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/*Foto*/
+.profile-section {
+    border-radius: 12px;
+    padding: 10px;
+    background-color: var(--color-fondo2);
+}
+
+.profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-photo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
 }
 
 /*Seccion Mis Direcciones*/
