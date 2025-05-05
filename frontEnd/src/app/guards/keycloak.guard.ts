@@ -11,7 +11,7 @@ export class Keycloakguard implements CanActivate {
 
   canActivate(): boolean {
     if (!this.keycloakService.isLoggedIn()) {
-        localStorage.setItem('redirectUrl', window.location.pathname);  // <-- esto está bien
+        localStorage.setItem('redirectUrl', window.location.pathname);  
         this.keycloakService.login();
         return false;
       }
