@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
+  constructor(private keycloakService: KeycloakService) {}
+
+  logout(): void {
+    this.keycloakService.logout(window.location.origin);
+  }
 }

@@ -1,40 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
-  constructor(private keycloakService: KeycloakService, private router: Router) {}
-
-  login(): void {
-    this.keycloakService.login();
-  }
-
-  logout(): void{
-    this.keycloakService.logout();
-  }
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.checkLoginStatus();
-  }
-
-  checkLoginStatus(): void {
-    const loggedIn: boolean = this.keycloakService.isLoggedIn();
-  
-    if (loggedIn) {
-      const redirectUrl = localStorage.getItem('redirectUrl');
-  
-      if (redirectUrl && redirectUrl !== '/login') {
-        this.router.navigateByUrl(redirectUrl);
-        localStorage.removeItem('redirectUrl');
-      } else {
-        console.log('Usuario ya logueado pero sin redirect previo');
-      }
-    }
+    // Obtener la URL de retorno de los parámetros de consulta
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    
+    // Generar la URL completa para la redirección
+    const redirectUri = window.location.origin + returnUrl;
+    
+    // Iniciar el proceso de login
+    this.authService.login(redirectUri);
   }
 }
