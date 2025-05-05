@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -36,7 +36,7 @@ export class HeaderComponent {
   //productos: Producto[] = []; ->descomentar cuando la entidad exista 
   //productosOG: Producto[] = [];
 
-  constructor(public authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private keycloakService: KeycloakService, private router: Router, private snackBar: MatSnackBar) { }
 
   // Función para alternar el menú lateral
   toggleMenu() {
@@ -54,14 +54,8 @@ export class HeaderComponent {
     this.cartMenuOpen = false;
   }
 
-  onMiCuentaClick() {
-    if (!this.authService.isLoggedIn()) {
-      // Si no está logueado, redirige al login
-      this.router.navigate(['/login']);
-    } else {
-      // Si está logueado, lleva a la página del user
-      this.router.navigate(['/user']);
-    }
+  logout(): void {
+    this.keycloakService.logout(window.location.origin);
   }
 
   //Modo claro oscuro

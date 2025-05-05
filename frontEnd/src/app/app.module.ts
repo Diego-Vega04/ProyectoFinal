@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,14 +25,15 @@ import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
 import { CestaComponent } from './cesta/cesta.component';
 import { FormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    ProductoComponent,
     UserComponent,
+    ProductoComponent,
     CestaComponent
   ],
   imports: [
@@ -41,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatSnackBarModule,
     Filtro2Component,
+    AuthModule,
     
     PaginaPrincipalComponent,
     BannerInferiorComponent,
