@@ -15,6 +15,8 @@ export class HeaderComponent {
   cartMenuOpen: boolean = false;
   menuAbierto = false;
 
+  isLoggedIn: boolean = false;
+
   // cambiar a tipo producto y las rutas a las caracteristicas
   productosCesta = [
     {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre1', precio: 20.00},
@@ -38,6 +40,10 @@ export class HeaderComponent {
 
   constructor(private keycloakService: KeycloakService, private router: Router, private snackBar: MatSnackBar) { }
 
+  async ngOnInit() {
+    this.isLoggedIn = await this.keycloakService.isLoggedIn();
+  }
+
   // Función para alternar el menú lateral
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -54,7 +60,19 @@ export class HeaderComponent {
     this.cartMenuOpen = false;
   }
 
-  logout(): void {
+  //Funciones para login y logout
+  async irAUser() {
+    const loggedIn = await this.keycloakService.isLoggedIn();
+
+    if (loggedIn) {
+      this.router.navigate(['/user']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  logout(event: MouseEvent): void {
+    event.stopPropagation(); // Evita que también se dispare irAUser()
     this.keycloakService.logout(window.location.origin);
   }
 

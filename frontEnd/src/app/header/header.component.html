@@ -52,15 +52,10 @@
   </div>
 
   <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
-  <div class="account">
+  <div class="account" (click)="irAUser()">
     <i class="fas fa-user"></i>
-    <!--<span> {{ authService.isLoggedIn() ? authService.getUserEmail() : 'Mi cuenta' }}</span>-->
-    <button onclick="window.location.href='http://localhost:4200/login'">
-      Iniciar sesión
-    </button>
-    <button (click)="logout()">
-      Cerrar sesión
-    </button>
+    <span> {{ isLoggedIn ? 'Área personal' : 'Iniciar sesión' }}</span>
+    <i class="fas fa-sign-out-alt" *ngIf="isLoggedIn" (click)="logout($event)" style="margin-left: 8px; color: red;"></i>
   </div>
 
   <!-- Mi cesta -->

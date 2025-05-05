@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-user',
@@ -63,7 +64,7 @@ export class UserComponent {
     }
   }
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public keycloakService: KeycloakService) { }
 
   ngOnInit() {
     this.userName = this.authService.getUserName() ? this.authService.getUserName() : 'Nombre no encontrado';
@@ -153,8 +154,7 @@ export class UserComponent {
   }
 
   // Método para cerrar sesión
-  onLogout(): void {
-    this.authService.logout();
-    console.log('Sesión cerrada');
+  logout(): void {
+    this.keycloakService.logout(window.location.origin);
   }
 }
