@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -14,6 +14,8 @@ export class HeaderComponent {
   menuOpen = false;
   cartMenuOpen: boolean = false;
   menuAbierto = false;
+
+  isLoggedIn: boolean = false;
 
   // cambiar a tipo producto y las rutas a las caracteristicas
   productosCesta = [
@@ -36,7 +38,11 @@ export class HeaderComponent {
   //productos: Producto[] = []; ->descomentar cuando la entidad exista 
   //productosOG: Producto[] = [];
 
-  constructor(public authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private keycloakService: KeycloakService, private router: Router, private snackBar: MatSnackBar) { }
+
+  async ngOnInit() {
+    this.isLoggedIn = await this.keycloakService.isLoggedIn();
+  }
 
   // Función para alternar el menú lateral
   toggleMenu() {
@@ -54,14 +60,20 @@ export class HeaderComponent {
     this.cartMenuOpen = false;
   }
 
-  onMiCuentaClick() {
-    if (!this.authService.isLoggedIn()) {
-      // Si no está logueado, redirige al login
-      this.router.navigate(['/login']);
-    } else {
-      // Si está logueado, lleva a la página del user
+  //Funciones para login y logout
+  async irAUser() {
+    const loggedIn = await this.keycloakService.isLoggedIn();
+
+    if (loggedIn) {
       this.router.navigate(['/user']);
+    } else {
+      this.router.navigate(['/login']);
     }
+  }
+
+  logout(event: MouseEvent): void {
+    event.stopPropagation(); // Evita que también se dispare irAUser()
+    this.keycloakService.logout(window.location.origin);
   }
 
   //Modo claro oscuro

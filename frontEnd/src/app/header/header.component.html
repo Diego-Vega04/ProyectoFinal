@@ -52,15 +52,16 @@
   </div>
 
   <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
-  <div class="account" (click)="onMiCuentaClick()">
+  <div class="account" (click)="irAUser()">
     <i class="fas fa-user"></i>
-    <span> {{ authService.isLoggedIn() ? authService.getUserEmail() : 'Mi cuenta' }}</span>
+    <span> {{ isLoggedIn ? 'Área personal' : 'Iniciar sesión' }}</span>
+    <i class="fas fa-sign-out-alt" *ngIf="isLoggedIn" (click)="logout($event)" style="margin-left: 8px; color: red;"></i>
   </div>
 
   <!-- Mi cesta -->
   <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
     <i class="fas fa-shopping-cart"></i>
-    <span>Mi cesta</span>
+    <span>Mi cesta</span> 
   </div>
 
   <!-- Menú lateral de la cesta -->
