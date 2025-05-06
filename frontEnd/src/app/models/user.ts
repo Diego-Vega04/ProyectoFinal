@@ -1,5 +1,5 @@
 export class User{
-    id: number;
+    id?: number;
     nombre: string;
     apellidos: string;
     email: string;
@@ -12,7 +12,7 @@ export class User{
     pedidos?: Pedido[];
 
     constructor(data?: Partial<User>){
-        this.id = data?.id ?? 0;
+        this.id = data?.id;
         this.nombre = data?.nombre ?? '';
         this.apellidos = data?.apellidos ?? '';
         this.email = data?.email ?? '';
