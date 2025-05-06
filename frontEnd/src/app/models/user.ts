@@ -1,3 +1,6 @@
+import { Carrito } from "./carrito";
+import { Favoritos } from "./favoritos";
+
 export class User{
     id?: number;
     nombre: string;
