@@ -8,9 +8,9 @@ import { Comentario } from '../models/comentario';
 })
 export class ComentariosService {
 
-  private apiUrl = '';  // URL de la API para obtener los comentarios
+  private apiUrl = 'http://localhost:8080/api/comentarios';   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Obtener todos los comentarios
   obtenerComentarios(): Observable<Comentario[]> {

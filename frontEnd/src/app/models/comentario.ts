@@ -1,17 +1,25 @@
 export class Comentario {
-    id?: number;  // ID opcional porque será generado automáticamente
-    contenido: string;
-    autor: string;
-    fecha: string; 
-    valoracion: number;
-    productoId: number;
-  
-    constructor(contenido: string, autor: string, valoracion: number, productoId: number) {
-      this.contenido = contenido;
-      this.autor = autor;
-      this.fecha = new Date().toISOString();  // Generar la fecha actual
-      this.valoracion = valoracion;
-      this.productoId = productoId;
-    }
+  id?: number;   
+  nota: number;
+  pros: string;
+  contras: string;
+  opinion: string;
+  id_user: number;        
+  id_producto: number;   
+
+  constructor(
+    nota: number,
+    pros: string,
+    contras: string,
+    opinion: string,
+    id_user: number,
+    id_producto: number
+  ) {
+    this.nota = nota;
+    this.pros = pros;
+    this.contras = contras;
+    this.opinion = opinion;
+    this.id_user = id_user;
+    this.id_producto = id_producto;
   }
-  
+}
