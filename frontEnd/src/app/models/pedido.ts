@@ -1,4 +1,5 @@
 import { MetodoPago } from "./enums/MetodoPago.enum";
+import { Producto } from "./producto";
 import { User } from "./user";
 
 export class Pedido {

@@ -1,5 +1,6 @@
 import { Carrito } from "./carrito";
 import { Favoritos } from "./favoritos";
+import { Pedido } from "./pedido";
 
 export class User{
     id?: number;

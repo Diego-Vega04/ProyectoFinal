@@ -1,3 +1,4 @@
+import { Producto } from "./producto";
 import { User } from "./user";
 
 export class Favoritos {
