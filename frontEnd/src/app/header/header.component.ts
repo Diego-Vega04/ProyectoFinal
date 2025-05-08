@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,10 @@ export class HeaderComponent {
   menuAbierto = false;
 
   isLoggedIn: boolean = false;
+
+  isDarkMode = false;
+
+  nombreBusqueda: string = '';
 
   // cambiar a tipo producto y las rutas a las caracteristicas
   productosCesta = [
@@ -32,13 +37,13 @@ export class HeaderComponent {
 
   ]; 
 
-  isDarkMode = false;
+  
 
-  nombreBusqueda: string = '';
-  //productos: Producto[] = []; ->descomentar cuando la entidad exista 
-  //productosOG: Producto[] = [];
-
-  constructor(private keycloakService: KeycloakService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(
+    private keycloakService: KeycloakService, 
+    private router: Router, 
+    private snackBar: MatSnackBar,
+  private searchService: SearchService) { }
 
   async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
@@ -91,15 +96,7 @@ export class HeaderComponent {
   //Función para la barra de búsqueda: (descomentar cuando estén implementadas las entidades y servicios en front)
   buscarProducto(){
     const termino = this.nombreBusqueda.toLowerCase().trim();
-
-    if (termino === '') {
-      //this.productos = this.productosOriginales;
-    } else {
-      console.log(termino);
-      //this.productos = this.productosOriginales.filter(producto =>
-      //  producto.nombre.toLowerCase().includes(termino)
-      //);
-    }
+    this.searchService.setSearchTerm(termino);
   }
 
   borrarProducto(index: number){

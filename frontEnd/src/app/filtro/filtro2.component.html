@@ -206,7 +206,7 @@
       <button class="sort-button" [class.active]="currentSort === 'price_desc'"
         (click)="sortProducts('price_desc')">Precio más alto</button>
     </div>
-    <div class="product-count">2162 artículos</div>
+    <div class="product-count">{{ displayedProducts.length }} productos</div>
   </div>
 
   <div class="product-grid">

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../models/producto';
+import { SearchService } from '../search.service';
 
 interface Product {
   id: number;
@@ -36,7 +37,7 @@ export class Filtro2Component implements OnInit {
   maxPrice: number = 9625;
   filteredProducts: Producto[] = [];
 
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.productoService.getAllProductos().subscribe({
@@ -49,6 +50,10 @@ export class Filtro2Component implements OnInit {
       error: (err) => {
         console.error('Error al cargar productos:', err);
       }
+    });
+
+    this.searchService.searchTerm$.subscribe(term => {
+      this.filtrarPorNombre(term);
     });
   
   }
@@ -96,5 +101,15 @@ export class Filtro2Component implements OnInit {
     
     // Update the displayed products
     this.displayedProducts = sortedProducts;
+  }
+
+  filtrarPorNombre(term: string): void {
+    if (!term) {
+      this.displayedProducts = [...this.products];
+    } else {
+      this.displayedProducts = this.products.filter(product =>
+        product.nombre?.toLowerCase().includes(term)
+      );
+    }
   }
 }
