@@ -14,12 +14,12 @@ export class ProductoService {
 
     //prodcuto por id
     getById(id: number): Observable<Producto> {
-        return this.http.get<Producto>(`$(this.apiUrl)/id/${id}`);
+        return this.http.get<Producto>(`${this.apiUrl}/id/${id}`);
     }
 
     //guardar nuevo producto
     addProducto(a: Producto): Observable<Producto> {
-        return this.http.post<Producto>(`$(this.apiUrl)/añadir`, a);
+        return this.http.post<Producto>(`${this.apiUrl}/añadir`, a);
     }
 
     //actualizar producto existente
@@ -29,21 +29,21 @@ export class ProductoService {
 
     //borrar un producto por su id
     deleteProducto(id: number): Observable<any> {
-        return this.http.get<Producto>(`$(this.apiUrl)/borrar/${id}`);
+        return this.http.get<Producto>(`${this.apiUrl}/borrar/${id}`);
     }
 
     //todos los productos
     getAllProductos(): Observable<Producto[]> {
-        return this.http.get<Producto[]>(`$(this.apiUrl)`);
+        return this.http.get<Producto[]>(`${this.apiUrl}`);
     }
 
     //productos por marca
     getProductosMarca(marca: string): Observable<Producto[]> {
-        return this.http.get<Producto[]>(`$(this.apiUrl)/marca/${marca}`);
+        return this.http.get<Producto[]>(`${this.apiUrl}/marca/${marca}`);
     }
 
     //productos por categoria
     getProductosCategoria(categoria: CategoriaProducto): Observable<Producto[]> {
-        return this.http.get<Producto[]>(`$(this.apiUrl)/categoria/${categoria}`);
+        return this.http.get<Producto[]>(`${this.apiUrl}/categoria/${categoria}`);
     }
 }

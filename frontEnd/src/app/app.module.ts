@@ -26,6 +26,7 @@ import { UserComponent } from './user/user.component';
 import { CestaComponent } from './cesta/cesta.component';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
     MatSnackBarModule,
     Filtro2Component,
     AuthModule,
+    HttpClientModule,
     
     PaginaPrincipalComponent,
     BannerInferiorComponent,

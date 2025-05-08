@@ -205,14 +205,6 @@
         (click)="sortProducts('price_asc')">Precio más bajo</button>
       <button class="sort-button" [class.active]="currentSort === 'price_desc'"
         (click)="sortProducts('price_desc')">Precio más alto</button>
-      <button class="sort-button" [class.active]="currentSort === 'bestsellers'"
-        (click)="sortProducts('bestsellers')">Más vendidos</button>
-      <button class="sort-button" [class.active]="currentSort === 'offers'"
-        (click)="sortProducts('offers')">Oferta</button>
-      <button class="sort-button" [class.active]="currentSort === 'best_rated'"
-        (click)="sortProducts('best_rated')">Mejor valorados</button>
-      <button class="sort-button" [class.active]="currentSort === 'newest'"
-        (click)="sortProducts('newest')">Novedades</button>
     </div>
     <div class="product-count">2162 artículos</div>
   </div>
@@ -220,26 +212,18 @@
   <div class="product-grid">
     <!-- Use *ngFor to iterate through displayedProducts -->
     <div class="product-card" *ngFor="let product of displayedProducts">
-      <div class="discount-badge" *ngIf="product.discount">-{{product.discount}}%</div>
       <div class="product-image">
-        <img [src]="product.image" [alt]="product.title">
+        <img [src]="product.imagen" [alt]="product.nombre">
       </div>
-      <div class="trending-badge" *ngIf="product.trending">Trending</div>
-      <div class="recommended-badge" *ngIf="product.recommended">Te recomendamos</div>
       <div class="product-info">
-        <h3 class="product-title">{{product.title}}</h3>
+        <h3 class="product-title">{{product.nombre}}</h3>
         <div class="product-price">
-          <span class="current-price">{{product.currentPrice}}€</span>
-          <span class="original-price">{{product.originalPrice}}€</span>
-        </div>
-        <div class="product-rating">
-          <span class="rating">{{product.rating}}/5</span>
-          <span class="reviews">({{product.reviews}} opiniones)</span>
+          <span class="current-price">{{product.precio}}€</span>
+          <!--<span class="original-price">{{product.originalPrice}}€</span>-->
         </div>
         <div class="shipping-info">
-          <span class="free-shipping">{{product.shipping}}</span>
+          <span class="free-shipping">Envío gratuito. Consulte disponibilidad.</span>
         </div>
-        <div class="more-options" *ngIf="product.moreOptions">Otras opciones disponibles</div>
       </div>
     </div>
   </div>
