@@ -1,0 +1,3 @@
+export enum CategoriaProducto {
+    COMPONENTES, ORDENADORES, PERIFÉRICOS, TELEVISORES, SONIDO
+}
