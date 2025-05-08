@@ -51,7 +51,7 @@
     <button (click)="buscarProducto()"><i class="fas fa-search"></i></button>
   </div>
 
-  <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
+  <!-- Si el usuario está logueado, muestra area personal; de lo contrario, muestra Iniciar sesion -->
   <div class="account" (click)="irAUser()">
     <i class="fas fa-user"></i>
     <span> {{ isLoggedIn ? 'Área personal' : 'Iniciar sesión' }}</span>
