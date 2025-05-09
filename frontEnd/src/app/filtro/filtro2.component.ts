@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../models/producto';
 import { SearchService } from '../search.service';
+import { Router } from '@angular/router';
 
 interface Product {
   id: number;
@@ -37,7 +38,7 @@ export class Filtro2Component implements OnInit {
   maxPrice: number = 9625;
   filteredProducts: Producto[] = [];
 
-  constructor(private productoService: ProductoService, private searchService: SearchService) { }
+  constructor(private productoService: ProductoService, private searchService: SearchService, private router: Router) { }
 
   ngOnInit(): void {
     this.productoService.getAllProductos().subscribe({
@@ -111,5 +112,10 @@ export class Filtro2Component implements OnInit {
         product.nombre?.toLowerCase().includes(term)
       );
     }
+  }
+
+  irAlProducto(id: number): void{
+    this.router.navigate(['/producto', id]);
+    console.log("id: " + id);
   }
 }

@@ -6,11 +6,13 @@ import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.co
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { Filtro2Component } from './filtro/filtro2.component';
+import { ProductoComponent } from './producto/producto.component';
 
 const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'cesta', component: CestaComponent},
+  {path: 'producto/:id', component: ProductoComponent},
   {path: '*', redirectTo: ''},
   {path: '', component: Filtro2Component  },
   

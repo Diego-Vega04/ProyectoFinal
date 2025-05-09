@@ -27,6 +27,7 @@ import { CestaComponent } from './cesta/cesta.component';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     Filtro2Component,
     AuthModule,
     HttpClientModule,
+    RouterModule,
     
     PaginaPrincipalComponent,
     BannerInferiorComponent,
