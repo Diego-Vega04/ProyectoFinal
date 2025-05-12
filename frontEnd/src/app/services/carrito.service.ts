@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Carrito } from "../models/carrito";
 import { Producto } from "../models/producto";
 
@@ -9,6 +9,9 @@ import { Producto } from "../models/producto";
 })
 export class CarritoService {
     private apiUrl = 'http://localhost:8081/api/carritos';
+
+    private productosSubject = new BehaviorSubject<Producto[]>([]);
+    productos$ = this.productosSubject.asObservable();
 
     constructor(private http: HttpClient) { }
     //Obtener carrito por ID
@@ -34,6 +37,11 @@ export class CarritoService {
     //Añadir productos al carrito
     addProductos(idCarrito: number, producto: Producto): Observable<Carrito> {
         return this.http.post<Carrito>(`${this.apiUrl}/${idCarrito}/productos`, producto);
+    }
+
+    //Actualizar la cesta en memoria
+    updateProductos(productos: Producto[]){
+        this.productosSubject.next(productos);
     }
 
 }

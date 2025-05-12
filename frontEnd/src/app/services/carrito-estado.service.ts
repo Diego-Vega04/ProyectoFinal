@@ -7,20 +7,28 @@ import { Producto } from "../models/producto";
 })
 export class CarritoEstadoService {
     private productos: Producto[] = [];
+    private productosSubject = new BehaviorSubject<Producto[]>([]);
 
     agregarProducto(producto: Producto) {
         this.productos.push(producto);
+        this.productosSubject.next(this.productos);
     }
 
     getProductos(): Producto[] {
         return this.productos;
     }
 
+    getProductosObservable() {
+        return this.productosSubject.asObservable();
+    }
+
     vaciarCarrito() {
         this.productos = [];
+        this.productosSubject.next(this.productos);
     }
 
     eliminarProducto(index: number) {
         this.productos.splice(index, 1);
+        this.productosSubject.next(this.productos);
     }
 }

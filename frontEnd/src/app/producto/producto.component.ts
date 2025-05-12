@@ -11,6 +11,7 @@ import { User } from '../models/user';
 import { Carrito } from '../models/carrito';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-producto',
@@ -31,7 +32,8 @@ export class ProductoComponent implements OnInit {
     private carritoService: CarritoService,
     private authService: AuthService,
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -47,18 +49,6 @@ export class ProductoComponent implements OnInit {
         }
       });
     });
-
-    //Cargar la cesta
-    const user = this.authService.getUsuario();
-
-    /*
-    this.carritoService.getCarritoByUserId(user?.id).subscribe({
-      next: (carrito) => {
-        // El carrito ya existe
-        this.carrito = carrito;
-      }
-    });
-    */
   }
 
   openReviewDialog(): void {
@@ -97,7 +87,11 @@ export class ProductoComponent implements OnInit {
           this.carritoService.addProductos(idCarrito, producto).subscribe({
             next: (carritoActualizado) => {
               console.log("Producto agregado al carrito del backend:", carritoActualizado);
-              this.carritoEstadoService.agregarProducto(producto);
+              this.carritoService.addProductos(idCarrito, producto);
+              this.carritoService.updateProductos(carritoActualizado.productos);
+
+              this.snackBar.open('Producto añadido a la cesta', 'Cerrar', { duration: 2000});
+              console.log("carrito:", this.carritoService.getCarritoById(idCarrito));
             },
             error: (err) => {
               console.error("Error al agregar producto al carrito:", err);
@@ -112,7 +106,7 @@ export class ProductoComponent implements OnInit {
       }
     });
 
-    console.log("carrito:", this.carritoEstadoService.getProductos());
+    
   }
 
 

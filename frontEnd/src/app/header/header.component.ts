@@ -9,6 +9,8 @@ import { User } from '../models/user';
 import { Carrito } from '../models/carrito';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { CarritoService } from '../services/carrito.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -26,31 +28,49 @@ export class HeaderComponent {
   nombreBusqueda: string = '';
   productosCesta: Producto[] = [];
 
-
   constructor(
     private keycloakService: KeycloakService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private carritoService: CarritoService,
     private carritoEstadoService: CarritoEstadoService,
     private searchService: SearchService,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
   async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
 
-    this.productosCesta = this.carritoEstadoService.getProductos();
+    const user = this.authService.getUsuario();
+      
+      this.userService.getByEmail(user.email).subscribe({
+        next: (user) => {
+          const idCarrito = user.carrito?.id;
 
-    const email = this.authService.getUsuario();
-    if (!email) return;
+          if(idCarrito !== undefined){
+            this.carritoService.getCarritoById(idCarrito).subscribe({
+              next: (carrito) => {
+                this.productosCesta = carrito.productos;
+                console.log("productos" + this.productosCesta);
 
-    this.http.get<User>(`/api/users/email/${email}`).subscribe(user => {
-      this.http.get<Carrito>(`/api/carritos/user/${user.id}`).subscribe(carrito => {
-        this.productosCesta = carrito.productos;
-      });
-    });
+                this.carritoService.productos$.subscribe((productos) => {
+                  this.productosCesta = productos; 
+                });
+
+                this.carritoService.updateProductos(carrito.productos);
+              },
+              error: (err) => {
+                console.error('Error el cargar la cesta del usuario', err);
+              }
+            });
+          }
+        }
+      })
+    
   }
+  
 
   // Función para alternar el menú lateral
   toggleMenu() {
@@ -100,6 +120,12 @@ export class HeaderComponent {
   buscarProducto() {
     const termino = this.nombreBusqueda.toLowerCase().trim();
     this.searchService.setSearchTerm(termino);
+  }
+
+  //Cargar cesta
+  getByUser() {
+    
+    
   }
 
   //Cesta
