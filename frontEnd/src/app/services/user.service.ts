@@ -7,13 +7,13 @@ import { User } from "../models/user";
     providedIn: 'root'
 })
 export class UserService{
-    private apiUrl = 'http://localhost:8080/api/users';
+    private apiUrl = 'http://localhost:8081/api/users';
 
     constructor(private http: HttpClient){}
 
     //Obtener usuario por email
     getByEmail(email: string): Observable<User> {
-        return this.http.get<User>(`$(this.apiUrl)/email/${email}`);
+        return this.http.get<User>(`${this.apiUrl}/email/${email}`);
     }
 
     //Obtener usuario por ID

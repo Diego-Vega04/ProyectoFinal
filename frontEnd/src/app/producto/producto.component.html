@@ -93,7 +93,7 @@
         <span>Disponibilidad en tienda</span>
       </div>
 
-      <button class="add-to-cart-btn">Añadir al carrito</button>
+      <button class="add-to-cart-btn"  *ngIf="product?.id" (click)="addCarrito(product!)">Añadir a la cesta</button>
 
       <div class="additional-services">
 

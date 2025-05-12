@@ -3,6 +3,12 @@ import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchService } from '../search.service';
+import { Producto } from '../models/producto';
+import { CarritoEstadoService } from '../services/carrito-estado.service';
+import { User } from '../models/user';
+import { Carrito } from '../models/carrito';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -15,38 +21,35 @@ export class HeaderComponent {
   menuOpen = false;
   cartMenuOpen: boolean = false;
   menuAbierto = false;
-
   isLoggedIn: boolean = false;
-
   isDarkMode = false;
-
   nombreBusqueda: string = '';
+  productosCesta: Producto[] = [];
 
-  // cambiar a tipo producto y las rutas a las caracteristicas
-  productosCesta = [
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre1', precio: 20.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre2', precio: 40.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre3', precio: 30.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre4', precio: 43.22},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre5', precio: 46.50},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre6', precio: 50.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre7', precio: 40.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre8', precio: 80.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre9', precio: 90.00},
-    {imagen: 'https://picsum.photos/200/300', nombre: 'Nombre10', precio: 100.00}
-
-  ]; 
-
-  
 
   constructor(
-    private keycloakService: KeycloakService, 
-    private router: Router, 
+    private keycloakService: KeycloakService,
+    private router: Router,
     private snackBar: MatSnackBar,
-  private searchService: SearchService) { }
+    private carritoEstadoService: CarritoEstadoService,
+    private searchService: SearchService,
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
+
+    this.productosCesta = this.carritoEstadoService.getProductos();
+
+    const email = this.authService.getUsuario();
+    if (!email) return;
+
+    this.http.get<User>(`/api/users/email/${email}`).subscribe(user => {
+      this.http.get<Carrito>(`/api/carritos/user/${user.id}`).subscribe(carrito => {
+        this.productosCesta = carrito.productos;
+      });
+    });
   }
 
   // Función para alternar el menú lateral
@@ -85,7 +88,7 @@ export class HeaderComponent {
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
     const body = document.body;
-  
+
     if (this.isDarkMode) {
       body.setAttribute('data-tema', 'oscuro');
     } else {
@@ -93,28 +96,31 @@ export class HeaderComponent {
     }
   }
 
-  //Función para la barra de búsqueda: (descomentar cuando estén implementadas las entidades y servicios en front)
-  buscarProducto(){
+  //Función para la barra de búsqueda:
+  buscarProducto() {
     const termino = this.nombreBusqueda.toLowerCase().trim();
     this.searchService.setSearchTerm(termino);
   }
 
-  borrarProducto(index: number){
-    this.productosCesta.splice(index, 1); //revisar cuando este el servicio de producto
+  //Cesta
+  borrarProducto(index: number) {
+    this.carritoEstadoService.eliminarProducto(index);
+    this.productosCesta = this.carritoEstadoService.getProductos();
 
     this.snackBar.open('Producto eliminado de la cesta', 'Cerrar', {
-      duration: 3000, 
+      duration: 3000,
       horizontalPosition: 'left',
       verticalPosition: 'bottom',
-      panelClass: ['snackbar-inferior'] 
-    });    
+      panelClass: ['snackbar-inferior']
+    });
   }
 
-  vaciarCesta(){
+  vaciarCesta() {
+    this.carritoEstadoService.vaciarCarrito();
     this.productosCesta = [];
   }
 
-  irCesta(){
+  irCesta() {
     this.router.navigate(['/cesta']);
     this.closeMenus();
   }

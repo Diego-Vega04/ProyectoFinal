@@ -24,4 +24,17 @@ export class AuthService {
   public logout(): Promise<void> {
     return this.keycloak.logout(window.location.origin);
   }
+
+  public getUsuario(): any | null {
+    const tokenParsed = this.keycloak.getKeycloakInstance().idTokenParsed;
+
+    if (!tokenParsed) return null;
+
+    return {
+      id: tokenParsed['sub'],
+      email: tokenParsed['email'],
+      nombre: tokenParsed['name'],
+    };
+  }
+
 }

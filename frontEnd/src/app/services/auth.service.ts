@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService {//temporal 
 
   user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -12,11 +12,9 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
-    //return true; 
   }
 
   //Obtener los datos del usuario logueado, 
-  // es posible que haya que cambiarlo al unir el front con el back
 
   getUserName(): string | null {
     this.user.nombre = "nombrePrueba"; //pruebas
