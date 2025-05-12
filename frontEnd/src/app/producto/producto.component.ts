@@ -22,6 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ProductoComponent implements OnInit {
   productId!: number;
   product!: Producto | undefined;
+  adds: Set<number> = new Set();
 
   constructor(
     public dialog: MatDialog,
@@ -49,6 +50,15 @@ export class ProductoComponent implements OnInit {
         }
       });
     });
+
+    //Validar si el producto ya esta en la cesta
+    const productCesta = this.carritoEstadoService.getProductos();
+
+    productCesta.forEach(p => {
+      if(p.id !== undefined) {
+        this.adds.add(p.id)
+      }
+    });
   }
 
   openReviewDialog(): void {
@@ -65,8 +75,6 @@ export class ProductoComponent implements OnInit {
     });
   }
 
-  @Input() producto!: Producto;
-
   addCarrito(producto: Producto) {
     const user = this.authService.getUsuario();
 
@@ -76,6 +84,10 @@ export class ProductoComponent implements OnInit {
     }
 
     console.log("usuario: " + user.nombre + " id: " + user.id);
+
+    if(producto.id !== undefined && this.adds.has(producto.id)) {
+      return; 
+    }
 
     this.userService.getByEmail(user.email).subscribe({
       next: (user) => {
@@ -87,11 +99,22 @@ export class ProductoComponent implements OnInit {
           this.carritoService.addProductos(idCarrito, producto).subscribe({
             next: (carritoActualizado) => {
               console.log("Producto agregado al carrito del backend:", carritoActualizado);
-              this.carritoService.addProductos(idCarrito, producto);
               this.carritoService.updateProductos(carritoActualizado.productos);
 
-              this.snackBar.open('Producto añadido a la cesta', 'Cerrar', { duration: 2000});
               console.log("carrito:", this.carritoService.getCarritoById(idCarrito));
+
+              if (producto.id !== undefined){
+                this.adds.add(producto.id!);
+              }
+
+              this.carritoService.getCarritoById(idCarrito).subscribe(carrito => {
+                carrito.productos.forEach(p => {
+                  if(p.id !== undefined) {
+                    this.adds.add(p.id);
+                  }
+                });
+              });
+              
             },
             error: (err) => {
               console.error("Error al agregar producto al carrito:", err);
@@ -106,7 +129,13 @@ export class ProductoComponent implements OnInit {
       }
     });
 
-    
+  }
+
+  getTextoBoton(producto: Producto): string {
+    if (producto.id !== undefined && this.adds.has(producto.id)) {
+      return 'Producto añadido a la cesta';
+    }
+    return 'Añadir a la cesta';
   }
 
 

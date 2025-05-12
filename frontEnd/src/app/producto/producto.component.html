@@ -93,7 +93,11 @@
         <span>Disponibilidad en tienda</span>
       </div>
 
-      <button class="add-to-cart-btn"  *ngIf="product?.id" (click)="addCarrito(product!)">Añadir a la cesta</button>
+      <ng-container *ngIf="product?.id as productId">
+        <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
+          {{ getTextoBoton(product!) }}
+        </button>
+      </ng-container>
 
       <div class="additional-services">
 
