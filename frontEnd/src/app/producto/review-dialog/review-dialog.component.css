@@ -1,0 +1,21 @@
+.stars {
+  font-size: 40px; 
+  display: inline-block;
+}
+
+.stars span {
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s; 
+}
+
+.stars .filled {
+  color: var(--color-primario); 
+}
+
+.stars .hovered {
+  color: var(--color-secundario); 
+}
+
+.stars span:hover {
+  transform: scale(1.3); 
+}

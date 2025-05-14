@@ -6,10 +6,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-review-dialog',
   standalone: false,
   templateUrl: './review-dialog.component.html',
+  styleUrl: './review-dialog.component.css'
 })
 export class ReviewDialogComponent {
   reviewForm: FormGroup;
-  selectedRating = 0;
+  selectedRating: number = 0;
+  hoveredRating: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ReviewDialogComponent>,
@@ -42,4 +44,13 @@ export class ReviewDialogComponent {
   cancel(): void {
     this.dialogRef.close();
   }
+
+  hoverRating(rating: number): void {
+    this.hoveredRating = rating;  
+  }
+
+  resetHover(): void {
+    this.hoveredRating = 0; 
+  }
+
 }
