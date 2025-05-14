@@ -51,7 +51,7 @@
         <div class="cart-Ncontent">
           <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
           <p class="cart-text">Tu carrito está vacío</p>
-          <button class="go-home-btn" click="window.location.href='/'" (click)="toggleCartMenu()">Explorar
+          <button class="go-home-btn" [routerLink]="'/'" (click)="toggleCartMenu()">Explorar
             artículos</button>
         </div>
       </ng-template>

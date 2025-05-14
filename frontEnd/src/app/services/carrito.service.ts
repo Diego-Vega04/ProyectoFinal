@@ -39,14 +39,18 @@ export class CarritoService {
         return this.http.post<Carrito>(`${this.apiUrl}/${idCarrito}/productos`, producto);
     }
 
+    //Vaciar el carrito
+    vaciarCarrito(id: number): Observable<Carrito> {
+        return this.http.delete<Carrito>(`${this.apiUrl}/delete/${id}`)
+    }
+
     //Actualizar la cesta en memoria
-    updateProductos(productos: Producto[]){
+    updateProductos(productos: Producto[]) {
         this.productosSubject.next(productos);
     }
 
-    //Vaciar el carrito
-    vaciarCarrito(id: number): Observable<Carrito>{
-        return this.http.delete<Carrito>(`${this.apiUrl}/delete/${id}`)
+    vaciarProductos() {
+        this.productosSubject.next([]);
     }
 
 }

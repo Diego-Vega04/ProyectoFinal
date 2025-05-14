@@ -130,25 +130,26 @@ export class HeaderComponent {
   vaciarCesta() {
     const user = this.authService.getUsuario();
 
-  this.userService.getByEmail(user.email).subscribe({
-    next: (usuarioDb) => {
-      const carritoId = usuarioDb.carrito?.id;
-      if (carritoId !== undefined) {
-        this.carritoService.vaciarCarrito(carritoId).subscribe({
-          next: () => {
-            this.productosCesta = [];
-            this.carritoEstadoService.vaciarCarrito();
-          },
-          error: (err) => {
-            console.error('Error al vaciar la cesta', err);
-          }
-        });
+    this.userService.getByEmail(user.email).subscribe({
+      next: (usuarioDb) => {
+        const carritoId = usuarioDb.carrito?.id;
+        if (carritoId !== undefined) {
+          this.carritoService.vaciarCarrito(carritoId).subscribe({
+            next: () => {
+              this.productosCesta = [];
+              this.carritoEstadoService.vaciarCarrito();
+
+            },
+            error: (err) => {
+              console.error('Error al vaciar la cesta', err);
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener el usuario para vaciar la cesta', err);
       }
-    },
-    error: (err) => {
-      console.error('Error al obtener el usuario para vaciar la cesta', err);
-    }
-  });
+    });
   }
 
   irCesta() {

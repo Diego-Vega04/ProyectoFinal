@@ -23,7 +23,6 @@ export class CarritoEstadoService {
     }
 
     vaciarCarrito() {
-        this.productos = [];
         this.productosSubject.next(this.productos);
     }
 
