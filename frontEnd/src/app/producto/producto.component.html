@@ -74,12 +74,10 @@
     <div class="similar-products">
       <h2 class="section-title">Artículos de la misma categoría</h2>
       <div class="similar-products-container">
-        <div class="similar-product" *ngFor="let similar of productosSimilares">
+        <div class="similar-product" *ngFor="let similar of productosSimilares" [routerLink]="'/producto/' + similar.id">
           <img [src]="'/img/' + similar.imagen" [alt]="similar.nombre">
-
           <div class="similar-product-info">
             <p>{{ similar.nombre }}</p>
-            <!-- Aquí puedes poner rating si tienes datos -->
             <p class="similar-product-price">{{ similar.precio }}€</p>
           </div>
         </div>

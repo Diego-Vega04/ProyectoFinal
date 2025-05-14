@@ -11,11 +11,11 @@ export class CarritoEstadoService {
 
     agregarProducto(producto: Producto) {
         this.productos.push(producto);
-        this.productosSubject.next(this.productos);
+        this.productosSubject.next([...this.productos]);
     }
 
     getProductos(): Producto[] {
-        return this.productos;
+        return [...this.productos];
     }
 
     getProductosObservable() {
@@ -30,5 +30,10 @@ export class CarritoEstadoService {
     eliminarProducto(index: number) {
         this.productos.splice(index, 1);
         this.productosSubject.next(this.productos);
+    }
+
+    actualizarProductos(productos: Producto[]) {
+        this.productos = [...productos];
+        this.productosSubject.next([...this.productos]);
     }
 }

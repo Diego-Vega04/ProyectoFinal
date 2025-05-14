@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -97,6 +98,22 @@ public class CarritoController {
                     .body("El id del carrito no puede ser menor o igual que 0");
         }
 
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> vaciarCarrito(@PathVariable("id") int carritoId) {
+        try {
+
+            boolean success = carritoSer.vaciarCarrito(carritoId);
+
+            if (success) {
+                return ResponseEntity.ok("Carrito vaciado con éxito");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrito no encontrado");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al vaciar la cesta");
+        }
     }
 
 }

@@ -35,4 +35,16 @@ public class CarritoService {
         return carritoRepo.findById(id);
 
     }
+
+    public boolean vaciarCarrito(int id){
+        Optional<Carrito> carritoOpt = carritoRepo.findById(id);
+        
+        if (carritoOpt.isPresent()) {
+            Carrito carrito = carritoOpt.get();
+            carrito.getProductos().clear(); 
+            carritoRepo.save(carrito);
+            return true;
+        }
+        return false;
+    }
 }

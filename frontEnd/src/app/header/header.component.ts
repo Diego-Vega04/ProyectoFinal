@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { CarritoService } from '../services/carrito.service';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,8 @@ export class HeaderComponent {
   nombreBusqueda: string = '';
   productosCesta: Producto[] = [];
 
+  private carritoEstadoSubscription: Subscription | null = null;
+
   constructor(
     private keycloakService: KeycloakService,
     private router: Router,
@@ -37,40 +40,41 @@ export class HeaderComponent {
     private searchService: SearchService,
     private http: HttpClient,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+
   ) { }
 
   async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
 
-    const user = this.authService.getUsuario();
-      
-      this.userService.getByEmail(user.email).subscribe({
-        next: (user) => {
-          const idCarrito = user.carrito?.id;
+    if (this.isLoggedIn) {
+      const user = this.authService.getUsuario();
+      const email = user.email;
 
-          if(idCarrito !== undefined){
+      // Se busca el usuario en la base de datos utilizando el email
+      this.userService.getByEmail(email).subscribe({
+        next: (userFromDb) => {
+          // Si se encuentra el usuario en la base de datos, se obtiene el ID del carrito
+          const idCarrito = userFromDb.carrito?.id;
+
+          if (idCarrito) {
             this.carritoService.getCarritoById(idCarrito).subscribe({
               next: (carrito) => {
                 this.productosCesta = carrito.productos;
-                console.log("productos" + this.productosCesta);
-
-                this.carritoService.productos$.subscribe((productos) => {
-                  this.productosCesta = productos; 
-                });
-
-                this.carritoService.updateProductos(carrito.productos);
+                console.log("productos", this.productosCesta);
               },
               error: (err) => {
-                console.error('Error el cargar la cesta del usuario', err);
+                console.error('Error al cargar la cesta del usuario', err);
               }
             });
           }
+        },
+        error: (err) => {
+          console.error('Error al obtener el usuario desde la base de datos', err);
         }
-      })
-    
+      });
+    }
   }
-  
 
   // Función para alternar el menú lateral
   toggleMenu() {
@@ -122,28 +126,29 @@ export class HeaderComponent {
     this.searchService.setSearchTerm(termino);
   }
 
-  //Cargar cesta
-  getByUser() {
-    
-    
-  }
-
   //Cesta
-  borrarProducto(index: number) {
-    this.carritoEstadoService.eliminarProducto(index);
-    this.productosCesta = this.carritoEstadoService.getProductos();
-
-    this.snackBar.open('Producto eliminado de la cesta', 'Cerrar', {
-      duration: 3000,
-      horizontalPosition: 'left',
-      verticalPosition: 'bottom',
-      panelClass: ['snackbar-inferior']
-    });
-  }
-
   vaciarCesta() {
-    this.carritoEstadoService.vaciarCarrito();
-    this.productosCesta = [];
+    const user = this.authService.getUsuario();
+
+  this.userService.getByEmail(user.email).subscribe({
+    next: (usuarioDb) => {
+      const carritoId = usuarioDb.carrito?.id;
+      if (carritoId !== undefined) {
+        this.carritoService.vaciarCarrito(carritoId).subscribe({
+          next: () => {
+            this.productosCesta = [];
+            this.carritoEstadoService.vaciarCarrito();
+          },
+          error: (err) => {
+            console.error('Error al vaciar la cesta', err);
+          }
+        });
+      }
+    },
+    error: (err) => {
+      console.error('Error al obtener el usuario para vaciar la cesta', err);
+    }
+  });
   }
 
   irCesta() {

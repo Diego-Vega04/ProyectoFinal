@@ -44,4 +44,9 @@ export class CarritoService {
         this.productosSubject.next(productos);
     }
 
+    //Vaciar el carrito
+    vaciarCarrito(id: number): Observable<Carrito>{
+        return this.http.delete<Carrito>(`${this.apiUrl}/delete/${id}`)
+    }
+
 }

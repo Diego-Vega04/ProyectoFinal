@@ -75,15 +75,15 @@
         </div>
         <div class="product-info">
           <h3 class="product-title">{{product.nombre}}</h3>
-          <!-- Mostrar categoría para depuración (opcional) -->
           <p class="product-category" style="font-size: 0.8em; color: #666;">
-            Cat: {{product.categoria}}
+            Categoría: {{product.categoria}}
           </p>
           <div class="product-price">
             <span class="current-price">{{product.precio}}€</span>
           </div>
           <div class="shipping-info">
-            <span class="free-shipping">Envío gratuito. Consulte disponibilidad.</span>
+            <span class="free-shipping">Envío:
+          {{ product?.precio! < 70 ? '3.99€' : 'Gratis' }}</span>
           </div>
         </div>
       </div>

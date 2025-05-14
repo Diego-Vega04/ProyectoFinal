@@ -38,11 +38,10 @@
       <ng-container *ngIf="productosCesta.length > 0; else vacia">
         <ul class="cart-list">
           <li *ngFor="let producto of productosCesta; let i = index;">
-            <img [src]="producto.imagen" alt="Producto">
+            <img [src]="'/img/' + producto.imagen" alt="Producto">
             <div>
               <p><strong>{{ producto.nombre }}</strong></p>
               <p>{{ producto.precio }} €</p>
-              <button (click)="borrarProducto(i); $event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
             </div>
           </li>
         </ul>
