@@ -51,6 +51,10 @@ export class HeaderComponent {
       const user = this.authService.getUsuario();
       const email = user.email;
 
+      this.carritoService.productos$.subscribe(productos => {
+        this.productosCesta = productos;
+      })
+
       // Se busca el usuario en la base de datos utilizando el email
       this.userService.getByEmail(email).subscribe({
         next: (userFromDb) => {

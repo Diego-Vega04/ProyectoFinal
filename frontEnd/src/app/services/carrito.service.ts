@@ -53,4 +53,8 @@ export class CarritoService {
         this.productosSubject.next([]);
     }
 
+    setProductos(productos: Producto[]) {
+        this.productosSubject.next(productos);
+    }
+
 }

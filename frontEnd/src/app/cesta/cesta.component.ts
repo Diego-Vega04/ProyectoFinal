@@ -15,14 +15,13 @@ declare var paypal: any;
 export class CestaComponent implements OnInit, AfterViewInit {
 
   paypalRendered: boolean = false;
+  cartItems: Producto[] = [];
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private carritoService: CarritoService
   ) { }
-
-  cartItems: Producto[] = [];
 
   ngOnInit(): void {
     const user = this.authService.getUsuario();
@@ -55,7 +54,6 @@ export class CestaComponent implements OnInit, AfterViewInit {
       if (container) {
         this.paypalRendered = true;
 
-        // ✅ Aplaza el renderizado para el próximo ciclo del event loop
         setTimeout(() => {
           this.renderPayPalButton();
         }, 0);
@@ -91,9 +89,9 @@ export class CestaComponent implements OnInit, AfterViewInit {
       },
       onApprove: (data: any, actions: any) => {
         return actions.order.capture().then((details: any) => {
-          alert('Pago realizado por: ' + details.payer.name.given_name);
+          alert('Pago realizado exitosamente por: ' + details.payer.name.given_name);
           this.cleanCart();
-          this.paypalRendered = false; 
+          this.paypalRendered = false;
         });
       },
       onError: (err: any) => {
@@ -118,8 +116,11 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
   //Vacia el carrito completo
   cleanCart() {
-    this.cartItems = [];
-    this.renderPayPalButton();
+
+        this.cartItems = [];
+        this.carritoService.setProductos([]); 
+        this.paypalRendered = false;
+
   }
 
   // Calcula el subtotal
