@@ -4,45 +4,8 @@
   <!-- Logo -->
   <div class="logo">
     <a routerLink="/">
-      <img src="logoSoloNoFondo.png" alt="Logo">
+      <img src="logoIzqNoFondo.png" alt="Logo">
     </a>
-  </div>
-
-  <!-- Menú de categorías-->
-  <div class="categories" (click)="toggleMenu()">
-    <button class="hamburger" [ngClass]="{'open': menuOpen}">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
-    </button>
-    <a href="#">Categorías disponibles</a>
-  </div>
-
-  <!-- Menú lateral -->
-  <div class="side-menu" [ngClass]="{'open': menuOpen}">
-    <div class="side-menu-content">
-      <button class="close-btn" (click)="toggleMenu()">✕</button>
-      <h2>CATEGORÍAS</h2>
-      <hr>
-      <ul>
-        <li>
-          <a>Componentes</a>
-        </li>
-        <li>
-          <a>Ordenadores</a>
-        </li>
-        <li>
-          <a>Periféricos</a>
-        </li>
-        <li>
-          <a>Televisores</a>
-        </li>
-        <li>
-          <a>Audio</a>
-        </li>
-      </ul>
-
-    </div>
   </div>
 
   <!-- Barra de búsqueda-->
