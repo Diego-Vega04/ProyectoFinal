@@ -4,24 +4,24 @@
 
     <div class="checkbox-filters">
       <div class="filter-item">
-        <input type="checkbox" id="rtx4080" name="rtx4080">
-        <label for="rtx4080">Componentes</label>
+        <input type="checkbox" id="componentes" [value]="'COMPONENTES'" (change)="onCategoryChange($event)">
+        <label for="componentes">Componentes</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="rtx4070" name="rtx4070">
-        <label for="rtx4070">Ordenadores</label>
+        <input type="checkbox" id="ordenadores" [value]="'ORDENADORES'" (change)="onCategoryChange($event)">
+        <label for="ordenadores">Ordenadores</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="workStudy" name="workStudy">
-        <label for="workStudy">Periféricos</label>
+        <input type="checkbox" id="periféricos" [value]="'PERIFÉRICOS'" (change)="onCategoryChange($event)">
+        <label for="periféricos">Periféricos</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="workStudy" name="workStudy">
-        <label for="workStudy">Televisores</label>
+        <input type="checkbox" id="televisores" [value]="'TELEVISORES'" (change)="onCategoryChange($event)">
+        <label for="televisores">Televisores</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="workStudy" name="workStudy">
-        <label for="workStudy">Audio</label>
+        <input type="checkbox" id="sonido" [value]="'SONIDO'" (change)="onCategoryChange($event)">
+        <label for="sonido">Sonido</label>
       </div>
     </div>
 
@@ -32,9 +32,9 @@
       </div>
       <div class="price-range-container">
         <div class="price-slider-container">
-          <input type="range" min="150" max="9999" [(ngModel)]="minPrice" (input)="updatePriceFilter()"
+          <input type="range" min="0" max="1300" [(ngModel)]="minPrice" (input)="updatePriceFilter()"
             class="price-slider min-price">
-          <input type="range" min="150" max="9999" [(ngModel)]="maxPrice" (input)="updatePriceFilter()"
+          <input type="range" min="0" max="1300" [(ngModel)]="maxPrice" (input)="updatePriceFilter()"
             class="price-slider max-price">
           <div class="price-slider-track"></div>
         </div>
@@ -72,7 +72,9 @@
           <label for="corsair">Corsair</label>
         </div>
       </div>
-
+    </div>
+    <div class="filter-actions">
+      <button (click)="aplicarTodosFiltros()" class="apply-filters-btn">Aplicar filtros</button>
     </div>
   </div>
 
@@ -80,17 +82,17 @@
     <div class="sorting-options">
       <div class="sort-buttons">
         <button class="sort-button" [class.active]="currentSort === 'relevance'"
-          (click)="sortProducts('relevance')">Relevancia</button>
+          (click)="sortProducts('relevance', displayedProducts)">Relevancia</button>
         <button class="sort-button" [class.active]="currentSort === 'price_asc'"
-          (click)="sortProducts('price_asc')">Precio más bajo</button>
+          (click)="sortProducts('price_asc', displayedProducts)">Precio más bajo</button>
         <button class="sort-button" [class.active]="currentSort === 'price_desc'"
-          (click)="sortProducts('price_desc')">Precio más alto</button>
+          (click)="sortProducts('price_desc', displayedProducts)">Precio más alto</button>
       </div>
       <div class="product-count">{{ displayedProducts.length }} productos</div>
     </div>
 
     <div class="product-grid">
-      <!-- Use *ngFor to iterate through displayedProducts -->
+      <!-- Listado de productos -->
       <div class="product-card" *ngFor="let product of displayedProducts" (click)="irAlProducto(product.id!)"
         style="cursor: pointer;">
         <div class="product-image">
@@ -98,6 +100,10 @@
         </div>
         <div class="product-info">
           <h3 class="product-title">{{product.nombre}}</h3>
+          <!-- Mostrar categoría para depuración (opcional) -->
+          <p class="product-category" style="font-size: 0.8em; color: #666;">
+            Cat: {{product.categoria}}
+          </p>
           <div class="product-price">
             <span class="current-price">{{product.precio}}€</span>
           </div>
@@ -105,6 +111,11 @@
             <span class="free-shipping">Envío gratuito. Consulte disponibilidad.</span>
           </div>
         </div>
+      </div>
+
+      <!-- Mensaje si no hay productos -->
+      <div *ngIf="displayedProducts.length === 0" style="grid-column: 1/-1; text-align: center; padding: 20px;">
+        <p>No se encontraron productos que coincidan con los filtros seleccionados.</p>
       </div>
     </div>
   </div>

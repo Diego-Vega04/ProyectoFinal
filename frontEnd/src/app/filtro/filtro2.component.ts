@@ -1,27 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../models/producto';
 import { SearchService } from '../search.service';
 import { Router } from '@angular/router';
-
-interface Product {
-  id: number;
-  title: string;
-  currentPrice: number;
-  originalPrice: number;
-  rating: number;
-  reviews: number;
-  discount: number;
-  image: string;
-  trending?: boolean;
-  recommended?: boolean;
-  shipping: string;
-  moreOptions?: boolean;
-  dateAdded: Date;
-  salesCount: number;
-}
 
 @Component({
   selector: 'app-filtro2',
@@ -30,15 +13,23 @@ interface Product {
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
+
 export class Filtro2Component implements OnInit {
   products: Producto[] = [];
   displayedProducts: Producto[] = [];
   currentSort: string = 'relevance';
-  minPrice: number = 211;
-  maxPrice: number = 9625;
+  minPrice: number = 0;
+  maxPrice: number = 1300;
   filteredProducts: Producto[] = [];
+  selectedCategories: string[] = [];
+  searchTerm: string = '';
 
-  constructor(private productoService: ProductoService, private searchService: SearchService, private router: Router) { }
+  constructor(
+    private productoService: ProductoService, 
+    private searchService: SearchService, 
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.productoService.getAllProductos().subscribe({
@@ -46,7 +37,8 @@ export class Filtro2Component implements OnInit {
         this.products = productos;
         this.filteredProducts = [...productos];
         this.displayedProducts = [...productos];
-        console.log('Productos cargados:', productos); 
+        console.log('Productos cargados:', productos);
+        console.log('Categorías disponibles:', this.getCategoriesCount(productos));
       },
       error: (err) => {
         console.error('Error al cargar productos:', err);
@@ -54,68 +46,103 @@ export class Filtro2Component implements OnInit {
     });
 
     this.searchService.searchTerm$.subscribe(term => {
-      this.filtrarPorNombre(term);
+      this.searchTerm = term;
+      this.aplicarTodosFiltros();
     });
-  
+  }
+
+  // Helper para contar productos por categoría
+  getCategoriesCount(productos: Producto[]): any {
+    const categoryCounts: any = {};
+    productos.forEach(p => {
+      const cat = p.categoria?.toString().trim().toUpperCase() || 'SIN CATEGORÍA';
+      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+    });
+    return categoryCounts;
   }
 
   updatePriceFilter(): void {
-    // Make sure min is not greater than max
     if (this.minPrice > this.maxPrice) {
       this.minPrice = this.maxPrice;
     }
-    
-    // Filter products by price range
-    this.filteredProducts = this.products.filter(product => 
-      product.precio! >= this.minPrice && 
-      product.precio! <= this.maxPrice
-    );
-    
-    // Apply current sort to filtered products
-    this.sortProducts(this.currentSort);
+    this.aplicarTodosFiltros();
   }
-  
-  sortProducts(sortType: string): void {
-    this.currentSort = sortType;
-    
-    // Create a copy of the filtered products array to sort
-    let sortedProducts = [...this.filteredProducts];
-    
+
+  sortProducts(sortType: string, productos: Producto[]): Producto[] {
+    let sorted = [...productos];
+
     switch (sortType) {
-      case 'relevance':
-        // Default order (could be based on a relevance score in a real app)
-        // For this example, we'll just reset to the original order
-        sortedProducts = [...this.products];
-        break;
-        
       case 'price_asc':
-        // Sort by price, lowest first
-        sortedProducts.sort((a, b) => a.precio! - b.precio!);
+        sorted.sort((a, b) => a.precio! - b.precio!);
         break;
-        
       case 'price_desc':
-        // Sort by price, highest first
-        sortedProducts.sort((a, b) => b.precio! - a.precio!);
+        sorted.sort((a, b) => b.precio! - a.precio!);
         break;
-        
+      case 'relevance':
+      default:
+        break;
     }
-    
-    // Update the displayed products
-    this.displayedProducts = sortedProducts;
+
+    return sorted;
   }
 
-  filtrarPorNombre(term: string): void {
-    if (!term) {
-      this.displayedProducts = [...this.products];
-    } else {
-      this.displayedProducts = this.products.filter(product =>
-        product.nombre?.toLowerCase().includes(term)
-      );
-    }
-  }
-
-  irAlProducto(id: number): void{
+  irAlProducto(id: number): void {
     this.router.navigate(['/producto', id]);
     console.log("id: " + id);
+  }
+
+  onCategoryChange(event: any): void {
+    const value = event.target.value;
+    const normalizedValue = value.trim().toUpperCase();
+
+    if (event.target.checked) {
+      this.selectedCategories.push(normalizedValue);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter(c => c !== normalizedValue);
+    }
+
+    console.log('Categorías seleccionadas:', this.selectedCategories);
+  }
+
+  // Nuevo método que aplica todos los filtros en orden correcto
+  aplicarTodosFiltros(): void {
+    let resultado = [...this.products];
+    
+    // 1. Aplicar filtro de búsqueda por término
+    if (this.searchTerm) {
+      resultado = resultado.filter(product =>
+        product.nombre?.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      console.log(`Después de filtro por término "${this.searchTerm}":`, resultado.length);
+    }
+    
+    // 2. Aplicar filtro por categoría
+    if (this.selectedCategories.length > 0) {
+      const antesDelFiltro = resultado.length;
+      resultado = resultado.filter(producto => {
+        const productoCategoriaStr = producto.categoria ?
+          producto.categoria.toString().trim().toUpperCase() : '';
+        
+        const match = this.selectedCategories.some(cat => 
+          productoCategoriaStr === cat);
+
+        
+        return match;
+      });
+      console.log(`Filtro categorías: ${antesDelFiltro} -> ${resultado.length}`);
+    }
+    
+    // 3. Aplicar filtro por precio
+    const antesPrecio = resultado.length;
+    resultado = resultado.filter(p =>
+      p.precio! >= this.minPrice && p.precio! <= this.maxPrice
+    );
+    console.log(`Filtro precio: ${antesPrecio} -> ${resultado.length}`);
+    
+    // 4. Aplicar ordenación actual
+    this.displayedProducts = this.sortProducts(this.currentSort, resultado);
+    
+    // Forzar detección de cambios por si acaso
+    this.cdr.detectChanges();
   }
 }
