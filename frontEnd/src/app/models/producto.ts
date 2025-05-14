@@ -9,6 +9,7 @@ export class Producto {
     descripcion?: string;
     categoria?: CategoriaProducto;
     imagen?: string;
+    cantidad?: number; 
     comentarios?: Comentario [];
 
     constructor(data?: Partial<Producto>){

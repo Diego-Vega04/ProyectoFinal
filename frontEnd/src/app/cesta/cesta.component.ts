@@ -1,38 +1,83 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { CarritoService } from '../services/carrito.service';
+import { AuthService } from '../auth/auth.service';
+import { Producto } from '../models/producto';
 
 declare var paypal: any;
-interface CestaItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+
 @Component({
   selector: 'app-cesta',
   standalone: false,
   templateUrl: './cesta.component.html',
   styleUrl: './cesta.component.css'
 })
+export class CestaComponent implements OnInit, AfterViewInit {
 
+  paypalRendered: boolean = false;
 
-export class CestaComponent implements OnInit, AfterViewInit{
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private carritoService: CarritoService
+  ) { }
 
-  constructor(){}
+  cartItems: Producto[] = [];
 
   ngOnInit(): void {
-      
+    const user = this.authService.getUsuario();
+
+    this.userService.getByEmail(user.email).subscribe({
+      next: (usuarioDb) => {
+        const carritoId = usuarioDb.carrito?.id;
+        if (carritoId !== undefined) {
+          this.carritoService.getCarritoById(carritoId).subscribe({
+            next: (carrito) => {
+              this.cartItems = carrito.productos.map(p => ({ ...p, cantidad: 1 }));
+              this.renderPayPalButton();
+            },
+            error: (err) => {
+              console.error('Error al cargar productos del carrito', err);
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener usuario', err);
+      }
+    })
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.paypalRendered && this.cartItems.length > 0) {
+      const container = document.getElementById('paypal-button-container');
+
+      if (container) {
+        this.paypalRendered = true;
+
+        // ✅ Aplaza el renderizado para el próximo ciclo del event loop
+        setTimeout(() => {
+          this.renderPayPalButton();
+        }, 0);
+      }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.renderPayPalButton();
   }
 
   renderPayPalButton() {
-    // Borra cualquier botón anterior para evitar múltiples renders
     const container = document.getElementById('paypal-button-container');
-    if (container) {
-      container.innerHTML = '';
+    if (!container) {
+      console.warn('Contenedor PayPal no encontrado aún.');
+      return;
     }
-  
+
+    container.innerHTML = '';
+
     const total = this.getResumenTotal().total;
-  
+
     paypal.Buttons({
       createOrder: (data: any, actions: any) => {
         return actions.order.create({
@@ -48,7 +93,7 @@ export class CestaComponent implements OnInit, AfterViewInit{
         return actions.order.capture().then((details: any) => {
           alert('Pago realizado por: ' + details.payer.name.given_name);
           this.cleanCart();
-          this.renderPayPalButton();
+          this.paypalRendered = false; 
         });
       },
       onError: (err: any) => {
@@ -57,61 +102,29 @@ export class CestaComponent implements OnInit, AfterViewInit{
     }).render('#paypal-button-container');
   }
 
-  ngAfterViewInit(): void {
-    this.renderPayPalButton();
-  }
 
-  cartItems: CestaItem[] = [
-    {
-      id: 1,
-      name: 'Producto 1',
-      price: 29.99,
-      quantity: 2,
-      image: 'https://picsum.photos/200'
-    },
-    {
-      id: 2,
-      name: 'Producto 2',
-      price: 14.5,
-      quantity: 1,
-      image: 'https://picsum.photos/200'
-    },
-    {
-      id: 3,
-      name: 'Producto 3',
-      price: 10.5,
-      quantity: 1,
-      image: 'https://picsum.photos/200'
-    }
-  ];
 
   get resumen(): { envio: number; total: number } {
     return this.getResumenTotal();
   }
 
   // Actualiza la cantidad cuando el input cambia
-  updateQuantity(item: CestaItem) {
-    if (item.quantity < 1) {
-      item.quantity = 1;
+  updateQuantity(item: Producto) {
+    if (item.cantidad! < 1) {
+      item.cantidad = 1;
     }
     this.renderPayPalButton();
   }
 
-  // Elimina un producto del carrito
-  removeItem(item: CestaItem) {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
-    this.renderPayPalButton();
-  }
-
   //Vacia el carrito completo
-  cleanCart(){
+  cleanCart() {
     this.cartItems = [];
     this.renderPayPalButton();
   }
 
   // Calcula el subtotal
   getSubtotal(): number {
-    const subtotal = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = this.cartItems.reduce((acc, item) => acc + item.precio! * item.cantidad!, 0);
     return parseFloat(subtotal.toFixed(2));
   }
 

@@ -139,6 +139,11 @@ export class HeaderComponent {
               this.productosCesta = [];
               this.carritoEstadoService.vaciarCarrito();
 
+              this.snackBar.open('Cesta vaciada correctamente', 'Cerrar', {
+                duration: 3000, 
+                horizontalPosition: 'start', 
+                verticalPosition: 'bottom', 
+              });
             },
             error: (err) => {
               console.error('Error al vaciar la cesta', err);
