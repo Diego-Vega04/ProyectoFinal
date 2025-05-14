@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Deja tu opinión</h2>
+
+<div mat-dialog-content>
+  <div class="stars">
+    <span *ngFor="let star of [1,2,3,4,5]"
+          (click)="setRating(star)"
+          [class.filled]="star <= selectedRating">★</span>
+  </div>
+
+  <form [formGroup]="reviewForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Pros</mat-label>
+      <textarea matInput formControlName="pros" rows="2"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contras</mat-label>
+      <textarea matInput formControlName="contras" rows="2"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Opinión general</mat-label>
+      <textarea matInput formControlName="opinion" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-button color="primary" [disabled]="!reviewForm.valid || selectedRating === 0" (click)="submit()">Enviar</button>
+</div>

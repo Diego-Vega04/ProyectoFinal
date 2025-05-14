@@ -86,162 +86,36 @@
       </div>
 
       <div class="view-more-container" *ngIf="productosSimilares.length > 0">
-    <a [routerLink]="'/'">Ver más productos</a>
-  </div>
-
+        <a [routerLink]="'/'">Ver más productos</a>
+      </div>
     </div>
+
     <div class="reviews-section">
       <h2 class="section-title">Opiniones</h2>
 
       <div class="reviews-summary">
         <div class="overall-rating">
-          <div class="rating-number">4.6</div>
+          <div class="rating-number">{{ ratingAverage || '0.0 '}}</div>
           <div class="rating-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star half-filled">★</span>
+            <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= ratingAverage">★</span>
           </div>
-
-          <div class="total-reviews">631 Opiniones</div>
-
-        </div>
-
-        <div class="recommendation-rate">
-          <div class="percentage">99%</div>
-          <div class="recommend-text">Recomiendan</div>
-          <div class="total-recommendations">366 Recomendaciones</div>
+          <div class="total-reviews">{{ totalReviews }} Opiniones</div>
         </div>
 
         <div class="rating-distribution">
-          <div class="rating-bar">
-            <span class="rating-level">5 ★</span>
+          <div *ngFor="let nivel of [5,4,3,2,1]; let i = index" class="rating-bar">
+            <span class="rating-level">{{ nivel }} ★</span>
             <div class="progress-container">
-              <div class="progress-bar" style="width: 80%;"></div>
+              <div class="progress-bar"  [style.width]="getPorcentaje(nivel) + '%'"></div>
             </div>
-
-            <span class="rating-count">487</span>
-
-          </div>
-
-          <div class="rating-bar">
-            <span class="rating-level">4 ★</span>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 20%;"></div>
-            </div>
-
-            <span class="rating-count">114</span>
-
-          </div>
-
-          <div class="rating-bar">
-            <span class="rating-level">3 ★</span>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 3%;"></div>
-            </div>
-
-            <span class="rating-count">13</span>
-
-          </div>
-
-          <div class="rating-bar">
-            <span class="rating-level">2 ★</span>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 1%;"></div>
-            </div>
-            <span class="rating-count">2</span>
-
-          </div>
-
-          <div class="rating-bar">
-            <span class="rating-level">1 ★</span>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 3%;"></div>
-            </div>
-
-            <span class="rating-count">15</span>
-
-          </div>
-        </div>
-
-        <div class="feature-ratings">
-          <div class="feature-rating">
-            <span class="feature-name">Procesador</span>
-
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star half-filled">★</span>
-            </div>
-          </div>
-
-          <div class="feature-rating">
-            <span class="feature-name">Batería</span>
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star empty">★</span>
-            </div>
-          </div>
-
-          <div class="feature-rating">
-            <span class="feature-name">Gráfica</span>
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star empty">★</span>
-            </div>
-          </div>
-
-          <div class="feature-rating">
-            <span class="feature-name">Disco duro</span>
-
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star half-filled">★</span>
-            </div>
-          </div>
-
-          <div class="feature-rating">
-            <span class="feature-name">RAM</span>
-
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star half-filled">★</span>
-            </div>
-
-          </div>
-
-          <div class="feature-rating">
-            <span class="feature-name">Resolución</span>
-
-            <div class="feature-stars">
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star filled">★</span>
-              <span class="star empty">★</span>
-            </div>
+            <span class="rating-count">{{ ratingCounts[nivel - 1] }}</span>
           </div>
         </div>
       </div>
 
       <div class="leave-review">
         <h3>Deja tu opinión</h3>
-        <p>Te costara un minuto, ayudarás a la gente a decidirse.</p>
+        <p>Te costará un minuto, ayudarás a la gente a decidirse.</p>
         <button class="add-review-btn" (click)="openReviewDialog()">Añadir opinión</button>
       </div>
     </div>

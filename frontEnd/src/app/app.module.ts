@@ -24,10 +24,15 @@ import { ProductoComponent } from './producto/producto.component';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { UserComponent } from './user/user.component';
 import { CestaComponent } from './cesta/cesta.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReviewDialogComponent } from './producto/review-dialog/review-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,8 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     UserComponent,
     ProductoComponent,
-    CestaComponent
+    CestaComponent,
+    ReviewDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,11 @@ import { RouterModule } from '@angular/router';
     AuthModule,
     HttpClientModule,
     RouterModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     
     PaginaPrincipalComponent,
     BannerInferiorComponent,

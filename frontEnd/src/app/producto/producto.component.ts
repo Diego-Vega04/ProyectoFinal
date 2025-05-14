@@ -24,6 +24,9 @@ export class ProductoComponent implements OnInit {
   product!: Producto | undefined;
   adds: Set<number> = new Set();
   productosSimilares: Producto[] = [];
+  ratingAverage = 0;
+  ratingCounts = [0, 0, 0, 0, 0];
+  totalReviews = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -52,6 +55,8 @@ export class ProductoComponent implements OnInit {
       });
     });
 
+    this.calcularResumenOpiniones();
+
     //Validar si el producto ya esta en la cesta
     const productCesta = this.carritoEstadoService.getProductos();
 
@@ -70,16 +75,23 @@ export class ProductoComponent implements OnInit {
     });
   }
 
-  openReviewDialog(): void {
+  async openReviewDialog(): Promise<void> {
+    const isLogged = await this.authService.isLoggedIn();
+
+    if (!isLogged) {
+      await this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      return;
+    }
+
     const dialogRef = this.dialog.open(ReviewDialogComponent, {
       width: '500px',
-      data: { pros: '', cons: '' }
+      data: { pros: '', cons: '', opinion: '', rating: 0 }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Pros:', result.pros);
-        console.log('Cons:', result.cons);
+        console.log('Opinión recibida:', result);
+        // Aquí guardarías la opinión en tu producto
       }
     });
   }
@@ -155,4 +167,28 @@ export class ProductoComponent implements OnInit {
       ).slice(0, 5);
     });
   }
+
+  calcularResumenOpiniones() {
+    if (!this.product?.comentarios || this.product.comentarios.length === 0) return;
+
+    this.totalReviews = this.product.comentarios.length;
+    let suma = 0;
+    this.ratingCounts = [0, 0, 0, 0, 0];
+
+    for (const comentario of this.product.comentarios) {
+      const nota = comentario.nota;
+      if (nota >= 1 && nota <= 5) {
+        this.ratingCounts[nota - 1]++;
+        suma += nota;
+      }
+    }
+
+    this.ratingAverage = +(suma / this.totalReviews).toFixed(1);
+  }
+
+  getPorcentaje(nivel: number): number {
+    if (this.totalReviews === 0) return 0;
+    return (this.ratingCounts[nivel - 1] / this.totalReviews) * 100;
+  }
+
 }
