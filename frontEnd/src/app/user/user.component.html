@@ -4,8 +4,7 @@
       <ul>
         <li class="section-title">Mi cuenta</li>
         <ul>
-          <li (click)="selectSection('mis-datos')">Mis datos</li>
-          <li (click)="selectSection('direcciones')">Mis direcciones</li>
+          <li (click)="selectSection('mis-datos')">Mis datos y direcciones</li>
         </ul>
 
         <hr>
@@ -28,7 +27,7 @@
   </aside>
 
   <main class="content">
-    <!--Apartado mis datos-->
+    <!--Apartado mis datos y direcciones-->
     <div *ngIf="selectedSection === 'mis-datos'">
 
       <h2>Bienvenido a tu área personal</h2>
@@ -37,78 +36,40 @@
         <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
           <div class="field">
             <label for="name">Nombre:</label>
-            <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editar">
+            <input type="text" id="name" class="userData" [(ngModel)]="userName" name="name" [disabled]="editarDatos">
           </div>
           <div class="field">
             <label for="lastname">Apellidos:</label>
             <input type="text" id="lastname" class="userData" [(ngModel)]="userLastName" name="lastname"
-              [disabled]="editar">
+              [disabled]="editarDatos">
           </div>
           <div class="field">
             <label for="email">Email:</label>
-            <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editar">
+            <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editarDatos">
           </div>
 
-          <button type="button" class="btEdit" (click)="update()">{{editar ? 'Editar' : 'Guardar'}}</button>
+          <button type="button" class="btEdit" (click)="update()">{{editarDatos ? 'Editar' : 'Guardar'}}</button>
         </form>
       </div>
 
       <hr>
-      <h3>Reestablecer contraseña:</h3>
-      <!--Reestablecer contraseña-->
-      <div class="textPsswd">
-        <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
-          <label for="psswd1">Contraseña actual</label>
-          <div class="psswd-container">
-            <input [type]="showPassword1 ? 'text' : 'password'" class="psswd" name="psswd1"
-              placeholder="Contraseña actual" ngModel required>
-            <button type="button" class="eye-button" (click)="togglePasswordVisibility(1)">
-              <i class="fas" [ngClass]="showPassword1 ? 'fa-eye-slash' : 'fa-eye'"></i>
-            </button>
-          </div>
 
-          <br>
-          <label for="psswd2">Nueva contraseña:</label>
-          <div class="psswd-container">
-            <input [type]="showPassword2 ? 'text' : 'password'" class="psswd" name="psswd3"
-              placeholder="Nueva contraseña" ngModel required>
-            <button type="button" class="eye-button" (click)="togglePasswordVisibility(2)">
-              <i class="fas" [ngClass]="showPassword2 ? 'fa-eye-slash' : 'fa-eye'"></i>
-            </button>
-          </div>
-
-          <br>
-          <label for="psswd3">Repita la nueva contraseña</label>
-          <div class="psswd-container">
-            <input [type]="showPassword3 ? 'text' : 'password'" class="psswd" name="psswd3"
-              placeholder="Repetir contraseña" ngModel required>
-            <button type="button" class="eye-button" (click)="togglePasswordVisibility(3)">
-              <i class="fas" [ngClass]="showPassword3 ? 'fa-eye-slash' : 'fa-eye'"></i>
-            </button>
-          </div>
-
-          <button type="button" class="btEdit" (click)="editPsswd()">Cambiar contraseña</button>
-        </form>
-      </div>
-    </div>
-
-    <!--Apartado direcciones-->
-    <div *ngIf="selectedSection === 'direcciones'">
-      <h3>Mis direcciones</h3>
-      <div class="direcciones">
+      <!-- Sección Mis Direcciones -->
+      <div class="direcciones" style="margin-top: 2rem;">
+        <h3>Mis direcciones</h3>
         <div class="dir-container">
           <h5>Dirección 1</h5>
-          <input type="text" class="direction" [disabled]="editar">
+          <input type="text" class="direction" [(ngModel)]="userDireccion" name="direccion1" [disabled]="editarDireccion">
         </div>
         <div class="dir-container">
           <h5>Dirección 2</h5>
-          <input type="text" class="direction" [disabled]="editar">
+          <input type="text" class="direction" [disabled]="editarDireccion">
         </div>
         <div class="dir-container">
           <h5>Dirección 3</h5>
-          <input type="text" class="direction" [disabled]="editar">
-          <button type="button" class="btEdit" (click)="editDir()"> {{ editar ? 'Editar' : 'Guardar' }}</button>
+          <input type="text" class="direction" [disabled]="editarDireccion">
         </div>
+        <button type="button" class="btEdit" (click)="editDir()">{{editarDireccion ? 'Editar' : 'Guardar'}}</button>
       </div>
     </div>
 
@@ -137,7 +98,7 @@
       <h3>Detalle del Pedido #{{ pedidoSeleccionado.id }}</h3>
       <p><strong>Fecha:</strong> {{ pedidoSeleccionado.fecha | date:'dd/MM/yyyy' }}</p>
       <p><strong>Dirección:</strong> {{ pedidoSeleccionado.direccion }}</p>
-    
+
       <div class="pedido-productos">
         <h4>Productos:</h4>
         <ul>
@@ -146,7 +107,7 @@
           </li>
         </ul>
       </div>
-    
+
       <div class="pedido-footer">
         <button (click)="selectSection('pedidos')" class="btViewDetails">← Volver a pedidos</button>
         <button (click)="devolucionMode = true" class="btViewDetails"> Solicitar devolución</button>
@@ -161,15 +122,15 @@
       </div>
     -->
 
-    <!--Formuloario sin el service-->
-    <div *ngIf="devolucionMode" class="form-devolucion">
-      <h4>Motivo de la devolución</h4>
-      <textarea [(ngModel)]="motivo" rows="4" placeholder="Escribe el motivo aquí..."></textarea>
-      <div class="form-actions">
-        <button (click)="enviarDevolucion()" [disabled]="!motivo.trim()">Enviar solicitud</button>
-        <button (click)="cancelarDevolucion()">Cancelar</button>
+      <!--Formuloario sin el service-->
+      <div *ngIf="devolucionMode" class="form-devolucion">
+        <h4>Motivo de la devolución</h4>
+        <textarea [(ngModel)]="motivo" rows="4" placeholder="Escribe el motivo aquí..."></textarea>
+        <div class="form-actions">
+          <button (click)="enviarDevolucion()" [disabled]="!motivo.trim()">Enviar solicitud</button>
+          <button (click)="cancelarDevolucion()">Cancelar</button>
+        </div>
       </div>
-    </div>
 
     </div>
 

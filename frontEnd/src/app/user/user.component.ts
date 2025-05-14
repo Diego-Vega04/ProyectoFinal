@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
 import { KeycloakService } from 'keycloak-angular';
+import { User } from '../models/user';
+import { AuthService } from '../auth/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -10,18 +12,16 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+  user!: User;
 
   //Seccion mis datos
   userName: string | null = "";
   userLastName: string | null = "";
   userEmail: string | null = "";
+  userDireccion: string | null = "";
 
-  showPassword1 = false;
-  showPassword2 = false;
-  showPassword3 = false;
-
-  editar: boolean = true;  //true = desahibilitado
-  psswd: boolean = true;
+  editarDatos: boolean = true; //Para datos personales
+  editarDireccion: boolean = true;
 
   motivo = '';
   devolucionMode = false;
@@ -64,47 +64,82 @@ export class UserComponent {
     }
   }
 
-  constructor(public authService: AuthService, public keycloakService: KeycloakService) { }
+  constructor(
+    public authService: AuthService,
+    public keycloakService: KeycloakService,
+    public userService: UserService
+  ) { }
 
   ngOnInit() {
-    this.userName = this.authService.getUserName() ? this.authService.getUserName() : 'Nombre no encontrado';
-    this.userLastName = this.authService.getUserLastName() ? this.authService.getUserLastName() : 'Apellido no encontrado';
-    this.userEmail = this.authService.getUserEmail() ? this.authService.getUserEmail() : 'Email no encontrado';
+    const email = this.authService.getEmail();
+    if (email) {
+      this.userService.getByEmail(email).subscribe({
+        next: (user) => {
+          this.user = user;
+          this.userName = user.nombre;
+          this.userLastName = user.apellidos;
+          this.userEmail = user.email;
+        },
+        error: (err) => {
+          console.error('Error cargando usuario:', err);
+        }
+      });
+    } else {
+      console.error('No se encontró el email del usuario en Keycloak');
+    }
   }
 
   //Seccion mis datos y mis direcciones
   onSubmit() {
-    if (this.editar) {
+    if (this.editarDatos || this.editarDireccion) {
       this.update();
     }
   }
 
   //Método para actualizar los datos del usuario
   update() {
-    console.log('Nombre:', this.userName);
-    console.log('Apellido:', this.userLastName);
-    console.log('Email:', this.userEmail);
+    if (!this.editarDatos) {
+      // Guardar
+      this.user.nombre = this.userName ?? '';
+      this.user.apellidos = this.userLastName ?? '';
+      this.user.email = this.userEmail ?? '';
 
-    this.editar = !this.editar;
-  }
-
-  togglePasswordVisibility(index: number) {
-    switch (index) {
-      case 1: this.showPassword1 = !this.showPassword1; break;
-      case 2: this.showPassword2 = !this.showPassword2; break;
-      case 3: this.showPassword3 = !this.showPassword3; break;
+      this.userService.updateUser(this.user).subscribe({
+        next: (updatedUser) => {
+          console.log('Usuario actualizado:', updatedUser);
+          Swal.fire('Guardado', 'Tus datos se han actualizado correctamente.', 'success');
+          this.editarDatos = true;
+        },
+        error: (err) => {
+          console.error('Error actualizando usuario:', err);
+          Swal.fire('Error', 'No se pudo actualizar el usuario.', 'error');
+        }
+      });
+    } else {
+      // Cambiar a modo edición
+      this.editarDatos = false;
     }
-  }
-
-  editPsswd() {
-    console.log("editPsswd");
-    //llamada al serivicio update del usuario 
   }
 
   //Seccion direcciones
   editDir() {
-    //guardar la nueva direccion en el objeto del usuario
-    this.editar = !this.editar;
+    if (!this.editarDireccion) {
+      this.user.direccion = this.userDireccion ?? '';
+
+      this.userService.updateUser(this.user).subscribe({
+        next: (updatedUser) => {
+          console.log('Usuario actualizado:', updatedUser);
+          Swal.fire('Guardado', 'Tus direcciones se han actualizado correctamente.', 'success');
+          this.editarDireccion = true;
+        },
+        error: (err) => {
+          console.error('Error actualizando usuario:', err);
+          Swal.fire('Error', 'No se pudo actualizar el usuario.', 'error');
+        }
+      });
+    } else {
+      this.editarDireccion = false;
+    }
   }
 
   //Seccion devoluciones
@@ -140,7 +175,7 @@ export class UserComponent {
         Swal.fire('Error', 'Hubo un problema al enviar la solicitud.', 'error');
       });
       */
-      console.log("devolucion")
+    console.log("devolucion")
   }
 
   cancelarDevolucion() {

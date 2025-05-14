@@ -116,11 +116,9 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
   //Vacia el carrito completo
   cleanCart() {
-
-        this.cartItems = [];
-        this.carritoService.setProductos([]); 
-        this.paypalRendered = false;
-
+    this.cartItems = [];
+    this.carritoService.setProductos([]);
+    this.paypalRendered = false;
   }
 
   // Calcula el subtotal

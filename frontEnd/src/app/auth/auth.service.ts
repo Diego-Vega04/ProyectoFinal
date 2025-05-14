@@ -37,4 +37,8 @@ export class AuthService {
     };
   }
 
+  getEmail(): string {
+    return this.keycloak.getKeycloakInstance().tokenParsed?.['email'] || '';
+  }
+
 }
