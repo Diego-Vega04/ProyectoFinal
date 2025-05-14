@@ -47,47 +47,22 @@
 
     <div class="filter-section">
       <div class="filter-header">
-        <h4>Marcas</h4>
-        <i class="fa fa-chevron-up"></i>
+        <h4>Marca</h4>
       </div>
+
       <div class="search-box">
-        <input type="text" placeholder="Buscar...">
-        <button type="button"><i class="fa fa-search"></i></button>
-      </div>
-      <div class="brand-filters">
-        <div class="brand-item">
-          <input type="checkbox" id="pccom" name="pccom">
-          <label for="logitech">Logitech</label>
-        </div>
-        <div class="brand-item">
-          <input type="checkbox" id="hp" name="hp">
-          <label for="samsung">Samsung</label>
-        </div>
-        <div class="brand-item">
-          <input type="checkbox" id="msi" name="msi">
-          <label for="hp">HP</label>
-        </div>
-        <div class="brand-item">
-          <input type="checkbox" id="asus" name="asus">
-          <label for="corsair">Corsair</label>
-        </div>
+        <input type="text" placeholder="Buscar marca..." [(ngModel)]="brandSearchTerm"
+          (input)="aplicarTodosFiltros()" />
       </div>
     </div>
     <div class="filter-actions">
       <button (click)="aplicarTodosFiltros()" class="apply-filters-btn">Aplicar filtros</button>
+      <button (click)="borrarTodosFiltros()" class="apply-filters-btn">Borrar filtros</button>
     </div>
   </div>
 
   <div class="products-container">
     <div class="sorting-options">
-      <div class="sort-buttons">
-        <button class="sort-button" [class.active]="currentSort === 'relevance'"
-          (click)="sortProducts('relevance', displayedProducts)">Relevancia</button>
-        <button class="sort-button" [class.active]="currentSort === 'price_asc'"
-          (click)="sortProducts('price_asc', displayedProducts)">Precio más bajo</button>
-        <button class="sort-button" [class.active]="currentSort === 'price_desc'"
-          (click)="sortProducts('price_desc', displayedProducts)">Precio más alto</button>
-      </div>
       <div class="product-count">{{ displayedProducts.length }} productos</div>
     </div>
 

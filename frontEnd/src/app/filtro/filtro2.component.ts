@@ -23,10 +23,11 @@ export class Filtro2Component implements OnInit {
   filteredProducts: Producto[] = [];
   selectedCategories: string[] = [];
   searchTerm: string = '';
+  brandSearchTerm: string = '';
 
   constructor(
-    private productoService: ProductoService, 
-    private searchService: SearchService, 
+    private productoService: ProductoService,
+    private searchService: SearchService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
@@ -104,10 +105,10 @@ export class Filtro2Component implements OnInit {
     console.log('Categorías seleccionadas:', this.selectedCategories);
   }
 
-  // Nuevo método que aplica todos los filtros en orden correcto
+  // Método que aplica todos los filtros en orden correcto
   aplicarTodosFiltros(): void {
     let resultado = [...this.products];
-    
+
     // 1. Aplicar filtro de búsqueda por término
     if (this.searchTerm) {
       resultado = resultado.filter(product =>
@@ -115,34 +116,60 @@ export class Filtro2Component implements OnInit {
       );
       console.log(`Después de filtro por término "${this.searchTerm}":`, resultado.length);
     }
-    
+
     // 2. Aplicar filtro por categoría
     if (this.selectedCategories.length > 0) {
       const antesDelFiltro = resultado.length;
       resultado = resultado.filter(producto => {
         const productoCategoriaStr = producto.categoria ?
           producto.categoria.toString().trim().toUpperCase() : '';
-        
-        const match = this.selectedCategories.some(cat => 
+
+        const match = this.selectedCategories.some(cat =>
           productoCategoriaStr === cat);
 
-        
+
         return match;
       });
       console.log(`Filtro categorías: ${antesDelFiltro} -> ${resultado.length}`);
     }
-    
-    // 3. Aplicar filtro por precio
+
+    // 3. Filtro por marca (solo texto)
+    if (this.brandSearchTerm.trim() !== '') {
+      const terminoMarca = this.brandSearchTerm.trim().toLowerCase();
+      resultado = resultado.filter(producto =>
+        producto.marca?.toLowerCase().includes(terminoMarca)
+      );
+      console.log(`Filtro por marca "${this.brandSearchTerm}": ${resultado.length}`);
+    }
+
+    // 4. Aplicar filtro por precio
     const antesPrecio = resultado.length;
     resultado = resultado.filter(p =>
       p.precio! >= this.minPrice && p.precio! <= this.maxPrice
     );
     console.log(`Filtro precio: ${antesPrecio} -> ${resultado.length}`);
-    
-    // 4. Aplicar ordenación actual
+
+    // 5. Aplicar ordenación actual
     this.displayedProducts = this.sortProducts(this.currentSort, resultado);
-    
+
     // Forzar detección de cambios por si acaso
+    this.cdr.detectChanges();
+  }
+
+  borrarTodosFiltros() {
+    this.searchTerm = '';
+    this.minPrice = 0;
+    this.maxPrice = 1300;
+    this.selectedCategories = [];
+    this.brandSearchTerm = '';
+
+    // Limpiar checkboxes del DOM (si fuera necesario)
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => {
+      checkbox.checked = false;
+    });
+
+    this.displayedProducts = [...this.products];
     this.cdr.detectChanges();
   }
 }
