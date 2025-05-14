@@ -1,5 +1,6 @@
 package com.grupo1.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -43,5 +44,6 @@ public class Comentario {
 
     @ManyToOne
     @JoinColumn(name = "id_producto")
+    @JsonBackReference
     private Producto producto;
 }
