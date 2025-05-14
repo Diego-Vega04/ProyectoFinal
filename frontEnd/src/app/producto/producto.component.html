@@ -106,7 +106,7 @@
           <div *ngFor="let nivel of [5,4,3,2,1]; let i = index" class="rating-bar">
             <span class="rating-level">{{ nivel }} ★</span>
             <div class="progress-container">
-              <div class="progress-bar"  [style.width]="getPorcentaje(nivel) + '%'"></div>
+              <div class="progress-bar" [style.width]="getPorcentaje(nivel) + '%'"></div>
             </div>
             <span class="rating-count">{{ ratingCounts[nivel - 1] }}</span>
           </div>
@@ -119,4 +119,18 @@
         <button class="add-review-btn" (click)="openReviewDialog()">Añadir opinión</button>
       </div>
     </div>
+
+    <div class="user-reviews" *ngIf="product?.comentarios?.length">
+      <div class="review" *ngFor="let comentario of product?.comentarios">
+        <div class="review-rating">
+          <span class="star" *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= comentario.nota">★</span>
+        </div>
+        <div class="review-content">
+          <p><strong>Pros:</strong> {{ comentario.pros }}</p>
+          <p><strong>Contras:</strong> {{ comentario.contras }}</p>
+          <p>{{ comentario.opinion }}</p>
+        </div>
+      </div>
+    </div>
+
   </div>
