@@ -6,359 +6,97 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 <div class="product-container">
-
   <div class="breadcrumb">
-
-    <a href="#">Home</a> &gt;
-    <span>Portátiles</span>
-
+    <a href="#" style="color: var(--color-primario);">Home</a> &gt;
+    <span>{{product?.categoria}}</span>
   </div>
 
   <div class="product-main">
     <div class="product-images">
       <div class="main-image">
-        <img src="" alt="Imagen">
+        <img [src]="'/img/' + product?.imagen" alt="Imagen">
       </div>
-
-      <div class="thumbnail-container">
-        <div class="thumbnail active"><img src="" alt="Vista frontal"></div>
-        <div class="thumbnail"><img src="" alt="Vista lateral"></div>
-        <div class="thumbnail"><img src="" alt="Vista trasera"></div>
-        <div class="thumbnail"><img src="" alt="Principal 1"></div>
-        <div class="thumbnail"><img src="" alt="Principal 2"></div>
-        <div class="thumbnail"><img src="" alt="Extra 1"></div>
-        <div class="thumbnail"><img src="" alt="Extra 2"></div>
-      </div>
-
     </div>
 
     <div class="product-details">
       <h1 class="product-title">{{ product?.nombre }}</h1>
       <div class="product-rating">
         <span class="rating">4.6/5</span>
-        <span class="reviews">(23 opiniones)</span>
-        <span class="questions">(18) Preguntas</span>
       </div>
 
       <div class="product-id">
-        <span>Código: #{{ product?.id }}</span>
+        <span>Código: #{{ product?.id }}</span><br>
         <span>Marca: {{ product?.marca }}</span>
       </div>
 
       <div class="seller-info">
-        <span>Vendido y enviado por Eviden Componentes</span>
-      </div>
-
-      <div class="product-config">
-        <h3>Selección de modelo</h3>
-
-        <div class="config-option">
-          <label>Color: Plata</label>
-
-          <div class="color-options">
-            <div class="color-option selected">
-              <span class="color-circle silver"></span>
-              <span class="color-name">Plata</span>
-            </div>
-
-            <div class="color-option">
-              <span class="color-circle blue"></span>
-              <span>Ver disponibles</span>
-            </div>
-
-            <div class="color-option">
-              <span class="color-circle black"></span>
-              <span>Ver disponibles</span>
-            </div>
-
-          </div>
-        </div>
-
+        <span style="color: #4169e1;">Vendido y enviado por Eviden Componentes</span>
       </div>
     </div>
 
     <div class="product-purchase">
       <div class="price-container">
-        <div class="current-price">{{ product?.precio}}</div>
-        <!--<div class="original-price">730,99€</div>-->
-        <!--<div class="discount">-22%</div>-->
+        <div class="current-price">{{ product?.precio}}€</div>
       </div>
 
       <div class="shipping-info">
-        <span>Envío: Gratis | Devolución: Gratis</span>
-        <span class="delivery-time">Recíbelo mañana</span>
-      </div>
-
-      <div class="store-availability">
-        <span>Disponibilidad en tienda</span>
-      </div>
-
-      <ng-container *ngIf="product?.id as productId">
-        <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
-          {{ getTextoBoton(product!) }}
-        </button>
-      </ng-container>
-
-      <div class="additional-services">
-
-        <h4>Servicios disponibles</h4>
-
-        <div class="service">
-          <input type="checkbox" id="premium-support">
-          <label for="premium-support">Soporte premium 365 + técnico a domicilio</label>
-          <span class="service-price">+28€</span>
+        <div>
+          Envío:
+          {{ product?.precio! < 70 ? '3.99€' : 'Gratis' }} </div>
+            <div class="delivery-time">Recíbelo mañana</div>
         </div>
 
-        <h4>Garantías</h4>
-
-        <div class="warranty">
-          <span>Garantía de Solución en 24h</span>
-          <span>Gratis</span>
+        <div class="store-availability">
+          <span>Disponibilidad en tienda</span>
         </div>
 
-        <div class="warranty-extension">
-          <input type="checkbox" id="warranty-extension">
-          <label for="warranty-extension">Amplía tu garantía hasta 4 años con PCCare</label>
-          <span class="warranty-price">+37€</span>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="similar-products">
-    <h2 class="section-title">Artículos similares</h2>
-    <div class="similar-products-container">
-
-      <div class="similar-product">
-        <img src="" alt="Imagen">
-
-        <div class="similar-product-info">
-          <p>HP 15-fd0180ns Intel Core i5-1334U/16GB/1TB SSD/15.6"</p>
-          <div class="similar-product-rating">
-            <span>4.4/5</span>
-            <span>(112 opiniones)</span>
-          </div>
-
-          <p class="similar-product-price">599€</p>
-          <p class="similar-product-original-price">744€</p>
-          <span class="similar-product-discount">-20%</span>
-
-        </div>
-      </div>
-
-      <div class="similar-product">
-        <img src="" alt="ASUS Vivobook">
-
-        <div class="similar-product-info">
-          <p>ASUS Vivobook F1504VA-NJ173W Intel Core i5-1334U/16GB/512GB SSD/15.6"</p>
-          <div class="similar-product-rating">
-            <span>4.3/5</span>
-            <span>(6 opiniones)</span>
-          </div>
-
-          <p class="similar-product-price">599€</p>
-          <p class="similar-product-original-price">729€</p>
-          <span class="similar-product-discount">-18%</span>
-
-        </div>
-      </div>
-
-      <div class="similar-product">
-        <img src="" alt="Lenovo IdeaPad">
-
-        <div class="similar-product-info">
-          <p>Lenovo IdeaPad Slim 5 15IAH8 Intel Core i5-12450H/16GB/512GB SSD/15.6" + Microsoft 365 Personal 12 Meses
-            Digital (Digital)</p>
-          <div class="similar-product-rating">
-            <span>4.5/5</span>
-            <span>(354 opiniones)</span>
-          </div>
-
-          <p class="similar-product-price">759€</p>
-
-        </div>
-      </div>
-
-      <div class="similar-product">
-        <img src="" alt="ASUS Vivobook">
-        <div class="similar-product-info">
-          <p>ASUS Vivobook 15 M1502YA-NJ584W AMD Ryzen 7 7730U/16GB/512GB SSD/15.6"</p>
-          <div class="similar-product-rating">
-            <span>4.8/5</span>
-            <span>(9 opiniones)</span>
-          </div>
-
-          <p class="similar-product-price">579€</p>
-          <p class="similar-product-original-price">699€</p>
-          <span class="similar-product-discount">-17%</span>
-
-        </div>
-      </div>
-
-      <div class="similar-product">
-        <img src="" alt="HP Pavilion">
-
-        <div class="similar-product-info">
-          <p>HP Pavilion 16-ap0000ns AMD Ryzen 7 8840U/16GB/1TB SSD/16"</p>
-          <div class="similar-product-rating">
-            <span>4.9/5</span>
-            <span>(36 opiniones)</span>
-          </div>
-
-          <p class="similar-product-price">949€</p>
-
-        </div>
+        <ng-container *ngIf="product?.id as productId">
+          <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
+            {{ getTextoBoton(product!) }}
+          </button>
+        </ng-container>
       </div>
     </div>
 
-    <div class="view-more-container">
-      <a href="#" class="view-more">Ver más productos</a>
+    <div class="product-description">
+      <h2 class="section-title">Sobre el producto</h2>
+      <p>{{ product?.nombre}}</p>
+      <h2 class="section-title">Descripción</h2>
+      <ul class="features-list">
+        <li>
+          {{ product?.descripcion}}
+        </li>
+      </ul>
     </div>
 
+    <hr>
+
+    <div class="similar-products">
+      <h2 class="section-title">Artículos de la misma categoría</h2>
+      <div class="similar-products-container">
+        <div class="similar-product" *ngFor="let similar of productosSimilares">
+          <img [src]="'/img/' + similar.imagen" [alt]="similar.nombre">
+
+          <div class="similar-product-info">
+            <p>{{ similar.nombre }}</p>
+            <!-- Aquí puedes poner rating si tienes datos -->
+            <p class="similar-product-price">{{ similar.precio }}€</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-more-container" *ngIf="productosSimilares.length > 0">
+    <a [routerLink]="'/'">Ver más productos</a>
   </div>
 
-  <div class="product-description">
+    </div>
+    <div class="reviews-section">
+      <h2 class="section-title">Opiniones</h2>
 
-    <h2 class="section-title">Sobre el producto</h2>
-
-    <p>{{ product?.nombre}}</p>
-
-    <h2 class="section-title">Características</h2>
-
-    <ul class="features-list">
-      <li>
-        {{ product?.descripcion}}
-      </li>
-    </ul>
-  </div>
-
-  <div class="reviews-section">
-    <h2 class="section-title">Opiniones</h2>
-
-    <div class="reviews-summary">
-      <div class="overall-rating">
-        <div class="rating-number">4.6</div>
-        <div class="rating-stars">
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star half-filled">★</span>
-        </div>
-
-        <div class="total-reviews">631 Opiniones</div>
-
-      </div>
-
-      <div class="recommendation-rate">
-        <div class="percentage">99%</div>
-        <div class="recommend-text">Recomiendan</div>
-        <div class="total-recommendations">366 Recomendaciones</div>
-      </div>
-
-      <div class="rating-distribution">
-        <div class="rating-bar">
-          <span class="rating-level">5 ★</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 80%;"></div>
-          </div>
-
-          <span class="rating-count">487</span>
-
-        </div>
-
-        <div class="rating-bar">
-          <span class="rating-level">4 ★</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 20%;"></div>
-          </div>
-
-          <span class="rating-count">114</span>
-
-        </div>
-
-        <div class="rating-bar">
-          <span class="rating-level">3 ★</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 3%;"></div>
-          </div>
-
-          <span class="rating-count">13</span>
-
-        </div>
-
-        <div class="rating-bar">
-          <span class="rating-level">2 ★</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 1%;"></div>
-          </div>
-          <span class="rating-count">2</span>
-
-        </div>
-
-        <div class="rating-bar">
-          <span class="rating-level">1 ★</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 3%;"></div>
-          </div>
-
-          <span class="rating-count">15</span>
-
-        </div>
-      </div>
-
-      <div class="feature-ratings">
-        <div class="feature-rating">
-          <span class="feature-name">Procesador</span>
-
-          <div class="feature-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star half-filled">★</span>
-          </div>
-        </div>
-
-        <div class="feature-rating">
-          <span class="feature-name">Batería</span>
-          <div class="feature-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star empty">★</span>
-          </div>
-        </div>
-
-        <div class="feature-rating">
-          <span class="feature-name">Gráfica</span>
-          <div class="feature-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star empty">★</span>
-          </div>
-        </div>
-
-        <div class="feature-rating">
-          <span class="feature-name">Disco duro</span>
-
-          <div class="feature-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star half-filled">★</span>
-          </div>
-        </div>
-
-        <div class="feature-rating">
-          <span class="feature-name">RAM</span>
-
-          <div class="feature-stars">
+      <div class="reviews-summary">
+        <div class="overall-rating">
+          <div class="rating-number">4.6</div>
+          <div class="rating-stars">
             <span class="star filled">★</span>
             <span class="star filled">★</span>
             <span class="star filled">★</span>
@@ -366,26 +104,145 @@
             <span class="star half-filled">★</span>
           </div>
 
+          <div class="total-reviews">631 Opiniones</div>
+
         </div>
 
-        <div class="feature-rating">
-          <span class="feature-name">Resolución</span>
+        <div class="recommendation-rate">
+          <div class="percentage">99%</div>
+          <div class="recommend-text">Recomiendan</div>
+          <div class="total-recommendations">366 Recomendaciones</div>
+        </div>
 
-          <div class="feature-stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star empty">★</span>
+        <div class="rating-distribution">
+          <div class="rating-bar">
+            <span class="rating-level">5 ★</span>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+
+            <span class="rating-count">487</span>
+
+          </div>
+
+          <div class="rating-bar">
+            <span class="rating-level">4 ★</span>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 20%;"></div>
+            </div>
+
+            <span class="rating-count">114</span>
+
+          </div>
+
+          <div class="rating-bar">
+            <span class="rating-level">3 ★</span>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 3%;"></div>
+            </div>
+
+            <span class="rating-count">13</span>
+
+          </div>
+
+          <div class="rating-bar">
+            <span class="rating-level">2 ★</span>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 1%;"></div>
+            </div>
+            <span class="rating-count">2</span>
+
+          </div>
+
+          <div class="rating-bar">
+            <span class="rating-level">1 ★</span>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 3%;"></div>
+            </div>
+
+            <span class="rating-count">15</span>
+
+          </div>
+        </div>
+
+        <div class="feature-ratings">
+          <div class="feature-rating">
+            <span class="feature-name">Procesador</span>
+
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star half-filled">★</span>
+            </div>
+          </div>
+
+          <div class="feature-rating">
+            <span class="feature-name">Batería</span>
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star empty">★</span>
+            </div>
+          </div>
+
+          <div class="feature-rating">
+            <span class="feature-name">Gráfica</span>
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star empty">★</span>
+            </div>
+          </div>
+
+          <div class="feature-rating">
+            <span class="feature-name">Disco duro</span>
+
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star half-filled">★</span>
+            </div>
+          </div>
+
+          <div class="feature-rating">
+            <span class="feature-name">RAM</span>
+
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star half-filled">★</span>
+            </div>
+
+          </div>
+
+          <div class="feature-rating">
+            <span class="feature-name">Resolución</span>
+
+            <div class="feature-stars">
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star filled">★</span>
+              <span class="star empty">★</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="leave-review">
-      <h3>Deja tu opinión</h3>
-      <p>Te costara un minuto, ayudarás a la gente a decidirse.</p>
-      <button class="add-review-btn" (click)="openReviewDialog()">Añadir opinión</button>
+      <div class="leave-review">
+        <h3>Deja tu opinión</h3>
+        <p>Te costara un minuto, ayudarás a la gente a decidirse.</p>
+        <button class="add-review-btn" (click)="openReviewDialog()">Añadir opinión</button>
+      </div>
     </div>
   </div>
-</div>

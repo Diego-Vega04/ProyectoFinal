@@ -23,6 +23,7 @@ export class ProductoComponent implements OnInit {
   productId!: number;
   product!: Producto | undefined;
   adds: Set<number> = new Set();
+  productosSimilares: Producto[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -55,9 +56,17 @@ export class ProductoComponent implements OnInit {
     const productCesta = this.carritoEstadoService.getProductos();
 
     productCesta.forEach(p => {
-      if(p.id !== undefined) {
+      if (p.id !== undefined) {
         this.adds.add(p.id)
       }
+    });
+
+    //Cargar productos similares
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.productService.getById(productId).subscribe((producto) => {
+      this.product = producto;
+      this.cargarProductosSimilares(producto);
     });
   }
 
@@ -85,8 +94,8 @@ export class ProductoComponent implements OnInit {
 
     console.log("usuario: " + user.nombre + " id: " + user.id);
 
-    if(producto.id !== undefined && this.adds.has(producto.id)) {
-      return; 
+    if (producto.id !== undefined && this.adds.has(producto.id)) {
+      return;
     }
 
     this.userService.getByEmail(user.email).subscribe({
@@ -103,18 +112,18 @@ export class ProductoComponent implements OnInit {
 
               console.log("carrito:", this.carritoService.getCarritoById(idCarrito));
 
-              if (producto.id !== undefined){
+              if (producto.id !== undefined) {
                 this.adds.add(producto.id!);
               }
 
               this.carritoService.getCarritoById(idCarrito).subscribe(carrito => {
                 carrito.productos.forEach(p => {
-                  if(p.id !== undefined) {
+                  if (p.id !== undefined) {
                     this.adds.add(p.id);
                   }
                 });
               });
-              
+
             },
             error: (err) => {
               console.error("Error al agregar producto al carrito:", err);
@@ -138,5 +147,12 @@ export class ProductoComponent implements OnInit {
     return 'Añadir a la cesta';
   }
 
-
+  cargarProductosSimilares(producto: Producto): void {
+    this.productService.getAllProductos().subscribe((todosProductos) => {
+      this.productosSimilares = todosProductos.filter(p =>
+        p.id !== producto.id &&
+        String(p.categoria).toUpperCase().trim() === String(producto.categoria).toUpperCase().trim()
+      ).slice(0, 5);
+    });
+  }
 }
