@@ -55,12 +55,12 @@
 
         <ng-container *ngIf="product?.id as productId">
           <div *ngIf="!isAdmin">
-            <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
+            <button class="add-to-cart-btn" [disabled]="addBotonCarrito.has(productId)" (click)="addCarrito(product!)">
               {{ getTextoBoton(product!) }}
             </button>
           </div>
           <div *ngIf="!isAdmin">
-            <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addFavorito(product!)">
+            <button class="add-to-cart-btn" [disabled]="addBotonfavs.has(productId)" (click)="addFavorito(product!)">
               {{ getFavsTextoBoton(product!) }}
             </button>
           </div>

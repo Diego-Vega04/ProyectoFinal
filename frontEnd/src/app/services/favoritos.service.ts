@@ -36,4 +36,9 @@ export class FavoritosService {
     createFavoritos(userId: number): Observable<Favoritos> {
         return this.http.post<Favoritos>(`${this.apiUrl}/crear/${userId}`, {});
     }
+
+    //Borrar todos los favoritos
+    vaciarFavoritos(id: number): Observable<Favoritos> {
+        return this.http.delete<Favoritos>(`${this.apiUrl}/${id}/vaciar`, {});
+    }
 }

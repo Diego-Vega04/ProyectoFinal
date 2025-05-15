@@ -13,19 +13,27 @@ public class FavoritosService {
 
     private final FavoritosRepository favRep;
 
-    public FavoritosService (FavoritosRepository favRep) {
+    public FavoritosService(FavoritosRepository favRep) {
         this.favRep = favRep;
     }
 
-    public Favoritos getByUser (User user) {
+    public Favoritos getByUser(User user) {
         return favRep.findByUser(user);
     }
 
-    public Favoritos addFavoritos (Favoritos fav) {
+    public Favoritos addFavoritos(Favoritos fav) {
         return favRep.save(fav);
     }
 
-    public Optional<Favoritos> getById(int id){
+    public Optional<Favoritos> getById(int id) {
         return favRep.findById(id);
+    }
+
+    public void vaciarFavoritos(int id) {
+        Favoritos favoritos = favRep.findById(id)
+                .orElseThrow(() -> new RuntimeException("Favoritos no encontrados con ID: " + id));
+
+        favoritos.getProductos().clear();
+        favRep.save(favoritos);
     }
 }

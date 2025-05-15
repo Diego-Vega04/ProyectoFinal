@@ -18,6 +18,7 @@ import com.grupo1.backend.services.UserService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -125,6 +126,16 @@ public class FavoritosController {
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la lista de favoritos");
+        }
+    }
+
+    @DeleteMapping("/{id}/vaciar")
+    public ResponseEntity<?> vaciarFavoritos(@PathVariable Integer id) {
+        try {
+            favSer.vaciarFavoritos(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al vaciar favoritos");
         }
     }
 }

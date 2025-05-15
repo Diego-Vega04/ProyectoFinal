@@ -24,13 +24,14 @@ import { FavoritosService } from '../services/favoritos.service';
 export class ProductoComponent implements OnInit {
   productId!: number;
   product!: Producto | undefined;
-  adds: Set<number> = new Set();
   productosSimilares: Producto[] = [];
   ratingAverage = 0;
   ratingCounts = [0, 0, 0, 0, 0];
   totalReviews = 0;
   isAdmin = false;
   editMode = false;
+  addBotonCarrito: Set<number> = new Set();
+  addBotonfavs: Set<number> = new Set();
 
   constructor(
     public dialog: MatDialog,
@@ -64,13 +65,43 @@ export class ProductoComponent implements OnInit {
     this.calcularResumenOpiniones();
 
     //Validar si el producto ya esta en la cesta
-    const productCesta = this.carritoEstadoService.getProductos();
+    const usuario = this.authService.getUsuario();
 
-    productCesta.forEach(p => {
-      if (p.id !== undefined) {
-        this.adds.add(p.id)
-      }
-    });
+    if (usuario?.email) {
+      this.userService.getByEmail(usuario.email).subscribe({
+        next: (usuarioDb) => {
+          const carritoId = usuarioDb.carrito?.id;
+          if (carritoId) {
+            this.carritoService.getCarritoById(carritoId).subscribe({
+              next: (carrito) => {
+                carrito.productos.forEach(p => {
+                  if (p.id !== undefined) {
+                    this.addBotonCarrito.add(p.id);
+                  }
+                });
+              },
+              error: (err) => console.error('Error al obtener productos del carrito:', err)
+            });
+          }
+
+          const favoritosId = usuarioDb.favoritos?.id;
+          if (favoritosId) {
+            this.favoritoService.getFavoritosById(favoritosId).subscribe({
+              next: (favoritos) => {
+                favoritos.productos.forEach(p => {
+                  if (p.id !== undefined) {
+                    this.addBotonfavs.add(p.id);
+                  }
+                });
+              },
+              error: (err) => console.error('Error al obtener favoritos:', err)
+            });
+          }
+
+        },
+        error: (err) => console.error('Error al obtener usuario desde email', err)
+      });
+    }
 
     //Cargar productos similares
     const productId = Number(this.route.snapshot.paramMap.get('id'));
@@ -115,8 +146,8 @@ export class ProductoComponent implements OnInit {
 
     console.log("usuario: " + user.nombre + " id: " + user.id);
 
-    if (producto.id !== undefined && this.adds.has(producto.id)) {
-      return;
+    if (producto.id !== undefined) {
+      this.addBotonCarrito.add(producto.id);
     }
 
     this.userService.getByEmail(user.email).subscribe({
@@ -134,13 +165,13 @@ export class ProductoComponent implements OnInit {
               console.log("carrito:", this.carritoService.getCarritoById(idCarrito));
 
               if (producto.id !== undefined) {
-                this.adds.add(producto.id!);
+                this.addBotonCarrito.add(producto.id!);
               }
 
               this.carritoService.getCarritoById(idCarrito).subscribe(carrito => {
                 carrito.productos.forEach(p => {
                   if (p.id !== undefined) {
-                    this.adds.add(p.id);
+                    this.addBotonCarrito.add(p.id);
                   }
                 });
               });
@@ -171,8 +202,8 @@ export class ProductoComponent implements OnInit {
 
     console.log("usuario: " + user.nombre + " id: " + user.id);
 
-    if (producto.id !== undefined && this.adds.has(producto.id)) {
-      return;
+    if (producto.id !== undefined) {
+      this.addBotonfavs.add(producto.id);
     }
 
     this.userService.getByEmail(user.email).subscribe({
@@ -200,35 +231,35 @@ export class ProductoComponent implements OnInit {
   }
 
   private procesarAddFavorito(idFavs: number, producto: Producto) {
-  this.favoritoService.addProductos(idFavs, producto).subscribe({
-    next: (favoritosActualizado) => {
-      console.log("Producto agregado a favoritos:", favoritosActualizado);
-      
-      this.favoritoService.getFavoritosById(idFavs).subscribe(favs => {
-        favs.productos.forEach(p => {
-          if (p.id !== undefined) {
-            this.adds.add(p.id);
-          }
+    this.favoritoService.addProductos(idFavs, producto).subscribe({
+      next: (favoritosActualizado) => {
+        console.log("Producto agregado a favoritos:", favoritosActualizado);
+
+        this.favoritoService.getFavoritosById(idFavs).subscribe(favs => {
+          favs.productos.forEach(p => {
+            if (p.id !== undefined) {
+              this.addBotonfavs.add(p.id);
+            }
+          });
         });
-      });
-    },
-    error: (err) => {
-      console.error("Error al agregar producto a favoritos:", err);
-    }
-  });
-}
+      },
+      error: (err) => {
+        console.error("Error al agregar producto a favoritos:", err);
+      }
+    });
+  }
 
 
 
   getTextoBoton(producto: Producto): string {
-    if (producto.id !== undefined && this.adds.has(producto.id)) {
+    if (producto.id !== undefined && this.addBotonCarrito.has(producto.id)) {
       return 'Producto añadido a la cesta';
     }
     return 'Añadir a la cesta';
   }
 
   getFavsTextoBoton(producto: Producto): string {
-    if (producto.id !== undefined && this.adds.has(producto.id)) {
+    if (producto.id !== undefined && this.addBotonfavs.has(producto.id)) {
       return 'Producto añadido a favoritos';
     }
     return 'Añadir a favoritos';
