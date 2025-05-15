@@ -7,6 +7,7 @@ import { Pedido } from '../models/pedido';
 import { MetodoPago } from '../models/enums/MetodoPago.enum';
 import { PedidoService } from '../services/pedido.service';
 import { User } from '../models/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var paypal: any;
 
@@ -26,7 +27,8 @@ export class CestaComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private userService: UserService,
     private carritoService: CarritoService,
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -96,10 +98,13 @@ export class CestaComponent implements OnInit, AfterViewInit {
       },
       onApprove: (data: any, actions: any) => {
         return actions.order.capture().then((details: any) => {
-          alert('Pago realizado exitosamente por: ' + details.payer.name.given_name);
-          this.cleanCart();
+          this.snackBar.open('Pago realizado exitosamente por: ' + details.payer.name.given_name, 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'start',
+            verticalPosition: 'bottom',
+          });
           this.paypalRendered = false;
-          
+
           const nuevoPedido = new Pedido({
             fecha: new Date().toISOString().split('T')[0],
             metodo_pago: MetodoPago.PAYPAL,
@@ -115,7 +120,22 @@ export class CestaComponent implements OnInit, AfterViewInit {
             },
             error: (err) => console.error("Error al guardar el pedido", err)
           });
+
+          const carritoId = this.usuarioDb.carrito?.id;
+
+          if (carritoId) {
+            this.carritoService.vaciarCarrito(carritoId).subscribe({
+              next: () => {
+                this.cleanCart();
+              },
+              error: (err) => {
+                console.error("Error al vaciar el carrito en el backend", err);
+              }
+            });
+          }
+
         });
+
       },
       onError: (err: any) => {
         console.error('Error en el pago:', err);
