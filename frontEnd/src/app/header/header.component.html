@@ -18,48 +18,58 @@
   <div class="account" (click)="irAUser()">
     <i class="fas fa-user"></i>
     <span> {{ isLoggedIn ? 'Área personal' : 'Iniciar sesión' }}</span>
-    <i class="fas fa-sign-out-alt" *ngIf="isLoggedIn" (click)="logout($event)" style="margin-left: 8px; color: red;"></i>
+    <i class="fas fa-sign-out-alt" *ngIf="isLoggedIn" (click)="logout($event)"
+      style="margin-left: 8px; color: red;"></i>
+  </div>
+
+
+  <div *ngIf="isAdmin" class="adminUsers" [routerLink]="'/'">
+    <span>Lista Usuarios</span>
   </div>
 
   <!-- Mi cesta -->
-  <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
-    <i class="fas fa-shopping-cart"></i>
-    <span>Mi cesta</span> 
-  </div>
-
-  <!-- Menú lateral de la cesta -->
-  <div class="cart-menu" [ngClass]="{'open': cartMenuOpen}">
-    <div class="cart-menu-header">
-      <span class="cart-title">Mi cesta</span>
-      <button class="close-btnC" (click)="toggleCartMenu()">✕</button>
+  <div *ngIf="!isAdmin">
+    <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
+      <i class="fas fa-shopping-cart"></i>
+      <span>Mi cesta</span>
     </div>
 
-    <div class="cart-content">
-      <ng-container *ngIf="productosCesta.length > 0; else vacia">
-        <ul class="cart-list">
-          <li *ngFor="let producto of productosCesta; let i = index;">
-            <img [src]="'/img/' + producto.imagen" alt="Producto">
-            <div>
-              <p><strong>{{ producto.nombre }}</strong></p>
-              <p>{{ producto.precio }} €</p>
-            </div>
-          </li>
-        </ul>
-        <button (click)="vaciarCesta()" class="bt-menu">Vaciar cesta completa</button>
-      </ng-container>
-      <ng-template #vacia>
-        <div class="cart-Ncontent">
-          <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
-          <p class="cart-text">Tu carrito está vacío</p>
-          <button class="go-home-btn" [routerLink]="'/'" (click)="toggleCartMenu()">Explorar
-            artículos</button>
-        </div>
-      </ng-template>
+    <!-- Menú lateral de la cesta -->
+    <div class="cart-menu" [ngClass]="{'open': cartMenuOpen}">
+      <div class="cart-menu-header">
+        <span class="cart-title">Mi cesta</span>
+        <button class="close-btnC" (click)="toggleCartMenu()">✕</button>
+      </div>
+
+      <div class="cart-content">
+        <ng-container *ngIf="productosCesta.length > 0; else vacia">
+          <ul class="cart-list">
+            <li *ngFor="let producto of productosCesta; let i = index;">
+              <img [src]="'/img/' + producto.imagen" alt="Producto">
+              <div>
+                <p><strong>{{ producto.nombre }}</strong></p>
+                <p>{{ producto.precio }} €</p>
+              </div>
+            </li>
+          </ul>
+          <button (click)="vaciarCesta()" class="bt-menu">Vaciar cesta completa</button>
+        </ng-container>
+        <ng-template #vacia>
+          <div class="cart-Ncontent">
+            <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
+            <p class="cart-text">Tu carrito está vacío</p>
+            <button class="go-home-btn" [routerLink]="'/'" (click)="toggleCartMenu()">Explorar
+              artículos</button>
+          </div>
+        </ng-template>
+      </div>
+
+
+      <div class="cart-menu-footer">
+        <button class="go-cart-btn" (click)="irCesta()">Ver artículos en la cesta</button>
+      </div>
     </div>
 
-    <div class="cart-menu-footer">
-      <button class="go-cart-btn" (click)="irCesta()">Ver artículos en la cesta</button>
-    </div>
   </div>
 
   <!-- Botón modo claro/oscuro -->

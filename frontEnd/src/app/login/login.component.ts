@@ -23,5 +23,6 @@ export class LoginComponent implements OnInit {
     
     // Iniciar el proceso de login
     this.authService.login(redirectUri);
+
   }
 }

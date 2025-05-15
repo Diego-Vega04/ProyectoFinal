@@ -28,6 +28,7 @@ export class HeaderComponent {
   isDarkMode = false;
   nombreBusqueda: string = '';
   productosCesta: Producto[] = [];
+  isAdmin = false;
 
   private carritoEstadoSubscription: Subscription | null = null;
 
@@ -47,37 +48,47 @@ export class HeaderComponent {
   async ngOnInit() {
     this.isLoggedIn = await this.keycloakService.isLoggedIn();
 
-    if (this.isLoggedIn) {
-      const user = this.authService.getUsuario();
-      const email = user.email;
+    this.isAdmin = this.keycloakService.isUserInRole('admin');
 
-      this.carritoService.productos$.subscribe(productos => {
-        this.productosCesta = productos;
-      })
+    if (!this.isAdmin) {
 
-      // Se busca el usuario en la base de datos utilizando el email
-      this.userService.getByEmail(email).subscribe({
-        next: (userFromDb) => {
-          // Si se encuentra el usuario en la base de datos, se obtiene el ID del carrito
-          const idCarrito = userFromDb.carrito?.id;
+      if (this.isLoggedIn) {
+        const user = this.authService.getUsuario();
+        const email = user.email;
 
-          if (idCarrito) {
-            this.carritoService.getCarritoById(idCarrito).subscribe({
-              next: (carrito) => {
-                this.productosCesta = carrito.productos;
-                console.log("productos", this.productosCesta);
-              },
-              error: (err) => {
-                console.error('Error al cargar la cesta del usuario', err);
-              }
-            });
+        this.carritoService.productos$.subscribe(productos => {
+          this.productosCesta = productos;
+        })
+
+        // Se busca el usuario en la base de datos utilizando el email
+        this.userService.getByEmail(email).subscribe({
+          next: (userFromDb) => {
+            // Si se encuentra el usuario en la base de datos, se obtiene el ID del carrito
+            const idCarrito = userFromDb.carrito?.id;
+
+            if (idCarrito) {
+              this.carritoService.getCarritoById(idCarrito).subscribe({
+                next: (carrito) => {
+                  this.productosCesta = carrito.productos;
+                  console.log("productos", this.productosCesta);
+                },
+                error: (err) => {
+                  console.error('Error al cargar la cesta del usuario', err);
+                }
+              });
+            }
+          },
+          error: (err) => {
+            console.error('Error al obtener el usuario desde la base de datos', err);
           }
-        },
-        error: (err) => {
-          console.error('Error al obtener el usuario desde la base de datos', err);
-        }
-      });
+        });
+      }
+    } else if (this.isAdmin) {
+      console.log("soy admin!");
+
+
     }
+
   }
 
   // Función para alternar el menú lateral
@@ -144,9 +155,9 @@ export class HeaderComponent {
               this.carritoEstadoService.vaciarCarrito();
 
               this.snackBar.open('Cesta vaciada correctamente', 'Cerrar', {
-                duration: 3000, 
-                horizontalPosition: 'start', 
-                verticalPosition: 'bottom', 
+                duration: 3000,
+                horizontalPosition: 'start',
+                verticalPosition: 'bottom',
               });
             },
             error: (err) => {

@@ -308,6 +308,24 @@ header {
     transition: color 0.3s;
 }
 
+/* Acceso a la lista de usuarios */
+.adminUsers {
+    color: var(--color-texto);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.adminUsers:hover {
+    background-color: var(--color-terciario);
+    border-radius: 5px;
+}
+
+.adminUsers span{    
+    font-size: 18px;
+}
+
 /* Capa oscura que cubre la página */
 .overlay {
     position: fixed;
