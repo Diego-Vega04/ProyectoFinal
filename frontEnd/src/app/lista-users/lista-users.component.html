@@ -1,0 +1,38 @@
+<div class="container my-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8" ><!--*ngFor="let user of users"-->
+        <div class="user-card mb-4 p-4 rounded shadow-sm animate-fade-in">
+          <div class="user-info">
+            <h4 class="mb-3" style="color: var(--color-primario);">
+              <i class="bi bi-person-fill me-2"></i>
+              Nombre Apellidos<!--{{ user.nombre }} {{ user.apellidos }}-->
+              #00 <!--{´{ user.id }}-->
+            </h4>
+            <p><i class="bi bi-envelope-fill me-2 text-secondary"></i><strong>Email:</strong> <!--{{ user.email }}--></p>
+            <p><i class="bi bi-geo-alt-fill me-2 text-secondary"></i><strong>Dirección:</strong> <!--{{ user.direccion }}--></p>
+            <p><i class="bi bi-mailbox2 me-2 text-secondary"></i><strong>Código Postal:</strong> <!--{{ user.cp }}--></p>
+  
+            <div ><!--*ngIf="user.orders.length > 0"-->
+              <h5 class="mt-4">
+                <i class="bi bi-box-seam-fill me-2 text-success"></i>Pedidos
+              </h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item ps-0" ><!--*ngFor="let order of user.orders"-->
+                  <strong>Pedido #<!--{{ order.id }}--></strong>
+                  <ul class="mb-1">
+                    <li ><!--*ngFor="let product of order.products"-->
+                      <i class="bi bi-caret-right-fill text-muted"></i> <!--{{ product }}-->
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div  class="text-muted mt-3"> <!--*ngIf="user.orders.length === 0"-->
+              <i class="bi bi-info-circle-fill me-2"></i>Este usuario no ha realizado pedidos.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

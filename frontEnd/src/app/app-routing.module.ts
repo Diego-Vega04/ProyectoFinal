@@ -6,12 +6,14 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { Filtro2Component } from './filtro/filtro2.component';
 import { ProductoComponent } from './producto/producto.component';
+import { ListaUsersComponent } from './lista-users/lista-users.component';
 
 const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'cesta', component: CestaComponent},
   {path: 'producto/:id', component: ProductoComponent},
+  {path: 'admin-users', component: ListaUsersComponent},
   {path: '*', redirectTo: ''},
   {path: '', component: Filtro2Component  },
   
