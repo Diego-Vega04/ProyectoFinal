@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../models/producto';
-import { SearchService } from '../search.service';
+
 import { Router } from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-filtro2',

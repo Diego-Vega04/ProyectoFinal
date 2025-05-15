@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CestaComponent } from './cesta/cesta.component';
 import { UserComponent } from './user/user.component';
-import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { Filtro2Component } from './filtro/filtro2.component';

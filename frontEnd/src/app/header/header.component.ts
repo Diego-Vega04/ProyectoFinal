@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SearchService } from '../search.service';
+
 import { Producto } from '../models/producto';
 import { CarritoEstadoService } from '../services/carrito-estado.service';
 import { User } from '../models/user';
@@ -12,6 +12,7 @@ import { AuthService } from '../auth/auth.service';
 import { CarritoService } from '../services/carrito.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-header',
