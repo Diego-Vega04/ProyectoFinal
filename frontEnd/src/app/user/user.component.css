@@ -6,9 +6,9 @@ h5,
 p,
 li {
     color: var(--color-texto);
+    font-size: large;
 }
 
-.textPsswd,
 .direcciones,
 .returns-grid,
 .warranty-instructions {
@@ -18,6 +18,7 @@ li {
 
 input {
     color: black;
+    border-radius: 5px;
 }
 
 div {
@@ -30,10 +31,10 @@ div {
     padding: 1rem;
     border-right: 1px solid #ddd;
     height: calc(100vh - 70px);
-    position: fixed;
+    position: absolute;
     top: 70px;
     overflow-y: auto;
-    margin-left: 10rem;
+    left: 0;
     border-radius: 8px;
     background-color: var(--color-fondo2);
 }
@@ -74,20 +75,25 @@ div {
 }
 
 .content {
-    margin-left: 450px;
+    margin-left: 260px;
     padding: 2rem;
     flex: 1;
     overflow-y: auto;
     height: calc(100vh - 70px);
 }
-
-hr {
+#medio {
     border: none;
-    border-top: 1px solid #e0e0e0;
+    border-top: 5px solid #ccc9c9;
+    border-radius: 10px;
     margin: 1rem 0;
 }
 
 /*Seccion "Mis datos"*/
+.direcciones1, .direcciones2{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
 .user-info {
     display: flex;
     flex-direction: column;
@@ -101,15 +107,14 @@ hr {
     align-items: center;
 }
 
-.field label {
-    width: 120px;
-    font-weight: bold;
+.field label, .dir-container label {
+    width: 100px;
 }
 
-.field input {
-    width: 250px;
+.field input, .dir-container input {
+    width: 280px;
     height: 20px;
-    padding: 10px;
+    padding: 20px;
     margin: 10px;
     border: 1px solid #ccc;
 }
@@ -123,44 +128,12 @@ hr {
     background-color: var(--color-primario);
     color: white;
     border: none;
-    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .btEdit:hover {
     background-color: var(--color-secundario);
-}
-
-/*Seccion reestablecer psswd*/
-.psswd-container {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 20px;
-}
-
-.psswd {
-    width: 100%;
-    padding-right: 40px;
-    height: 35px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-.eye-button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /*Seccion Mis Direcciones*/
@@ -173,7 +146,7 @@ hr {
 
 .direction {
     width: 300px;
-    height: 38px;
+    height: 30px;
     padding: 0 10px;
     font-size: 1rem;
     border-radius: 5px;
