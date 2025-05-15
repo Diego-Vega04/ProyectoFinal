@@ -4,6 +4,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { User } from '../models/user';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../services/user.service';
+import { Pedido } from '../models/pedido';
 
 @Component({
   selector: 'app-user',
@@ -26,21 +27,7 @@ export class UserComponent {
   motivo = '';
   devolucionMode = false;
 
-  //Pedidos para pruebas
-  pedidos = [
-    {
-      id: 1,
-      fecha: '2023-04-20',
-      direccion: 'Calle Falsa 123',
-      productos: [
-        { nombre: 'Teclado', precio: 20.00, cantidad: 1 },
-        { nombre: 'Ratón', precio: 10.00, cantidad: 2 }
-      ]
-    },
-    { id: 2, fecha: '2023-04-03', direccion: 'c/inventada nº2' },
-    { id: 3, fecha: '2023-04-05', direccion: 'c/inventada nº2' },
-    { id: 4, fecha: '2023-04-07', direccion: 'c/inventada nº2' },
-  ];
+  pedidos: Pedido[] = [];
   pedidoSeleccionado: any = null;
 
   //Centro de soporte
@@ -79,6 +66,9 @@ export class UserComponent {
           this.userName = user.nombre;
           this.userLastName = user.apellidos;
           this.userEmail = user.email;
+          this.userDireccion = user.direccion;
+
+          this.pedidos = user.pedidos ?? [];
         },
         error: (err) => {
           console.error('Error cargando usuario:', err);
@@ -165,24 +155,16 @@ export class UserComponent {
 
   //Formulario devolucion
   enviarDevolucion() {
-    /*con pedidoService implementado
-    this.pedidoService.solicitarDevolucion(this.pedidoSeleccionado.id, { motivo: this.motivo })
-      .subscribe(() => {
-        Swal.fire('¡Listo!', 'Tu solicitud de devolución se ha enviado.', 'success');
-        this.devolucionMode = false;
-        this.selectSection('pedidos');
-      }, err => {
-        Swal.fire('Error', 'Hubo un problema al enviar la solicitud.', 'error');
-      });
-      */
-    console.log("devolucion")
+    Swal.fire('¡Listo!', 'Tu solicitud de devolución se ha enviado.', 'success');
+    this.devolucionMode = false;
+    this.selectSection('pedidos');
+
   }
 
   cancelarDevolucion() {
     this.devolucionMode = false;
     this.motivo = '';
   }
-
 
   sendContact() {
     console.log('Mensaje enviado:', this.contact);

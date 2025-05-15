@@ -86,7 +86,7 @@
 
           <div class="pedido-body">
             <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'dd/MM/yyyy' }}</p>
-            <p><strong>Direccion:</strong> {{ pedido.direccion }}</p>
+            <p><strong>Direccion:</strong> {{ pedido.direccon }}</p>
 
             <button class="btViewDetails" (click)="selectSection('pedido', pedido)">Ver detalles</button>
           </div>
@@ -113,16 +113,7 @@
         <button (click)="devolucionMode = true" class="btViewDetails"> Solicitar devolución</button>
       </div>
 
-      <!--Formulario de devolución cuando el pedidoService esté implmentado
-      <div *ngIf="devolucionMode" class="form-devolucion">
-        <h4>Motivo de la devolución</h4>
-        <textarea [(ngModel)]="motivo"></textarea>
-        <button (click)="enviarDevolucion()">Enviar solicitud</button>
-        <button (click)="cancelarDevolucion()">Cancelar</button>
-      </div>
-    -->
-
-      <!--Formuloario sin el service-->
+      <!--Formulario sin el service-->
       <div *ngIf="devolucionMode" class="form-devolucion">
         <h4>Motivo de la devolución</h4>
         <textarea [(ngModel)]="motivo" rows="4" placeholder="Escribe el motivo aquí..."></textarea>

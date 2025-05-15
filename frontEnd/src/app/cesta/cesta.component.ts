@@ -3,6 +3,10 @@ import { UserService } from '../services/user.service';
 import { CarritoService } from '../services/carrito.service';
 import { AuthService } from '../auth/auth.service';
 import { Producto } from '../models/producto';
+import { Pedido } from '../models/pedido';
+import { MetodoPago } from '../models/enums/MetodoPago.enum';
+import { PedidoService } from '../services/pedido.service';
+import { User } from '../models/user';
 
 declare var paypal: any;
 
@@ -16,11 +20,13 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
   paypalRendered: boolean = false;
   cartItems: Producto[] = [];
+  usuarioDb!: User;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private pedidoService: PedidoService
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +34,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
     this.userService.getByEmail(user.email).subscribe({
       next: (usuarioDb) => {
+        this.usuarioDb = usuarioDb;
         const carritoId = usuarioDb.carrito?.id;
         if (carritoId !== undefined) {
           this.carritoService.getCarritoById(carritoId).subscribe({
@@ -92,6 +99,22 @@ export class CestaComponent implements OnInit, AfterViewInit {
           alert('Pago realizado exitosamente por: ' + details.payer.name.given_name);
           this.cleanCart();
           this.paypalRendered = false;
+          
+          const nuevoPedido = new Pedido({
+            fecha: new Date().toISOString().split('T')[0],
+            metodo_pago: MetodoPago.PAYPAL,
+            direccon: this.usuarioDb.direccion,
+            productos: this.cartItems,
+            user: this.usuarioDb
+          });
+
+          this.pedidoService.addPedido(nuevoPedido).subscribe({
+            next: (res) => {
+              console.log("Pedido guardado correctamente", res);
+              this.cleanCart();
+            },
+            error: (err) => console.error("Error al guardar el pedido", err)
+          });
         });
       },
       onError: (err: any) => {
