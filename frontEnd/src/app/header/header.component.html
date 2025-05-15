@@ -73,7 +73,7 @@
   </div>
 
 
-<!-- Favoritos -->
+  <!-- Favoritos -->
   <div *ngIf="!isAdmin">
     <div class="favs" id="favsMenuButton" (click)="toggleFavsMenu()">
       <i class="fas fa-heart"></i>
@@ -88,13 +88,13 @@
       </div>
 
       <div class="favs-content">
-        <ng-container *ngIf="productosCesta.length > 0; else vacia">
+        <ng-container *ngIf="productosFavs.length > 0; else vacia">
           <ul class="favs-list">
-            <li *ngFor="let producto of productosCesta; let i = index;">
-              <img [src]="'/img/' + producto.imagen" alt="Producto">
+            <li *ngFor="let fav of productosFavs; let i = index;">
+              <img [src]="'/img/' + fav.imagen" alt="Producto">
               <div>
-                <p><strong>{{ producto.nombre }}</strong></p>
-                <p>{{ producto.precio }} €</p>
+                <p><strong>{{ fav.nombre }}</strong></p>
+                <p>{{ fav.precio }} €</p>
               </div>
             </li>
           </ul>

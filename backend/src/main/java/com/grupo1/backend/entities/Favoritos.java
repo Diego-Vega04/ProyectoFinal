@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 
 import jakarta.persistence.Entity;
@@ -38,7 +39,7 @@ public class Favoritos {
     private User user;
 
     //varios productos en varias listas de favoritos
-    @ManyToAny
+    @ManyToMany
     @JoinTable(
         name = "favoritos_producto",
         joinColumns = @JoinColumn(name = "id_favoritos"),

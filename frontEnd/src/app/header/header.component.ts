@@ -13,6 +13,8 @@ import { CarritoService } from '../services/carrito.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { SearchService } from '../search.service';
+import { Favoritos } from '../models/favoritos';
+import { FavoritosService } from '../services/favoritos.service';
 
 @Component({
   selector: 'app-header',
@@ -30,9 +32,8 @@ export class HeaderComponent {
   isDarkMode = false;
   nombreBusqueda: string = '';
   productosCesta: Producto[] = [];
+  productosFavs: Producto[] = [];
   isAdmin = false;
-
-  private carritoEstadoSubscription: Subscription | null = null;
 
   constructor(
     private keycloakService: KeycloakService,
@@ -44,6 +45,7 @@ export class HeaderComponent {
     private http: HttpClient,
     private authService: AuthService,
     private userService: UserService,
+    private favService: FavoritosService
 
   ) { }
 
@@ -58,6 +60,7 @@ export class HeaderComponent {
         const user = this.authService.getUsuario();
         const email = user.email;
 
+        //Cargar la cesta
         this.carritoService.productos$.subscribe(productos => {
           this.productosCesta = productos;
         })
@@ -84,13 +87,34 @@ export class HeaderComponent {
             console.error('Error al obtener el usuario desde la base de datos', err);
           }
         });
+
+        //Cargar favoritos
+        this.userService.getByEmail(email).subscribe({
+          next: (userFromDb) => {
+            const idFavoritos = userFromDb.favoritos?.id;
+
+            if (idFavoritos) {
+              this.favService.getFavoritosById(idFavoritos).subscribe({
+                next: (favoritos) => {
+                  this.productosFavs = favoritos.productos;
+                  console.log("favoritos", this.productosFavs);
+                },
+                error: (err) => {
+                  console.error('Error al cargar los favoritos del usuario', err);
+                }
+              });
+            }
+          },
+          error: (err) => {
+            console.error('Error al obtener el usuario desde la base de datos', err);
+          }
+        });
+
       }
     } else if (this.isAdmin) {
       console.log("soy admin!");
 
-
     }
-
   }
 
   // Función para alternar el menú lateral

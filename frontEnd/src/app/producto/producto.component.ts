@@ -177,43 +177,48 @@ export class ProductoComponent implements OnInit {
 
     this.userService.getByEmail(user.email).subscribe({
       next: (user) => {
-        const idFavs = user.favoritos?.id;
+        let idFavs = user.favoritos?.id;
 
-        if (idFavs !== undefined) {
-          console.log("idFavoritos", idFavs);
-
-          this.favoritoService.addProductos(idFavs, producto).subscribe({
-            next: (favActualizado) => {
-              console.log("Producto agregado al carrito del backend:", favActualizado);
-              this.carritoService.updateProductos(favActualizado.productos);
-
-              if (producto.id !== undefined) {
-                this.adds.add(producto.id!);
-              }
-
-              this.favoritoService.getFavoritosById(idFavs).subscribe(favs => {
-                favs.productos.forEach(p => {
-                  if (p.id !== undefined) {
-                    this.adds.add(p.id);
-                  }
-                });
-              });
-
+        if (!idFavs) {
+          this.favoritoService.createFavoritos(user.id!).subscribe({
+            next: (nuevoFavoritos) => {
+              idFavs = nuevoFavoritos.id;
+              this.procesarAddFavorito(idFavs!, producto);
             },
             error: (err) => {
-              console.error("Error al agregar producto a favoritos:", err);
+              console.error("No se pudo crear la lista de favoritos:", err);
             }
           });
         } else {
-          console.error("No se pudo obtener el ID de la lista de favoritos.");
+          this.procesarAddFavorito(idFavs, producto);
         }
       },
       error: (err) => {
         console.error("Error al obtener el usuario por email:", err);
       }
     });
-
   }
+
+  private procesarAddFavorito(idFavs: number, producto: Producto) {
+  this.favoritoService.addProductos(idFavs, producto).subscribe({
+    next: (favoritosActualizado) => {
+      console.log("Producto agregado a favoritos:", favoritosActualizado);
+      
+      this.favoritoService.getFavoritosById(idFavs).subscribe(favs => {
+        favs.productos.forEach(p => {
+          if (p.id !== undefined) {
+            this.adds.add(p.id);
+          }
+        });
+      });
+    },
+    error: (err) => {
+      console.error("Error al agregar producto a favoritos:", err);
+    }
+  });
+}
+
+
 
   getTextoBoton(producto: Producto): string {
     if (producto.id !== undefined && this.adds.has(producto.id)) {

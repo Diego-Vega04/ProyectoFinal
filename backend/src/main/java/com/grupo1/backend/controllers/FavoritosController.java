@@ -1,5 +1,6 @@
 package com.grupo1.backend.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.apache.coyote.BadRequestException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.Producto;
+import com.grupo1.backend.entities.User;
 import com.grupo1.backend.services.FavoritosService;
 import com.grupo1.backend.services.UserService;
 
@@ -20,8 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
 @Controller
 @RequestMapping("/api/favoritos")
 public class FavoritosController {
@@ -29,16 +29,17 @@ public class FavoritosController {
     private final FavoritosService favSer;
     private final UserService userSer;
 
-    public FavoritosController (FavoritosService favSer, UserService userSer) {
+    public FavoritosController(FavoritosService favSer, UserService userSer) {
         this.favSer = favSer;
         this.userSer = userSer;
     }
 
     @PutMapping("/actualizar")
-    public ResponseEntity<?> actualizar (@RequestBody Favoritos entity) {
+    public ResponseEntity<?> actualizar(@RequestBody Favoritos entity) {
         try {
             if (entity == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La lista de favoritos puede estar vacia pero no puede ser null");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("La lista de favoritos puede estar vacia pero no puede ser null");
             }
 
             return ResponseEntity.ok(favSer.addFavoritos(entity));
@@ -48,14 +49,15 @@ public class FavoritosController {
     }
 
     @GetMapping("/user/{id_user}")
-    public ResponseEntity<?> verByUser (@PathVariable Integer id_user) {
+    public ResponseEntity<?> verByUser(@PathVariable Integer id_user) {
         try {
             if (id_user == null || id_user == 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de usuario no puede ser 0 o nulo");
             }
 
             if (userSer.getById(id_user) == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado un usuario con el id especificado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No se ha encontrado un usuario con el id especificado");
             } else {
                 return ResponseEntity.ok(favSer.getByUser(userSer.getById(id_user)));
             }
@@ -77,7 +79,7 @@ public class FavoritosController {
 
         return ResponseEntity.ok(FavoritosActualizado);
     }
- 
+
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         try {
@@ -91,5 +93,38 @@ public class FavoritosController {
                     .body("El id de favoritos no puede ser menor o igual que 0");
         }
 
+    }
+
+    @PostMapping("/crear/{id_user}")
+    public ResponseEntity<?> crearFavoritos(@PathVariable Integer id_user) {
+        try {
+            if (id_user == null || id_user <= 0) {
+                return ResponseEntity.badRequest().body("ID de usuario inválido");
+            }
+
+            User user = userSer.getById(id_user);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+            }
+
+            if (user.getFavoritos() != null) {
+                return ResponseEntity.badRequest().body("El usuario ya tiene una lista de favoritos");
+            }
+
+            Favoritos favoritos = new Favoritos();
+            favoritos.setUser(user);
+            favoritos.setProductos(new ArrayList<>());
+
+            Favoritos guardado = favSer.addFavoritos(favoritos);
+
+            // Asociar en ambas direcciones
+            user.setFavoritos(guardado);
+            userSer.addUser(user); // o save/update según tu método
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la lista de favoritos");
+        }
     }
 }
