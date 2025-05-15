@@ -27,7 +27,7 @@ public class PedidoController {
     private PedidoService pedidoSer;
 
     @PostMapping("/añadir")
-    public ResponseEntity<Pedido> addPedido (@RequestBody Pedido pedido) {
+    public ResponseEntity<ResponseEntity<Pedido>> addPedido (@RequestBody Pedido pedido) {
         return ResponseEntity.ok(pedidoSer.addPedido(pedido));
     }
 
