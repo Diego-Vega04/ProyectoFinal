@@ -8,19 +8,21 @@
         </ul>
 
         <hr>
-        <li class="section-title">Pedidos y devoluciones</li>
-        <ul>
-          <li (click)="selectSection('pedidos')">Pedidos, devoluciones y facturas</li>
-        </ul>
+        <div *ngIf="user.rol !== 'ADMIN'">
+          <li class="section-title">Pedidos y devoluciones</li>
+          <ul>
+            <li (click)="selectSection('pedidos')">Pedidos, devoluciones y facturas</li>
+          </ul>
 
-        <hr>
-        <li class="section-title">¿Necesitas ayuda?</li>
-        <ul>
-          <li (click)="selectSection('devoluciones')">Devoluciones y garantías</li>
-          <li (click)="selectSection('soporte')">Centro de soporte</li>
-        </ul>
+          <hr>
+          <li class="section-title">¿Necesitas ayuda?</li>
+          <ul>
+            <li (click)="selectSection('devoluciones')">Devoluciones y garantías</li>
+            <li (click)="selectSection('soporte')">Centro de soporte</li>
+          </ul>
 
-        <hr>
+          <hr>
+        </div>
         <li class="logout" (click)="logout()">Cerrar sesión</li>
       </ul>
     </nav>
@@ -31,8 +33,12 @@
     <div *ngIf="selectedSection === 'mis-datos'">
 
       <h2>Bienvenido a tu área personal</h2>
-      <div class="text user-info">
-        <!--Formulario de edición de datos-->
+      <div class="direcciones">
+        <div class="direcciones1 d-flex gap-2">
+          <i class="fas fa-user me-3"></i>
+          <h3>Mis datos</h3>
+        </div>
+
         <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
           <div class="field">
             <label for="name">Nombre:</label>
@@ -45,32 +51,40 @@
           </div>
           <div class="field">
             <label for="email">Email:</label>
-            <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email" [disabled]="editarDatos">
+            <input type="text" id="email" class="userData" [(ngModel)]="userEmail" name="email"
+              [disabled]="editarDatos">
           </div>
+
 
           <button type="button" class="btEdit" (click)="update()">{{editarDatos ? 'Editar' : 'Guardar'}}</button>
         </form>
       </div>
 
-      <hr>
+      <div *ngIf="user.rol !== 'ADMIN'">
+      <hr id="medio">
 
       <!-- Sección Mis Direcciones -->
-      <div class="direcciones" style="margin-top: 2rem;">
-        <h3>Mis direcciones</h3>
-        <div class="dir-container">
-          <h5>Dirección 1</h5>
-          <input type="text" class="direction" [(ngModel)]="userDireccion" name="direccion1" [disabled]="editarDireccion">
+      <div class="direcciones">
+        <div class="direcciones2 d-flex gap-2">
+          <i class="bi bi-geo-alt-fill me-1"></i>
+          <h3>Mis direcciones</h3>
         </div>
         <div class="dir-container">
-          <h5>Dirección 2</h5>
+          <label>Dirección 1</label>
+          <input type="text" class="direction" [(ngModel)]="userDireccion" name="direccion1"
+            [disabled]="editarDireccion">
+        </div>
+        <div class="dir-container">
+          <label>Dirección 2</label>
           <input type="text" class="direction" [disabled]="editarDireccion">
         </div>
         <div class="dir-container">
-          <h5>Dirección 3</h5>
+          <label>Dirección 3</label>
           <input type="text" class="direction" [disabled]="editarDireccion">
         </div>
         <button type="button" class="btEdit" (click)="editDir()">{{editarDireccion ? 'Editar' : 'Guardar'}}</button>
       </div>
+    </div>
     </div>
 
     <!--Apartado pedidos-->
@@ -128,13 +142,15 @@
     <!--Apartado info devoluciones-->
     <div *ngIf="selectedSection === 'devoluciones'" class="returns-section">
       <h2>Devoluciones y Garantías</h2>
-      <p class="intro-text">Aquí puedes consultar toda la información relacionada con nuestras políticas de devoluciones
+      <p class="intro-text">Aquí puedes consultar toda la información relacionada con nuestras políticas de
+        devoluciones
         y garantía de productos.</p>
 
       <div class="returns-grid">
         <div class="return-card">
           <h4>Plazo de Devolución</h4>
-          <p>Dispones de <strong>30 días naturales</strong> desde la recepción de tu pedido para devolverlo, siempre que
+          <p>Dispones de <strong>30 días naturales</strong> desde la recepción de tu pedido para devolverlo, siempre
+            que
             esté en su estado original.</p>
         </div>
 
