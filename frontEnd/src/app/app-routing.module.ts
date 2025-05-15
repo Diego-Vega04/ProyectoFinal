@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'cesta', component: CestaComponent},
   {path: 'producto/:id', component: ProductoComponent},
-  {path: 'admin-users', component: ListaUsersComponent},
+  {path: 'admin-users', component: ListaUsersComponent, canActivate: [AuthGuard],  data: { roles: ['admin'] }},
   {path: '*', redirectTo: ''},
   {path: '', component: Filtro2Component  },
   
