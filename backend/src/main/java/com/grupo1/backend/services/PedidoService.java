@@ -22,13 +22,14 @@ public class PedidoService {
     @Autowired
     private UserRepository userRepo;
 
-    public ResponseEntity<Pedido> addPedido (Pedido pedido) {
-         if (pedido.getUser() != null && pedido.getUser().getId() != null) {
-        Optional<User> userDb = userRepo.findById(pedido.getUser().getId());
-        userDb.ifPresent(pedido::setUser);
-    }
-    Pedido saved = pedidoRepo.save(pedido);
-    return ResponseEntity.ok(saved);
+    public ResponseEntity<Pedido> addPedido(Pedido pedido) {
+        if (pedido.getUser() != null && pedido.getUser().getId() != null) {
+            Optional<User> userDb = userRepo.findById(pedido.getUser().getId());
+            userDb.ifPresent(pedido::setUser);
+        }
+
+        Pedido saved = pedidoRepo.save(pedido);
+        return ResponseEntity.ok(saved);
     }
 
     public List<Pedido> getPedidosByUser(int id_user) throws NotFoundException {
@@ -37,15 +38,15 @@ public class PedidoService {
         } else {
             throw new NotFoundException();
         }
-        
+
     }
 
-    public Pedido getById (int id) throws NotFoundException {
+    public Pedido getById(int id) throws NotFoundException {
         if (pedidoRepo.existsById(id)) {
             return pedidoRepo.findById(id).get();
         } else {
             throw new NotFoundException();
         }
-        
+
     }
 }

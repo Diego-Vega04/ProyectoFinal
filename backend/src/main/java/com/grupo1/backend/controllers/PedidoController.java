@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
@@ -27,8 +26,11 @@ public class PedidoController {
     private PedidoService pedidoSer;
 
     @PostMapping("/añadir")
-    public ResponseEntity<ResponseEntity<Pedido>> addPedido (@RequestBody Pedido pedido) {
-        return ResponseEntity.ok(pedidoSer.addPedido(pedido));
+    public ResponseEntity<Pedido> addPedido(@RequestBody Pedido pedido) {
+        System.out.println("Pedido recibido: " + pedido);
+        System.out.println("User dentro del pedido: " + pedido.getUser());
+        System.out.println("ID del user: " + (pedido.getUser() != null ? pedido.getUser().getId() : "NULL"));
+        return pedidoSer.addPedido(pedido);
     }
 
     @GetMapping("/user/{id_user}")
@@ -39,22 +41,24 @@ public class PedidoController {
             }
 
             List<Pedido> a = pedidoSer.getPedidosByUser(id_user);
-            
+
             if (a == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se han encontrado pedidos hechos por el usuario");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No se han encontrado pedidos hechos por el usuario");
             }
             return ResponseEntity.ok(a);
 
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un usuario con id " + id_user);
         } catch (BadRequestException a) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de usuario no puede ser menor o igual que 0");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El id de usuario no puede ser menor o igual que 0");
         }
-        
+
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getById (@PathVariable int id) {
+    public ResponseEntity<?> getById(@PathVariable int id) {
         try {
             if (id <= 0) {
                 throw new BadRequestException();
@@ -62,10 +66,11 @@ public class PedidoController {
 
             return ResponseEntity.ok(pedidoSer.getById(id));
         } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del pedido no puede ser menor o igual a 0");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El id del pedido no puede ser menor o igual a 0");
         } catch (NotFoundException c) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado un pedido con el id " + id);
         }
-        
+
     }
 }

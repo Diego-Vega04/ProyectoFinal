@@ -105,18 +105,28 @@ export class CestaComponent implements OnInit, AfterViewInit {
           });
           this.paypalRendered = false;
 
+          if (!this.usuarioDb || !this.usuarioDb.id) {
+            console.error("No se pudo obtener el ID del usuario para crear el pedido");
+            return;
+          }
+
           const nuevoPedido = new Pedido({
             fecha: new Date().toISOString().split('T')[0],
             metodo_pago: MetodoPago.PAYPAL,
             direccon: this.usuarioDb.direccion,
-            productos: this.cartItems,
+            productos: this.usuarioDb.carrito?.productos,
             user: this.usuarioDb
           });
+
+          console.log("datos usuario: ", this.usuarioDb.id, this.usuarioDb.nombre)
 
           this.pedidoService.addPedido(nuevoPedido).subscribe({
             next: (res) => {
               console.log("Pedido guardado correctamente", res);
+              console.log("id user nuevo epdido", nuevoPedido.id);
               this.cleanCart();
+              console.log("id user nuevo epdido", nuevoPedido.user?.id);
+              console.log("id pedido", res.id);
             },
             error: (err) => console.error("Error al guardar el pedido", err)
           });

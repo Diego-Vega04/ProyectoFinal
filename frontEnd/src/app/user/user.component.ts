@@ -48,6 +48,19 @@ export class UserComponent {
       this.pedidoSeleccionado = null;
       this.devolucionMode = false;
       this.motivo = '';
+
+      const email = this.authService.getEmail();
+      if (email) {
+        this.userService.getByEmail(email).subscribe({
+          next: (user) => {
+            this.user = user;
+            this.pedidos = user.pedidos ?? [];
+          },
+          error: (err) => {
+            console.error('Error recargando pedidos:', err);
+          }
+        });
+      }
     }
   }
 
