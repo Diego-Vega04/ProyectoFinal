@@ -29,6 +29,19 @@ h1 {
   margin-left: 15%;
 }
 
+.apply-filters-btn{
+  background-color: var(--color-primario);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 7px;
+  margin-right: 10px;
+}
+
+.apply-filters-btn:hover{
+  background-color: var(--color-secundario);
+}
+
 .category-filters {
   display: flex;
   flex-wrap: wrap;

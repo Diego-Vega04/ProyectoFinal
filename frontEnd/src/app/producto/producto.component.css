@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
+  color: var(--color-texto);
 }
 
 .breadcrumb {
@@ -22,7 +23,7 @@
 
 .breadcrumb span {
   margin-left: 5px;
-  color: #333;
+  color: var(--color-texto);
 }
 
 .product-main {
@@ -78,7 +79,7 @@
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #333;
+  color: var(--color-texto);
 }
 
 .product-rating {
@@ -102,7 +103,7 @@
 
 .product-id {
   font-size: 13px;
-  color: #666;
+  color: var(--color-texto);
   margin-bottom: 15px;
 }
 
@@ -446,7 +447,7 @@
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--color-texto);
 }
 
 .bundle-container {
