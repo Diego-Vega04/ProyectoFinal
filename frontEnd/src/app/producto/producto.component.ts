@@ -12,6 +12,7 @@ import { Carrito } from '../models/carrito';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-producto',
@@ -27,6 +28,8 @@ export class ProductoComponent implements OnInit {
   ratingAverage = 0;
   ratingCounts = [0, 0, 0, 0, 0];
   totalReviews = 0;
+  isAdmin = false;
+  editMode = false;
 
   constructor(
     public dialog: MatDialog,
@@ -38,7 +41,8 @@ export class ProductoComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private keycloakService: KeycloakService
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +77,9 @@ export class ProductoComponent implements OnInit {
       this.product = producto;
       this.cargarProductosSimilares(producto);
     });
+
+    //Validar si ha hecho login y su rol
+    this.isAdmin = this.keycloakService.isUserInRole('admin');
   }
 
   async openReviewDialog(): Promise<void> {
@@ -169,9 +176,12 @@ export class ProductoComponent implements OnInit {
   }
 
   calcularResumenOpiniones() {
+
     if (!this.product?.comentarios || this.product.comentarios.length === 0) return;
 
     this.totalReviews = this.product.comentarios.length;
+    console.log("reviews", this.totalReviews);
+    console.log("comentario", this.product.comentarios.length);
     let suma = 0;
     this.ratingCounts = [0, 0, 0, 0, 0];
 
@@ -191,4 +201,21 @@ export class ProductoComponent implements OnInit {
     return (this.ratingCounts[nivel - 1] / this.totalReviews) * 100;
   }
 
+  editMethod() {
+    this.editMode = !this.editMode;
+  }
+
+  guardarProducto() {
+    if (!this.product) return;
+
+    this.productService.updateProducto(this.product).subscribe({
+      next: (updatedProduct) => {
+        console.log('Producto actualizado:', updatedProduct);
+        this.editMode = false;
+      },
+      error: (err) => {
+        console.error('Error al actualizar producto:', err);
+      }
+    });
+  }
 }

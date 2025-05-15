@@ -19,14 +19,16 @@
     </div>
 
     <div class="product-details">
-      <h1 class="product-title">{{ product?.nombre }}</h1>
+      <h1 class="product-title" *ngIf="!editMode">{{ product?.nombre }}</h1>
+      <input *ngIf="editMode" [(ngModel)]="product!.nombre" class="form-control">
       <div class="product-rating">
-        <span class="rating">4.6/5</span>
+        <span class="rating">Valoración media: 4.6/5</span>
       </div>
 
       <div class="product-id">
         <span>Código: #{{ product?.id }}</span><br>
-        <span>Marca: {{ product?.marca }}</span>
+        <span *ngIf="!editMode">Marca: {{ product?.marca }}</span>
+        <input *ngIf="editMode" [(ngModel)]="product!.marca" class="form-control">
       </div>
 
       <div class="seller-info">
@@ -36,7 +38,8 @@
 
     <div class="product-purchase">
       <div class="price-container">
-        <div class="current-price">{{ product?.precio}}€</div>
+        <div class="current-price" *ngIf="!editMode">{{ product?.precio }}€</div>
+        <input *ngIf="editMode" type="number" [(ngModel)]="product!.precio" class="form-control" />
       </div>
 
       <div class="shipping-info">
@@ -51,9 +54,20 @@
         </div>
 
         <ng-container *ngIf="product?.id as productId">
-          <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
-            {{ getTextoBoton(product!) }}
-          </button>
+          <div *ngIf="!isAdmin">
+            <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addCarrito(product!)">
+              {{ getTextoBoton(product!) }}
+            </button>
+          </div>
+          <div *ngIf="isAdmin">
+            <button class="add-to-cart-btn" (click)="editMethod()">
+              {{ editMode ? 'Cancelar cambios' : 'Editar producto' }}
+            </button>
+            <button class="add-to-cart-btn" (click)="guardarProducto()" *ngIf="editMode"
+              style="background-color: green;">
+              Guardar cambios
+            </button>
+          </div>
         </ng-container>
       </div>
     </div>
@@ -63,8 +77,12 @@
       <p>{{ product?.nombre}}</p>
       <h2 class="section-title">Descripción</h2>
       <ul class="features-list">
-        <li>
-          {{ product?.descripcion}}
+        <li *ngIf="!editMode">{{ product?.descripcion }}</li>
+
+        <li *ngIf="editMode">
+          <textarea [(ngModel)]="product!.descripcion" class="form-control" rows="4"
+            placeholder="Introduce la descripción del producto">
+          </textarea>
         </li>
       </ul>
     </div>
@@ -74,7 +92,8 @@
     <div class="similar-products">
       <h2 class="section-title">Artículos de la misma categoría</h2>
       <div class="similar-products-container">
-        <div class="similar-product" *ngFor="let similar of productosSimilares" [routerLink]="'/producto/' + similar.id">
+        <div class="similar-product" *ngFor="let similar of productosSimilares"
+          [routerLink]="'/producto/' + similar.id">
           <img [src]="'/img/' + similar.imagen" [alt]="similar.nombre">
           <div class="similar-product-info">
             <p>{{ similar.nombre }}</p>
