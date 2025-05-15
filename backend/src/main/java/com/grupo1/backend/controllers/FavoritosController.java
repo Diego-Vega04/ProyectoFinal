@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.grupo1.backend.entities.Favoritos;
-import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.Producto;
 import com.grupo1.backend.entities.User;
 import com.grupo1.backend.services.FavoritosService;
@@ -120,7 +119,7 @@ public class FavoritosController {
 
             // Asociar en ambas direcciones
             user.setFavoritos(guardado);
-            userSer.addUser(user); // o save/update según tu método
+            userSer.addUser(user); 
 
             return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
 
