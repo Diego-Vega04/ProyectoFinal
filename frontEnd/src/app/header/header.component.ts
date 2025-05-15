@@ -24,6 +24,7 @@ export class HeaderComponent {
 
   menuOpen = false;
   cartMenuOpen: boolean = false;
+  favsMenuOpen: boolean = false;
   menuAbierto = false;
   isLoggedIn: boolean = false;
   isDarkMode = false;
@@ -103,9 +104,14 @@ export class HeaderComponent {
     this.cartMenuOpen = !this.cartMenuOpen;
   }
 
+  toggleFavsMenu(): void {
+    this.favsMenuOpen = !this.favsMenuOpen;
+  }
+
   closeMenus() {
     this.menuOpen = false;
     this.cartMenuOpen = false;
+    this.favsMenuOpen = false;
   }
 
   //Funciones para login y logout
@@ -175,6 +181,11 @@ export class HeaderComponent {
 
   irCesta() {
     this.router.navigate(['/cesta']);
+    this.closeMenus();
+  }
+
+  irFavs() {
+    this.router.navigate(['/favoritos']);
     this.closeMenus();
   }
 }

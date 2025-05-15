@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { KeycloakService } from 'keycloak-angular';
+import { FavoritosService } from '../services/favoritos.service';
 
 @Component({
   selector: 'app-producto',
@@ -38,6 +39,7 @@ export class ProductoComponent implements OnInit {
     private productService: ProductoService,
     private carritoEstadoService: CarritoEstadoService,
     private carritoService: CarritoService,
+    private favoritoService: FavoritosService,
     private authService: AuthService,
     private http: HttpClient,
     private userService: UserService,
@@ -159,11 +161,72 @@ export class ProductoComponent implements OnInit {
 
   }
 
+  addFavorito(producto: Producto) {
+    const user = this.authService.getUsuario();
+
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    console.log("usuario: " + user.nombre + " id: " + user.id);
+
+    if (producto.id !== undefined && this.adds.has(producto.id)) {
+      return;
+    }
+
+    this.userService.getByEmail(user.email).subscribe({
+      next: (user) => {
+        const idFavs = user.favoritos?.id;
+
+        if (idFavs !== undefined) {
+          console.log("idFavoritos", idFavs);
+
+          this.favoritoService.addProductos(idFavs, producto).subscribe({
+            next: (favActualizado) => {
+              console.log("Producto agregado al carrito del backend:", favActualizado);
+              this.carritoService.updateProductos(favActualizado.productos);
+
+              if (producto.id !== undefined) {
+                this.adds.add(producto.id!);
+              }
+
+              this.favoritoService.getFavoritosById(idFavs).subscribe(favs => {
+                favs.productos.forEach(p => {
+                  if (p.id !== undefined) {
+                    this.adds.add(p.id);
+                  }
+                });
+              });
+
+            },
+            error: (err) => {
+              console.error("Error al agregar producto a favoritos:", err);
+            }
+          });
+        } else {
+          console.error("No se pudo obtener el ID de la lista de favoritos.");
+        }
+      },
+      error: (err) => {
+        console.error("Error al obtener el usuario por email:", err);
+      }
+    });
+
+  }
+
   getTextoBoton(producto: Producto): string {
     if (producto.id !== undefined && this.adds.has(producto.id)) {
       return 'Producto añadido a la cesta';
     }
     return 'Añadir a la cesta';
+  }
+
+  getFavsTextoBoton(producto: Producto): string {
+    if (producto.id !== undefined && this.adds.has(producto.id)) {
+      return 'Producto añadido a favoritos';
+    }
+    return 'Añadir a favoritos';
   }
 
   cargarProductosSimilares(producto: Producto): void {

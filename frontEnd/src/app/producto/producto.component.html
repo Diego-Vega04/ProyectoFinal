@@ -59,6 +59,12 @@
               {{ getTextoBoton(product!) }}
             </button>
           </div>
+          <div *ngIf="!isAdmin">
+            <button class="add-to-cart-btn" [disabled]="adds.has(productId)" (click)="addFavorito(product!)">
+              {{ getFavsTextoBoton(product!) }}
+            </button>
+          </div>
+
           <div *ngIf="isAdmin">
             <button class="add-to-cart-btn" (click)="editMethod()">
               {{ editMode ? 'Cancelar cambios' : 'Editar producto' }}

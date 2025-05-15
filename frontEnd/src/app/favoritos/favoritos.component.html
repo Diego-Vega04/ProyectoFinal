@@ -1,0 +1,30 @@
+<div class="cart-container">
+    <div class="cart-header">
+      <button [routerLink]="'/'" routerLinkActive="active">&larr; &nbsp; Volver atrás</button>
+      <h2>FAVORITOS</h2>
+    </div>
+    <hr>
+  
+    <div *ngIf="favItems.length === 0" class="empty-cart">
+      <p>Tu lista de favoritos está vacía. </p>
+      <a routerLink="/" class="btn btn-primary">Explorar artículos</a>
+    </div>
+  
+    <div *ngIf="favItems.length > 0" class="cart-content">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of favItems" >
+            <td class="product-info">
+              <img [src]="'/img/' + item.imagen" alt="{{ item.nombre }}" class="product-img">
+              <p>{{ item.nombre }}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -35,6 +35,7 @@ import { AppComponent } from './app.component';
 import { ListaUsersComponent } from './lista-users/lista-users.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FavoritosComponent } from './favoritos/favoritos.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserComponent,
     ProductoComponent,
     CestaComponent,
-    ReviewDialogComponent
+    ReviewDialogComponent,
+    FavoritosComponent
   ],
   imports: [
     BrowserModule,

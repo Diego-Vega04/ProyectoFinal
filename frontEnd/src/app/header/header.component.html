@@ -1,5 +1,5 @@
 <header>
-  <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen}" (click)="closeMenus()"></div>
+  <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen || favsMenuOpen}" (click)="closeMenus()"></div>
 
   <!-- Logo -->
   <div class="logo">
@@ -67,6 +67,51 @@
 
       <div class="cart-menu-footer">
         <button class="go-cart-btn" (click)="irCesta()">Ver artículos en la cesta</button>
+      </div>
+    </div>
+
+  </div>
+
+
+<!-- Favoritos -->
+  <div *ngIf="!isAdmin">
+    <div class="favs" id="favsMenuButton" (click)="toggleFavsMenu()">
+      <i class="fas fa-heart"></i>
+      <span>Mis Favoritos</span>
+    </div>
+
+    <!-- Menú lateral de favoritos -->
+    <div class="favs-menu" [ngClass]="{'open': favsMenuOpen}">
+      <div class="favs-menu-header">
+        <span class="favs-title">Mis Favoritos</span>
+        <button class="close-btnC" (click)="toggleFavsMenu()">✕</button>
+      </div>
+
+      <div class="favs-content">
+        <ng-container *ngIf="productosCesta.length > 0; else vacia">
+          <ul class="favs-list">
+            <li *ngFor="let producto of productosCesta; let i = index;">
+              <img [src]="'/img/' + producto.imagen" alt="Producto">
+              <div>
+                <p><strong>{{ producto.nombre }}</strong></p>
+                <p>{{ producto.precio }} €</p>
+              </div>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-template #vacia>
+          <div class="favs-Ncontent">
+            <img src="lensPickingPointsNoPostalCodeFound.svg" class="favs-image" alt="Cesta vacía">
+            <p class="favs-text">Tu lista de favoritos está vacía</p>
+            <button class="go-home-btn" [routerLink]="'/'" (click)="toggleFavsMenu()">Explorar
+              artículos</button>
+          </div>
+        </ng-template>
+      </div>
+
+
+      <div class="favs-menu-footer">
+        <button class="go-favs-btn" (click)="irFavs()">Ver artículos en favoritos</button>
       </div>
     </div>
 

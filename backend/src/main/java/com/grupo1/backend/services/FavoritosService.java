@@ -1,5 +1,7 @@
 package com.grupo1.backend.services;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.grupo1.backend.entities.Favoritos;
@@ -21,5 +23,9 @@ public class FavoritosService {
 
     public Favoritos addFavoritos (Favoritos fav) {
         return favRep.save(fav);
+    }
+
+    public Optional<Favoritos> getById(int id){
+        return favRep.findById(id);
     }
 }
