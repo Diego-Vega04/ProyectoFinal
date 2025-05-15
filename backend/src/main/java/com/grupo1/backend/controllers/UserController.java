@@ -9,6 +9,8 @@ import com.grupo1.backend.entities.User;
 import com.grupo1.backend.entities.enums.Rol;
 import com.grupo1.backend.services.UserService;
 
+import java.util.List;
+
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -94,6 +96,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id no puede ser menor o igual que cero");
         }
        
+    }
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userSer.getAllUsers();
     }
 }
 
