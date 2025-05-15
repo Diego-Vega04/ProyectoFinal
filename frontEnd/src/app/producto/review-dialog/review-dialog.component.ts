@@ -9,36 +9,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './review-dialog.component.css'
 })
 export class ReviewDialogComponent {
-  reviewForm: FormGroup;
   selectedRating: number = 0;
   hoveredRating: number = 0;
+  pros: string = '';
+  cons: string = '';
+  opinion: string = '';
+  rating: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ReviewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
-  ) {
-    this.reviewForm = this.fb.group({
-      pros: ['', Validators.required],
-      contras: ['', Validators.required],
-      opinion: ['', Validators.required]
-    });
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   setRating(rating: number) {
     this.selectedRating = rating;
+    this.rating = rating; 
   }
 
-  submit() {
-    if (this.reviewForm.valid && this.selectedRating > 0) {
-      const { pros, contras, opinion } = this.reviewForm.value;
-      this.dialogRef.close({
-        nota: this.selectedRating,
-        pros,
-        contras,
-        opinion
-      });
-    }
+  onEnviar(): void {
+    this.dialogRef.close({
+      pros: this.pros,
+      cons: this.cons,
+      opinion: this.opinion,
+      rating: this.selectedRating
+    });
   }
 
   cancel(): void {

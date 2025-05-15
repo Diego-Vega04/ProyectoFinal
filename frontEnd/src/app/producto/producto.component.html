@@ -21,9 +21,6 @@
     <div class="product-details">
       <h1 class="product-title" *ngIf="!editMode">{{ product?.nombre }}</h1>
       <input *ngIf="editMode" [(ngModel)]="product!.nombre" class="form-control">
-      <div class="product-rating">
-        <span class="rating">Valoración media: 4.6/5</span>
-      </div>
 
       <div class="product-id">
         <span>Código: #{{ product?.id }}</span><br>
@@ -153,6 +150,11 @@
           <p><strong>Contras:</strong> {{ comentario.contras }}</p>
           <p>{{ comentario.opinion }}</p>
         </div>
+
+        <button (click)="editarComentario(comentario)" class="edit-button">Editar</button>
+        <button (click)="eliminarComentario(comentario.id!)" class="edit-button">Eliminar</button>
+
+        <hr>
       </div>
     </div>
 

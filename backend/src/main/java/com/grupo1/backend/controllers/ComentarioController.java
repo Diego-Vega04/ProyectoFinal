@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo1.backend.entities.Comentario;
 import com.grupo1.backend.services.ComentarioService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/comentarios")
 public class ComentarioController {
@@ -29,34 +30,32 @@ public class ComentarioController {
     private ComentarioService comentarioSer;
 
     @PostMapping("/añadir")
-    public ResponseEntity<Comentario> addComentario (@RequestBody Comentario comentario) {
-        return ResponseEntity.ok (comentarioSer.addComentario(comentario));
+    public ResponseEntity<Comentario> addComentario(@RequestBody Comentario comentario) {
+        return ResponseEntity.ok(comentarioSer.addComentario(comentario));
     }
 
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> deleteComentario (@PathVariable int id) {
+    public ResponseEntity<?> deleteComentario(@PathVariable int id) {
         try {
-            if (id <= 0) {
-                throw new BadRequestException();
-            }
-
+            System.out.println("Eliminando comentario con id: " + id);
             comentarioSer.deleteComentario(id);
-            return ResponseEntity.ok("Comentario borrado con exito.");
-        } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del comentario no puede ser menor o igual que 0");
-        } catch (NotFoundException z) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe comentario con id " + id);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
         }
-        
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("mensaje", "Comentario borrado con éxito");
+        respuesta.put("mensaje", "Comentario borrado con éxito");
+        return ResponseEntity.ok(respuesta);
+
     }
 
     @PutMapping("/actualizar")
     public ResponseEntity<Comentario> actualizarComentario(@RequestBody Comentario comentario) {
-        return ResponseEntity.ok (comentarioSer.addComentario(comentario));
+        return ResponseEntity.ok(comentarioSer.addComentario(comentario));
     }
-    
+
     @GetMapping("/id/{id}")
-    public ResponseEntity<Comentario> getById (@PathVariable int id) throws NotFoundException {
+    public ResponseEntity<Comentario> getById(@PathVariable int id) throws NotFoundException {
         return ResponseEntity.ok(comentarioSer.getById(id));
     }
 
@@ -74,14 +73,15 @@ public class ComentarioController {
 
             return ResponseEntity.ok(a);
         } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del usuario no puede ser menor o igual que 0");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El id del usuario no puede ser menor o igual que 0");
         } catch (NotFoundException z) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe usuario con id " + id_user);
         }
     }
 
     @GetMapping("/producto/{id_producto}")
-    public ResponseEntity<?> getByProducto (@PathVariable int id_producto) {
+    public ResponseEntity<?> getByProducto(@PathVariable int id_producto) {
         try {
             if (id_producto <= 0) {
                 throw new BadRequestException();
@@ -94,11 +94,11 @@ public class ComentarioController {
 
             return ResponseEntity.ok(a);
         } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id del producto no puede ser menor o igual que 0");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El id del producto no puede ser menor o igual que 0");
         } catch (NotFoundException z) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe producto con id " + id_producto);
         }
 
-        
     }
 }

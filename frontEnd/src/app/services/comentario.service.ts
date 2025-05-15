@@ -8,17 +8,35 @@ import { Comentario } from '../models/comentario';
 })
 export class ComentariosService {
 
-  private apiUrl = 'http://localhost:8080/api/comentarios';   
+  private apiUrl = 'http://localhost:8081/api/comentarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  // Obtener todos los comentarios
   obtenerComentarios(): Observable<Comentario[]> {
     return this.http.get<Comentario[]>(this.apiUrl);
   }
 
-  // Crear un nuevo comentario
   crearComentario(comentario: Comentario): Observable<Comentario> {
-    return this.http.post<Comentario>(this.apiUrl, comentario);
+    return this.http.post<Comentario>(`${this.apiUrl}/añadir`, comentario);
+  }
+
+  actualizarComentario(comentario: Comentario): Observable<Comentario> {
+    return this.http.put<Comentario>(`${this.apiUrl}/actualizar`, comentario);
+  }
+
+  eliminarComentario(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/borrar/${id}`);
+  }
+
+  obtenerComentarioPorId(id: number): Observable<Comentario> {
+    return this.http.get<Comentario>(`${this.apiUrl}/id/${id}`);
+  }
+
+  obtenerPorProducto(idProducto: number): Observable<Comentario[]> {
+    return this.http.get<Comentario[]>(`${this.apiUrl}/producto/${idProducto}`);
+  }
+
+  obtenerPorUsuario(idUsuario: number): Observable<Comentario[]> {
+    return this.http.get<Comentario[]>(`${this.apiUrl}/user/${idUsuario}`);
   }
 }

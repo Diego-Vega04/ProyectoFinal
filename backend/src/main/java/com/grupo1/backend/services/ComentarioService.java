@@ -29,13 +29,13 @@ public class ComentarioService {
         } else {
             throw new NotFoundException();
         }
-        
+
     }
 
-    public List<Comentario> getComentariosByProducto (int id_producto) throws NotFoundException {
+    public List<Comentario> getComentariosByProducto(int id_producto) throws NotFoundException {
         if (productoRepo.existsById(id_producto)) {
             return comentarioRepo.findByProducto(productoRepo.findById(id_producto).get());
-        }  else {
+        } else {
             throw new NotFoundException();
         }
     }
@@ -45,16 +45,16 @@ public class ComentarioService {
     }
 
     public void deleteComentario(int id) throws NotFoundException {
-        if (comentarioRepo.existsById(id)) {
-            comentarioRepo.deleteById(id);
-        } else {
-            throw new NotFoundException();
-        }
+        System.out.println("--------------DELETE" + id + " id");
+        Comentario comentario = comentarioRepo.findById(id).orElseThrow();
+        comentarioRepo.delete(comentario);
+
+        
     }
 
-    public Comentario getById (int id) throws NotFoundException {
+    public Comentario getById(int id) throws NotFoundException {
         if (comentarioRepo.existsById(id)) {
-            return comentarioRepo.findById(id).get();        
+            return comentarioRepo.findById(id).get();
         } else {
             throw new NotFoundException();
         }

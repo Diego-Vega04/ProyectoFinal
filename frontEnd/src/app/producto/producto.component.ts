@@ -14,6 +14,8 @@ import { UserService } from '../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { KeycloakService } from 'keycloak-angular';
 import { FavoritosService } from '../services/favoritos.service';
+import { ComentariosService } from '../services/comentario.service';
+import { Comentario } from '../models/comentario';
 
 @Component({
   selector: 'app-producto',
@@ -44,6 +46,7 @@ export class ProductoComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private userService: UserService,
+    private comentarioService: ComentariosService,
     private snackBar: MatSnackBar,
     private keycloakService: KeycloakService
   ) { }
@@ -55,14 +58,13 @@ export class ProductoComponent implements OnInit {
       this.productService.getById(this.productId).subscribe({
         next: (data) => {
           this.product = data;
+          this.calcularResumenOpiniones();
         },
         error: (err) => {
           console.error('Error al cargar el producto', err);
         }
       });
     });
-
-    this.calcularResumenOpiniones();
 
     //Validar si el producto ya esta en la cesta
     const usuario = this.authService.getUsuario();
@@ -115,6 +117,16 @@ export class ProductoComponent implements OnInit {
     this.isAdmin = this.keycloakService.isUserInRole('admin');
   }
 
+  recargarProducto(): void {
+    this.productService.getById(this.productId).subscribe({
+      next: (productoActualizado) => {
+        this.product = productoActualizado;
+        this.calcularResumenOpiniones();
+      },
+      error: err => console.error('Error al recargar producto:', err)
+    });
+  }
+
   async openReviewDialog(): Promise<void> {
     const isLogged = await this.authService.isLoggedIn();
 
@@ -130,8 +142,35 @@ export class ProductoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Opinión recibida:', result);
-        // Aquí guardarías la opinión en tu producto
+        const usuario = this.authService.getUsuario();
+
+        if (!usuario || !usuario.id) {
+          console.error('Usuario no encontrado');
+          return;
+        }
+
+        const nuevoComentario = new Comentario(
+          result.rating,
+          result.pros,
+          result.cons,
+          result.opinion,
+          usuario.id,
+          this.productId
+        );
+
+        this.comentarioService.crearComentario(nuevoComentario).subscribe({
+          next: () => {
+            this.productService.getById(this.productId).subscribe({
+              next: (productoActualizado) => {
+                this.product = productoActualizado;
+                this.calcularResumenOpiniones();
+                console.log("comentarios",)
+              },
+              error: err => console.error('Error al actualizar producto:', err)
+            });
+          },
+          error: err => console.error('Error al crear comentario:', err)
+        });
       }
     });
   }
@@ -250,7 +289,6 @@ export class ProductoComponent implements OnInit {
   }
 
 
-
   getTextoBoton(producto: Producto): string {
     if (producto.id !== undefined && this.addBotonCarrito.has(producto.id)) {
       return 'Producto añadido a la cesta';
@@ -317,4 +355,57 @@ export class ProductoComponent implements OnInit {
       }
     });
   }
+
+  eliminarComentario(id: number): void {
+    this.comentarioService.eliminarComentario(id).subscribe({
+      next: () => {
+        console.log('Comentario eliminado');
+
+        // Eliminar comentario de la interfaz (lista en memoria)
+        if (this.product?.comentarios) {
+          this.product.comentarios = this.product.comentarios.filter(c => c.id !== id);
+          this.calcularResumenOpiniones(); // Recalcula estadísticas
+        }
+
+        // Mostrar notificación (opcional)
+        this.snackBar.open('Comentario eliminado con éxito', 'Cerrar', { duration: 2000 });
+      },
+      error: err => {
+        console.error('Error al eliminar comentario:', err);
+        this.snackBar.open('Error al eliminar comentario', 'Cerrar', { duration: 3000 });
+      }
+    });
+  }
+
+  editarComentario(comentario: Comentario): void {
+    const dialogRef = this.dialog.open(ReviewDialogComponent, {
+      width: '500px',
+      data: {
+        pros: comentario.pros,
+        cons: comentario.contras,
+        opinion: comentario.opinion,
+        rating: comentario.nota
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const comentarioEditado = new Comentario(
+          result.rating,
+          result.pros,
+          result.cons,
+          result.opinion,
+          comentario.usuario.id,
+          comentario.producto.id
+        );
+        comentarioEditado.id = comentario.id;
+
+        this.comentarioService.actualizarComentario(comentarioEditado).subscribe({
+          next: () => this.recargarProducto(),
+          error: err => console.error('Error al actualizar comentario:', err)
+        });
+      }
+    });
+  }
+
 }

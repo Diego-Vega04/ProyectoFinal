@@ -1,11 +1,11 @@
 export class Comentario {
-  id?: number;   
+  id?: number;
   nota: number;
   pros: string;
   contras: string;
   opinion: string;
-  id_user: number;        
-  id_producto: number;   
+  usuario: { id: number };       
+  producto: { id: number };      
 
   constructor(
     nota: number,
@@ -19,7 +19,7 @@ export class Comentario {
     this.pros = pros;
     this.contras = contras;
     this.opinion = opinion;
-    this.id_user = id_user;
-    this.id_producto = id_producto;
+    this.usuario = { id: id_user };
+    this.producto = { id: id_producto };
   }
 }

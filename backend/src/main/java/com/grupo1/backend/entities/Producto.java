@@ -64,7 +64,7 @@ public class Producto {
     private List<Pedido> pedidos;
 
     //un producto en varias reseñas
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Comentario> comentarios;
     

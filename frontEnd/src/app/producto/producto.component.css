@@ -343,7 +343,6 @@
   }
 }
 
-
 .add-to-cart-btn {
   width: 100%;
   padding: 12px;
@@ -698,7 +697,7 @@
 }
 
 .star {
-  color: #8a56ac;
+  color: #e0e0e0;
   margin: 0 2px;
 }
 
@@ -848,4 +847,13 @@
   .recommendation-rate {
     width: 100%;
   }
+}
+
+.edit-button {
+  color: white;
+  background-color: var(--color-primario);
+  margin-right: 20px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
 }
