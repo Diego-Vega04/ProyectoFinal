@@ -151,9 +151,13 @@
           <p>{{ comentario.opinion }}</p>
         </div>
 
-        <button (click)="editarComentario(comentario)" class="edit-button">Editar</button>
-        <button (click)="eliminarComentario(comentario.id!)" class="edit-button">Eliminar</button>
-
+        <div *ngIf="isLoggedIn">
+          <button (click)="editarComentario(comentario)" class="edit-button" *ngIf="!isAdmin">Editar</button>
+        </div>
+        <br>
+        <div *ngIf="isLoggedIn">
+          <button (click)="eliminarComentario(comentario.id!)" class="edit-button" *ngIf="!isAdmin">Eliminar</button>
+        </div>
         <hr>
       </div>
     </div>

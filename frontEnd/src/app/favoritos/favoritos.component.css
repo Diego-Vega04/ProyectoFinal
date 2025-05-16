@@ -161,3 +161,17 @@
     background-color: var(--color-fondo2);
     box-shadow: 0 4px 8px 0 var(--sombra-1), 0 6px 20px 0 var(--sombra-2);
   }
+
+  .vaciar-boton {
+    background-color: var(--color-primario);
+    border: none;
+    border-radius: 5px;
+    color:white;
+    padding: 10px;
+    margin-top: 30px;
+    
+  }
+
+  .vaciar-boton:hover {
+    background-color: var(--color-secundario);
+  }

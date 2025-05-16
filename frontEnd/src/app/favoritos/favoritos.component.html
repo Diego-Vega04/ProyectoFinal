@@ -26,6 +26,7 @@
           </tr>
         </tbody>
       </table>
-      <button (click)="vaciarFavoritos()">Vaciar lista de favoritos</button>
+      
     </div>
+    <button (click)="vaciarFavoritos()" class="vaciar-boton" *ngIf="favItems.length > 0">Vaciar lista de favoritos</button>
   </div>

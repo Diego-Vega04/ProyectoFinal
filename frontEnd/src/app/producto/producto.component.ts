@@ -32,6 +32,7 @@ export class ProductoComponent implements OnInit {
   totalReviews = 0;
   isAdmin = false;
   editMode = false;
+  isLoggedIn = false;
   addBotonCarrito: Set<number> = new Set();
   addBotonfavs: Set<number> = new Set();
 
@@ -52,6 +53,9 @@ export class ProductoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.isLoggedIn().then((logged) => {
+      this.isLoggedIn = logged;
+    });
     //Cargar el producto
     this.route.paramMap.subscribe(params => {
       this.productId = Number(params.get('id'));
