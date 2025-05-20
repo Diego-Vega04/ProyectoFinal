@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path:'', component: VistaAdminComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

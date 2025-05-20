@@ -14,6 +14,7 @@ export class HeaderComponent {
   menuOpen = false;
   cartMenuOpen: boolean = false;
   menuAbierto = false;
+  
 
   // cambiar a tipo producto y las rutas a las caracteristicas
   productosCesta = [

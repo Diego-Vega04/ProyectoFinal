@@ -1,0 +1,30 @@
+<div class="admin-container">
+  <h1>Panel de Admin</h1>
+  <button class="admin-button" (click)="gestionProductos()">Gestionar Productos</button>
+  <button class="admin-button" routerLink="/usuarios">Gestionar Usuarios</button>
+</div>
+
+<div class="productos-container" *ngIf="gestionProduct">
+  <h2>Lista de Productos</h2>
+  <table class="productos-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th colspan="2">Acciones de producto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio | currency:'EUR' }}</td>
+        <td>{{ producto.stock }}</td>
+        <td><button>Editar producto</button></td>
+        <td><button>Eliminar producto</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

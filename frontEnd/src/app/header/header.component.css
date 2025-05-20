@@ -5,11 +5,13 @@ header {
     padding: 10px 0;
     color: white;
     font-family: Arial, sans-serif;
-    position: static;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     width: 100%;
-    background-color: var(--color-fondo);
+    background-color: var(--color-fondo2);
 }
-
+  
 /* Logo */
 .logo {
     display: flex;
@@ -19,102 +21,6 @@ header {
 
 .logo img {
     height: 50px;
-}
-
-/* Menú de categorías*/
-.categories {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-    padding: 10px;
-}
-
-.categories a {
-    color: var(--color-texto);
-    text-decoration: none;
-    font-size: 16px;
-    margin-left: 20px;
-    text-align: center;
-}
-
-.categories:hover {
-    background-color: var(--color-terciario);
-    border-radius: 5px;
-}
-
-.hamburger {
-    background: none;
-    border: none;
-    display: inline-block;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.hamburger .line {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 4px 0;
-    background-color: var(--color-primario);
-}
-
-/* Menú lateral (inicialmente oculto) */
-.side-menu {
-    position: fixed;
-    top: 0;
-    left: -400px;
-    width: 400px;
-    height: 100%;
-    transition: left 0.4s ease;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    background-color: var(--color-primario);
-}
-
-.side-menu.open {
-    left: 0;
-    z-index: 9999;
-}
-
-.side-menu-content {
-    padding: 30px 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100%;
-}
-
-.side-menu h2 {
-    margin-top: 60px;
-    font-size: 22px;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 30px;
-}
-
-.side-menu ul {
-    list-style: none;
-    padding: 0;
-    margin-left: 30px;
-}
-
-.side-menu ul li {
-    margin: 15px 0;
-    padding: 10px 15px;
-    border-radius: 8px;
-
-}
-
-.side-menu ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 18px;
-    vertical-align: middle;
-
-}
-
-.side-menu ul li a:hover {
-    cursor: pointer;
-    color: var(--color-texto);
 }
 
 /* Estilo para la X */
@@ -137,7 +43,7 @@ header {
 .search-bar {
     display: inline-block;
     position: relative;
-    margin-left: 200px;
+    margin-left: 350px;
 }
 
 .search-bar input[type="text"] {
@@ -377,7 +283,7 @@ header {
 /*Boton modo claro/oscuro*/
 .dark-mode-toggle {
     position: absolute;
-    top: 33px;
+    top: 15pxpx;
     right: 33px;
 }
 
@@ -402,6 +308,24 @@ header {
     transition: color 0.3s;
 }
 
+/* Acceso a la lista de usuarios */
+.adminUsers {
+    color: var(--color-texto);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.adminUsers:hover {
+    background-color: var(--color-terciario);
+    border-radius: 5px;
+}
+
+.adminUsers span{    
+    font-size: 18px;
+}
+
 /* Capa oscura que cubre la página */
 .overlay {
     position: fixed;
@@ -419,4 +343,192 @@ header {
 .overlay.open {
     opacity: 1;
     pointer-events: all;
+}
+
+/*Favoritos*/
+.favs {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 20px;
+    color: var(--color-texto);
+    padding: 10px;
+}
+
+.favs span {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.favs:hover {
+    background-color: var(--color-terciario);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Menú lateral de la favoritos */
+.favs-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 400px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primario);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+/* Mostrar el menú deslizándolo hacia la derecha */
+.favs-menu.open {
+    right: 0;
+}
+
+.favs-Ncontent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.favs-menu-header, .favs-menu-footer {
+    height: 60px;
+    flex-shrink: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favs-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.close-btnC {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.close-btnC:hover {
+    color: #000000;
+}
+
+.favs-image {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.favs-text {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.favs-Ncontent {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.go-home-btn {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.go-home-btn:hover {
+    background-color: var(--color-secundario);
+}
+
+.favs-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 20px;
+}
+
+.favs-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.favs-list li{
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    background-color: #ededed;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.favs-list li button{
+    width: auto;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: large;
+}
+
+.favs-list li button:hover{
+    color: red;
+}
+
+.favs-list img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 1px solid #030709;
+}
+
+.favs-list p{
+    color: #030709;
+}
+
+.bt-menu{
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--color-terciario);
+    border-radius: 10px;
+    color: #fff;
+}
+.bt-menu:hover{
+    background-color: var(--color-secundario);
+    cursor: pointer;
+}
+
+.favs-menu-footer {
+    border-top: 1px solid rgb(255,255,255,0.2);
+}
+
+.go-favs-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: var(--color-terciario);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.go-favs-btn:hover{
+    background-color: var(--color-secundario);
 }

@@ -1,75 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
+<header>
+  <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen}" (click)="closeMenus()"></div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header PCComponentes</title>
-  <link rel="stylesheet" href="header.component.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+  <!-- Logo -->
+  <div class="logo">
+    <a routerLink="/">
+      <img src="logoSoloNoFondo.png" alt="Logo">
+    </a>
+  </div>
 
-<body>
-  <header>
-    <div class="overlay" [ngClass]="{'open': menuOpen || cartMenuOpen}" (click)="closeMenus()"></div>
+  <!-- Barra de búsqueda-->
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar" (input)="buscarProducto()" [(ngModel)]="nombreBusqueda">
+    <button (click)="buscarProducto()"><i class="fas fa-search"></i></button>
+  </div>
 
-    <!-- Logo -->
-    <div class="logo">
-      <a routerLink="/">
-        <img src="logoSoloNoFondo.png" alt="Logo">
-      </a>
-    </div>
+  <!-- Si el usuario está logueado, muestra area personal; de lo contrario, muestra Iniciar sesion -->
+  <div class="account">
+    <i class="fas fa-user"></i>
+    <span> 'Iniciar sesión</span>
+    <i class="fas fa-sign-out-alt"
+      style="margin-left: 8px; color: red;"></i>
+  </div>
 
-    <!-- Menú de categorías-->
-    <div class="categories" (click)="toggleMenu()">
-      <button class="hamburger" [ngClass]="{'open': menuOpen}">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
-      <a href="#">Categorías disponibles</a>
-    </div>
-
-    <!-- Menú lateral -->
-    <div class="side-menu" [ngClass]="{'open': menuOpen}">
-      <div class="side-menu-content">
-        <button class="close-btn" (click)="toggleMenu()">✕</button>
-        <h2>CATEGORÍAS</h2>
-        <hr>
-        <ul>
-          <li>
-            <a>Componentes</a>
-          </li>
-          <li>
-            <a>Ordenadores</a>
-          </li>
-          <li>
-            <a>Periféricos</a>
-          </li>
-          <li>
-            <a>Televisores</a>
-          </li>
-          <li>
-            <a>Audio</a>
-          </li>
-        </ul>
-
-      </div>
-    </div>
-
-    <!-- Barra de búsqueda-->
-    <div class="search-bar">
-      <input type="text" placeholder="Buscar" (input)="buscarProducto()" [(ngModel)]="nombreBusqueda">
-      <button (click)="buscarProducto()"><i class="fas fa-search"></i></button>
-    </div>
-
-    <!-- Si el usuario está logueado, muestra su email; de lo contrario, muestra 'Mi cuenta' -->
-    <div class="account" (click)="onMiCuentaClick()">
-      <i class="fas fa-user"></i>
-      <span> {{ authService.isLoggedIn() ? authService.getUserEmail() : 'Mi cuenta' }}</span>
-    </div>
-
-    <!-- Mi cesta -->
+  <!-- Mi cesta -->
+  <div>
     <div class="cart" id="cartMenuButton" (click)="toggleCartMenu()">
       <i class="fas fa-shopping-cart"></i>
       <span>Mi cesta</span>
@@ -86,11 +40,10 @@
         <ng-container *ngIf="productosCesta.length > 0; else vacia">
           <ul class="cart-list">
             <li *ngFor="let producto of productosCesta; let i = index;">
-              <img [src]="producto.imagen" alt="Producto">
+              <img [src]="'/img/' + producto.imagen" alt="Producto">
               <div>
                 <p><strong>{{ producto.nombre }}</strong></p>
                 <p>{{ producto.precio }} €</p>
-                <button (click)="borrarProducto(i); $event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
               </div>
             </li>
           </ul>
@@ -100,24 +53,68 @@
           <div class="cart-Ncontent">
             <img src="lensPickingPointsNoPostalCodeFound.svg" class="cart-image" alt="Cesta vacía">
             <p class="cart-text">Tu carrito está vacío</p>
-            <button class="go-home-btn" click="window.location.href='/'" (click)="toggleCartMenu()">Explorar artículos</button>
+            <button class="go-home-btn" [routerLink]="'/'" (click)="toggleCartMenu()">Explorar
+              artículos</button>
           </div>
         </ng-template>
       </div>
-      
+
+
       <div class="cart-menu-footer">
         <button class="go-cart-btn">Ver artículos en la cesta</button>
       </div>
     </div>
 
-    <!-- Botón modo claro/oscuro -->
-    <div class="dark-mode-toggle">
-      <button (click)="toggleDarkMode()">
-        <i class="fas fa-moon" *ngIf="!isDarkMode"></i>
-        <i class="fas fa-sun" *ngIf="isDarkMode"></i>
-      </button>
-    </div>
-  </header>
-</body>
+  </div>
 
-</html>
+  <!-- Favoritos -->
+  <div >
+    <div class="favs" id="favsMenuButton" >
+      <i class="fas fa-heart"></i>
+      <span>Mis Favoritos</span>
+    </div>
+
+    <!-- Menú lateral de favoritos -->
+    <div class="favs-menu" >
+      <div class="favs-menu-header">
+        <span class="favs-title">Mis Favoritos</span>
+        <button class="close-btnC" >✕</button>
+      </div>
+
+      <div class="favs-content">
+        <ng-container >
+          <ul class="favs-list">
+            <li >
+              <img [src]="'/img/' " alt="Producto">
+              <div>
+                <p><strong></strong></p>
+                <p>€</p>
+              </div>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-template #vacia>
+          <div class="favs-Ncontent">
+            <img src="lensPickingPointsNoPostalCodeFound.svg" class="favs-image" alt="Cesta vacía">
+            <p class="favs-text">Tu lista de favoritos está vacía</p>
+            <button class="go-home-btn" [routerLink]="'/'">Explorar
+              artículos</button>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="favs-menu-footer">
+        <button class="go-favs-btn" >Ver artículos en favoritos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón modo claro/oscuro -->
+  <div class="dark-mode-toggle">
+    <button (click)="toggleDarkMode()">
+      <i class="fas fa-moon" *ngIf="!isDarkMode">a</i>
+      <i class="fas fa-sun" *ngIf="isDarkMode"></i>
+    </button>
+  </div>
+
+</header>
