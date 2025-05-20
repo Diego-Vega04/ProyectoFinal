@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import com.grupo1.backend.entities.Favoritos;
 import com.grupo1.backend.entities.Producto;
 import com.grupo1.backend.entities.User;
+import com.grupo1.backend.repository.ProductoRepository;
 import com.grupo1.backend.services.FavoritosService;
+import com.grupo1.backend.services.ProductoService;
 import com.grupo1.backend.services.UserService;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +30,8 @@ public class FavoritosController {
 
     private final FavoritosService favSer;
     private final UserService userSer;
+
+    private ProductoRepository productRepo;
 
     public FavoritosController(FavoritosService favSer, UserService userSer) {
         this.favSer = favSer;
@@ -68,16 +72,23 @@ public class FavoritosController {
 
     @PostMapping("/{idFavoritos}/productos")
     public ResponseEntity<?> addProductos(@PathVariable int idFavoritos, @RequestBody Producto producto) {
-        Optional<Favoritos> FavoritosOpt = favSer.getById(idFavoritos);
-        if (FavoritosOpt.isEmpty()) {
+        Optional<Favoritos> favoritosOpt = favSer.getById(idFavoritos);
+        if (favoritosOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Favoritos Favoritos = FavoritosOpt.get();
-        Favoritos.getProductos().add(producto);
-        Favoritos FavoritosActualizado = favSer.addFavoritos(Favoritos);
+        Optional<Producto> productoOpt = productRepo.findById(producto.getId());
+        if (productoOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Producto no encontrado");
+        }
 
-        return ResponseEntity.ok(FavoritosActualizado);
+        Favoritos favoritos = favoritosOpt.get();
+        Producto productoReal = productoOpt.get();
+
+        favoritos.getProductos().add(productoReal);
+        Favoritos favoritosActualizado = favSer.addFavoritos(favoritos);
+
+        return ResponseEntity.ok(favoritosActualizado);
     }
 
     @GetMapping("/id/{id}")
@@ -119,7 +130,7 @@ public class FavoritosController {
 
             // Asociar en ambas direcciones
             user.setFavoritos(guardado);
-            userSer.addUser(user); 
+            userSer.addUser(user);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
 
