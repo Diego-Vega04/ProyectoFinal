@@ -8,6 +8,7 @@ import { MetodoPago } from '../models/enums/MetodoPago.enum';
 import { PedidoService } from '../services/pedido.service';
 import { User } from '../models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CarritoEstadoService } from '../services/carrito-estado.service';
 
 declare var paypal: any;
 
@@ -28,7 +29,8 @@ export class CestaComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private carritoService: CarritoService,
     private pedidoService: PedidoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private carritoEstadoService: CarritoEstadoService
   ) { }
 
   ngOnInit(): void {
@@ -187,5 +189,36 @@ export class CestaComponent implements OnInit, AfterViewInit {
     let total = (subtotal + envio);
 
     return { envio: parseFloat(envio.toFixed(2)), total: parseFloat(total.toFixed(2)) };
+  }
+
+  vaciarCesta() {
+    const user = this.authService.getUsuario();
+
+    this.userService.getByEmail(user.email).subscribe({
+      next: (usuarioDb) => {
+        const carritoId = usuarioDb.carrito?.id;
+        if (carritoId !== undefined) {
+          this.carritoService.vaciarCarrito(carritoId).subscribe({
+            next: () => {
+              this.cartItems = [];
+              this.carritoEstadoService.vaciarCarrito();
+
+              this.snackBar.open('Cesta vaciada correctamente', 'Cerrar', {
+                duration: 3000,
+                horizontalPosition: 'start',
+                verticalPosition: 'bottom',
+                panelClass: 'custom-snackbar'
+              });
+            },
+            error: (err) => {
+              console.error('Error al vaciar la cesta', err);
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener el usuario para vaciar la cesta', err);
+      }
+    });
   }
 }

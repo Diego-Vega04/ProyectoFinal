@@ -10,6 +10,7 @@
     <a routerLink="/" class="btn btn-primary">Explorar artículos</a>
   </div>
 
+  <button *ngIf="cartItems.length > 0" (click)="vaciarCesta()" class="btn btn-primary">Vaciar cesta completa</button>
   <div *ngIf="cartItems.length > 0" class="cart-content">
     <table class="cart-table">
       <thead>

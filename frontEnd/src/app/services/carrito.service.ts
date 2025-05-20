@@ -40,8 +40,10 @@ export class CarritoService {
     }
 
     //Vaciar el carrito
-    vaciarCarrito(id: number): Observable<Carrito> {
-        return this.http.delete<Carrito>(`${this.apiUrl}/delete/${id}`)
+    vaciarCarrito(id: number): Observable<String> {
+        return this.http.delete(`${this.apiUrl}/delete/${id}`, {
+            responseType: 'text'
+        });
     }
 
     //Actualizar la cesta en memoria

@@ -34,7 +34,12 @@ export class FavoritosComponent implements OnInit {
         if (favsId !== undefined) {
           this.favoritoService.getByUserId(favsId).subscribe({
             next: (favs) => {
-              this.favItems = favs.productos.map(p => ({ ...p, cantidad: 1 }));
+              if (favs && favs.productos) {
+                this.favItems = favs.productos.map(p => ({ ...p, cantidad: 1 }));
+              } else {
+                console.warn('Favoritos sin productos o datos nulos:', favs);
+                this.favItems = [];
+              }
             },
             error: (err) => {
               console.error('Error al cargar productos de favoritos', err);
