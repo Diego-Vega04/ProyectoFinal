@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class VistaAdminComponent {
 
-  gestionProduct: boolean = true;
+  gestionProduct: boolean = false;
   editProduct = new Map<number, boolean>();
 
   productos = [
