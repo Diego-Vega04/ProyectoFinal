@@ -24,6 +24,7 @@ import { ListaUsersComponent } from './lista-users/lista-users.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
     ProductoComponent,
     CestaComponent,
     ReviewDialogComponent,
-    FavoritosComponent
+    FavoritosComponent,
+    VistaAdminComponent
   ],
   imports: [
     BrowserModule,

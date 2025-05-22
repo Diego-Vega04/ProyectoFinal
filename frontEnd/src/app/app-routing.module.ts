@@ -8,6 +8,7 @@ import { Filtro2Component } from './filtro/filtro2.component';
 import { ProductoComponent } from './producto/producto.component';
 import { ListaUsersComponent } from './lista-users/lista-users.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 
 const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'favoritos', component: FavoritosComponent},
   {path: 'producto/:id', component: ProductoComponent},
   {path: 'admin-users', component: ListaUsersComponent, canActivate: [AuthGuard],  data: { roles: ['admin'] }},
+  {path: 'admin-gestion', component: VistaAdminComponent, canActivate: [AuthGuard],  data: { roles: ['admin'] }},
   {path: '*', redirectTo: ''},
   {path: '', component: Filtro2Component  },
   

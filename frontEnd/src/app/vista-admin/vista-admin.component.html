@@ -1,0 +1,56 @@
+<div class="vista-admin">
+    <div class="admin-container">
+        <h1>Panel de Admin</h1>
+        <button class="admin-button" (click)="gestionProductos()">Gestionar Productos</button>
+        <button class="admin-button" routerLink="/admin-users">Gestionar Usuarios</button>
+    </div>
+
+    <div class="productos-container" *ngIf="gestionProduct">
+        <h2>Lista de Productos</h2>
+        <table class="productos-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Categoria</th>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                    <th colspan="2">Acciones de producto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of productos">
+                    <td>{{ producto.id }}</td>
+                    <td>
+                        <span *ngIf="!editProduct.get(producto.id!)">{{ producto.categoria }}</span>
+                        <input *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.categoria">
+                    </td>
+                    <td>
+                        <span *ngIf="!editProduct.get(producto.id!)">{{ producto.nombre }}</span>
+                        <input *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.nombre">
+                    </td>
+                    <td>
+                        <span *ngIf="!editProduct.get(producto.id!)">{{ producto.marca }}</span>
+                        <input *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.marca">
+                    </td>
+                    <td>
+                        <span *ngIf="!editProduct.get(producto.id!)">{{ producto.precio }} €</span>
+                        <input *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.precio">
+                    </td>
+                    <td>
+                        <span *ngIf="!editProduct.get(producto.id!)">{{ producto.descripcion }}</span>
+                        <textarea class="textarea-edit" *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.descripcion" rows="3"></textarea>
+                    </td>
+
+                    <td>
+                        <button class="btn-edit" (click)="editarProducto(producto)">
+                            {{ editProduct.get(producto.id!) ? 'Guardar producto' : 'Editar producto' }}
+                        </button>
+                    </td>
+                    <td><button class="btn-delete" (click)="eliminarProducto(producto.id!)">Eliminar producto</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

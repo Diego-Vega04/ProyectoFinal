@@ -29,7 +29,7 @@ export class ProductoService {
 
     //borrar un producto por su id
     deleteProducto(id: number): Observable<any> {
-        return this.http.get<Producto>(`${this.apiUrl}/borrar/${id}`);
+        return this.http.delete<Producto>(`${this.apiUrl}/borrar/${id}`);
     }
 
     //todos los productos

@@ -113,7 +113,7 @@ export class HeaderComponent {
       }
     } else if (this.isAdmin) {
       console.log("soy admin!");
-
+       this.router.navigate(['/admin-gestion']);
     }
   }
 
