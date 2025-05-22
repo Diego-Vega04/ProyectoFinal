@@ -41,7 +41,7 @@ export class VistaAdminComponent {
 
   abrirDialogoNuevoProducto() {
     const dialogRef = this.dialog.open(ProductoFormDialogComponent, {
-      width: '400px'
+      width: '700px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

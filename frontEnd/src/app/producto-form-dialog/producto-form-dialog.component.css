@@ -1,0 +1,21 @@
+.titulo-formulario {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.formulario-contenido {
+  padding-top: 0;
+}
+
+.formulario-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.campo {
+  width: 100%;
+}
+

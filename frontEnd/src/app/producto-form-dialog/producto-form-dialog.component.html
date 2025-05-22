@@ -1,33 +1,34 @@
-<h2 mat-dialog-title>Nuevo Producto</h2>
-<mat-dialog-content>
-    <form [formGroup]="productoForm">
-        <mat-form-field appearance="fill" class="full-width">
+<h2 mat-dialog-title class="titulo-formulario">Añadir Nuevo Producto</h2>
+<mat-dialog-content class="formulario-contenido">
+    <form [formGroup]="productoForm" class="formulario-grid">
+        <mat-form-field appearance="outline" class="campo">
             <mat-label>Categoria</mat-label>
             <input matInput formControlName="categoria" />
         </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
+        
+        <mat-form-field appearance="outline" class="campo">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="nombre" />
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="campo">
             <mat-label>Marca</mat-label>
             <input matInput formControlName="marca" />
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="campo">
             <mat-label>Precio</mat-label>
             <input type="number" matInput formControlName="precio" />
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="campo">
             <mat-label>Descripción</mat-label>
-            <input matInput formControlName="descripcion" />
+            <textarea matInput formControlName="descripcion" rows="3"></textarea>
         </mat-form-field>
     </form>
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
     <button mat-button (click)="cancelar()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="productoForm.invalid">Guardar</button>
+    <button mat-raised-button (click)="guardar()" [disabled]="productoForm.invalid">Guardar</button>
 </mat-dialog-actions>
