@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Nuevo Producto</h2>
+<mat-dialog-content>
+    <form [formGroup]="productoForm">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Categoria</mat-label>
+            <input matInput formControlName="categoria" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Marca</mat-label>
+            <input matInput formControlName="marca" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Precio</mat-label>
+            <input type="number" matInput formControlName="precio" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Descripción</mat-label>
+            <input matInput formControlName="descripcion" />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="productoForm.invalid">Guardar</button>
+</mat-dialog-actions>

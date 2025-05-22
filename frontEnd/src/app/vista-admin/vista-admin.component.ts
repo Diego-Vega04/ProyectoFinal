@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Producto } from '../models/producto';
 import { ProductoService } from '../services/producto.service';
+import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductoFormDialogComponent } from '../producto-form-dialog/producto-form-dialog.component';
 
 @Component({
   selector: 'app-vista-admin',
@@ -11,12 +14,15 @@ import { ProductoService } from '../services/producto.service';
 })
 export class VistaAdminComponent {
   gestionProduct: boolean = false;
+  mostrarFormulario = false;
+  productoForm!: FormGroup;
   editProduct = new Map<number, boolean>();
 
   productos: Producto[] = [];
 
   constructor(
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private dialog: MatDialog
   ) { }
 
   gestionProductos() {
@@ -31,6 +37,21 @@ export class VistaAdminComponent {
         console.error('Error al cargar productos:', err);
       }
     })
+  }
+
+  abrirDialogoNuevoProducto() {
+    const dialogRef = this.dialog.open(ProductoFormDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.productoService.addProducto(result).subscribe(() => {
+          // Recargar lista de productos
+          this.gestionProductos(); 
+        });
+      }
+    });
   }
 
   editarProducto(producto: Producto) {
@@ -59,37 +80,37 @@ export class VistaAdminComponent {
   }
 
   eliminarProducto(id: number) {
-  Swal.fire({
-    title: "¿Eliminar este producto de la base de datos?",
-    text: "Esta acción no se podrá revertir",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#8a56ac",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, borrar"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.productoService.deleteProducto(id).subscribe({
-        next: () => {
-          this.productos = this.productos.filter(p => p.id !== id);
+    Swal.fire({
+      title: "¿Eliminar este producto de la base de datos?",
+      text: "Esta acción no se podrá revertir",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#8a56ac",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productoService.deleteProducto(id).subscribe({
+          next: () => {
+            this.productos = this.productos.filter(p => p.id !== id);
 
-          Swal.fire({
-            title: "Producto eliminado",
-            text: "El producto ha sido eliminado correctamente.",
-            icon: "success"
-          });
-        },
-        error: (err) => {
-          console.error('Error al eliminar el producto', err);
-          Swal.fire({
-            title: "Error",
-            text: "No se pudo eliminar el producto.",
-            icon: "error"
-          });
-        }
-      });
-    }
-  });
-}
+            Swal.fire({
+              title: "Producto eliminado",
+              text: "El producto ha sido eliminado correctamente.",
+              icon: "success"
+            });
+          },
+          error: (err) => {
+            console.error('Error al eliminar el producto', err);
+            Swal.fire({
+              title: "Error",
+              text: "No se pudo eliminar el producto.",
+              icon: "error"
+            });
+          }
+        });
+      }
+    });
+  }
 
 }

@@ -6,7 +6,12 @@
     </div>
 
     <div class="productos-container" *ngIf="gestionProduct">
-        <h2>Lista de Productos</h2>
+        <div class="productos-header">
+            <button (click)="abrirDialogoNuevoProducto()">Añadir producto</button>
+            <h2>Lista de Productos</h2>
+        </div>
+
+        <!--Tabla de lista de productos-->
         <table class="productos-table">
             <thead>
                 <tr>
@@ -40,7 +45,8 @@
                     </td>
                     <td>
                         <span *ngIf="!editProduct.get(producto.id!)">{{ producto.descripcion }}</span>
-                        <textarea class="textarea-edit" *ngIf="editProduct.get(producto.id!)" [(ngModel)]="producto!.descripcion" rows="3"></textarea>
+                        <textarea class="textarea-edit" *ngIf="editProduct.get(producto.id!)"
+                            [(ngModel)]="producto!.descripcion" rows="3"></textarea>
                     </td>
 
                     <td>
@@ -48,7 +54,8 @@
                             {{ editProduct.get(producto.id!) ? 'Guardar producto' : 'Editar producto' }}
                         </button>
                     </td>
-                    <td><button class="btn-delete" (click)="eliminarProducto(producto.id!)">Eliminar producto</button></td>
+                    <td><button class="btn-delete" (click)="eliminarProducto(producto.id!)">Eliminar producto</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

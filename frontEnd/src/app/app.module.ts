@@ -25,6 +25,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { VistaAdminComponent } from './vista-admin/vista-admin.component';
+import { ProductoFormDialogComponent } from './producto-form-dialog/producto-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { VistaAdminComponent } from './vista-admin/vista-admin.component';
     CestaComponent,
     ReviewDialogComponent,
     FavoritosComponent,
-    VistaAdminComponent
+    VistaAdminComponent,
+    ProductoFormDialogComponent
   ],
   imports: [
     BrowserModule,

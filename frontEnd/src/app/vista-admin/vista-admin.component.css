@@ -47,18 +47,42 @@
 /*Gestion productos*/
 .productos-container {
     padding: 40px;
-
     margin: 0 auto;
     font-family: 'Inter', sans-serif;
 }
 
-.productos-container h2 {
+.productos-header {
+    position: relative;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.productos-header h2 {
     font-size: 22px;
     margin-bottom: 20px;
     text-align: center;
     color: var(--color-texto);
 }
 
+.productos-header button {
+    position: absolute;
+    left: 0;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.productos-header button:hover {
+    background-color: var(--color-secundario);
+}
+
+/*Tabla productos*/
 .productos-table {
     width: 100%;
     table-layout: fixed;
