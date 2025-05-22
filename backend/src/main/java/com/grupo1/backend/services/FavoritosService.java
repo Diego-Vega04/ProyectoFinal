@@ -1,5 +1,6 @@
 package com.grupo1.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -36,4 +37,12 @@ public class FavoritosService {
         favoritos.getProductos().clear();
         favRep.save(favoritos);
     }
+
+    public void eliminarProductoDeTodosLosFavoritos(int idProducto) {
+    List<Favoritos> todasLasListas = favRep.findAll();
+    for (Favoritos lista : todasLasListas) {
+        lista.getProductos().removeIf(p -> p.getId() == idProducto);
+        favRep.save(lista);
+    }
+}
 }

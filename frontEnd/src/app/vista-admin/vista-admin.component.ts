@@ -71,6 +71,8 @@ export class VistaAdminComponent {
     if (result.isConfirmed) {
       this.productoService.deleteProducto(id).subscribe({
         next: () => {
+          this.productos = this.productos.filter(p => p.id !== id);
+
           Swal.fire({
             title: "Producto eliminado",
             text: "El producto ha sido eliminado correctamente.",

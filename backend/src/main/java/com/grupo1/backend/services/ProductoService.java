@@ -10,8 +10,15 @@ import com.grupo1.backend.entities.Producto;
 import com.grupo1.backend.entities.enums.CategoriaProducto;
 import com.grupo1.backend.repository.ProductoRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductoService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private ProductoRepository productoRepo;
@@ -20,13 +27,28 @@ public class ProductoService {
         return productoRepo.save(producto);
     }
 
+    @Transactional
     public void deleteProducto(int id) throws NotFoundException {
-        if (productoRepo.existsById(id)) {
-            productoRepo.deleteById(id);
-        } else {
+        if (!productoRepo.existsById(id)) {
             throw new NotFoundException();
         }
-        
+
+        // Elimina relaciones en pedido_producto
+        entityManager.createNativeQuery("DELETE FROM pedido_producto WHERE id_producto = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+
+        // Elimina relaciones con favoritos
+        entityManager.createNativeQuery("DELETE FROM favoritos_producto WHERE id_producto = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+
+        // Elimina relaciones con pedidos
+        entityManager.createNativeQuery("DELETE FROM carrito_producto WHERE id_producto = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+
+        productoRepo.deleteById(id);
     }
 
     public List<Producto> productosByCategoria(CategoriaProducto categoria) {
@@ -41,12 +63,12 @@ public class ProductoService {
         return productoRepo.findAll();
     }
 
-    public Producto getById (int id) throws NotFoundException {
+    public Producto getById(int id) throws NotFoundException {
         if (productoRepo.existsById(id)) {
             return productoRepo.findById(id).get();
-        } else  {
+        } else {
             throw new NotFoundException();
         }
-        
+
     }
 }

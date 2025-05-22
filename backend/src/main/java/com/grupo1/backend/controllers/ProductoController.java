@@ -1,6 +1,7 @@
 package com.grupo1.backend.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo1.backend.entities.Producto;
 import com.grupo1.backend.entities.enums.CategoriaProducto;
+import com.grupo1.backend.services.FavoritosService;
 import com.grupo1.backend.services.ProductoService;
 
 @RestController
@@ -26,6 +28,8 @@ public class ProductoController {
     
     @Autowired
     private ProductoService productoSer;
+    @Autowired
+    private FavoritosService favSer;
 
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getById (@PathVariable int id) {
@@ -56,9 +60,10 @@ public class ProductoController {
             if (id <= 0) {
                 throw new BadRequestException();
             }
-
+            favSer.eliminarProductoDeTodosLosFavoritos(id);
             productoSer.deleteProducto(id);
-            return ResponseEntity.ok("Producto eliminado correctamente");
+            return ResponseEntity.ok(Map.of("message", "Producto eliminado correctamente"));
+
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el producto con id " + id);
         } catch (BadRequestException a) {
